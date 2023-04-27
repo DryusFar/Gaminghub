@@ -6,9 +6,12 @@ def login(request):
     return render(request,'login.html')
 
 <<<<<<< HEAD
-def index(request):
-    return render(request,'index.html')
+def register(request):
+    return render(request,'register.html')
+
 =======
 def perfil(request):
     return render(request,'perfil.html')
 >>>>>>> baa79e158e1bb61fe29f60baf72fd136cdb17482
+def index(request):
+    return render(request,'index.html')
