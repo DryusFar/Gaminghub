@@ -1,0 +1,16 @@
+from django.urls import path
+<<<<<<< HEAD
+from .views import login, register # Se importa la vista de urls
+
+urlpatterns = [
+    path('', login, name='login'),
+    path('register', register, name='register'),
+   
+=======
+from .views import login, perfil # Se importa la vista de urls
+
+urlpatterns = [
+    path('', login, name='login'),
+    path('perfil/', perfil, name='perfil')
+>>>>>>> baa79e158e1bb61fe29f60baf72fd136cdb17482
+]
