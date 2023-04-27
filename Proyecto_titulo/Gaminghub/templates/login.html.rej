@@ -1,0 +1,9 @@
+diff a/Proyecto_titulo/Gaminghub/templates/login.html b/Proyecto_titulo/Gaminghub/templates/login.html	(rejected hunks)
+@@ -10,7 +10,6 @@
+     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+ </head>
+ <body>
+-  <h1>Hola mundo</h1>
+     <div class="container d-flex flex-column flex-md-row justify-content-center align-items-center divPadre">
+         <div class="col-md-6 text-center div1">
+           <img src="../static/img/Texto.png" alt="" class="img1">
