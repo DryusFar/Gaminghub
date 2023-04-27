@@ -1,0 +1,12 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+
+# Create your views here.
+def login(request):
+    return render(request,'login.html')
+
+<<<<<<< HEAD
+def index(request):
+    return render(request,'index.html')
+=======
+>>>>>>> 8b0e58f9e3c09a7186688f59bbf291a306cb02ca
