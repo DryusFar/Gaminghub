@@ -9,4 +9,6 @@ def login(request):
 def index(request):
     return render(request,'index.html')
 =======
->>>>>>> 8b0e58f9e3c09a7186688f59bbf291a306cb02ca
+def perfil(request):
+    return render(request,'perfil.html')
+>>>>>>> baa79e158e1bb61fe29f60baf72fd136cdb17482

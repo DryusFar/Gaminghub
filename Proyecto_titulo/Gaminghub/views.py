@@ -5,5 +5,7 @@ from django.http import HttpResponse
 def login(request):
     return render(request,'login.html')
 
+def perfil(request):
+    return render(request,'perfil.html')
 def index(request):
     return render(request,'index.html')
