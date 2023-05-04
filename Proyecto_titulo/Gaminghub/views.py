@@ -7,3 +7,12 @@ def login(request):
 
 def perfil(request):
     return render(request,'perfil.html')
+
+def admin1(request):
+    return render(request,'admin1.html')
+
+def chat(request):
+    return render(request,'chat.html')
+
+def menu_principal(request):
+    return render(request,'menu_principal.html')
