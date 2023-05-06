@@ -22,3 +22,6 @@ def index(request):
 
 def register(request):
     return render(request,'register.html')
+
+def completar_perfil(request):
+    return render(request,'completar_perfil.html')
