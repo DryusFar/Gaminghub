@@ -5,13 +5,21 @@ from django.http import HttpResponse
 def login(request):
     return render(request,'login.html')
 
-<<<<<<< HEAD
-def register(request):
-    return render(request,'register.html')
-
-=======
 def perfil(request):
     return render(request,'perfil.html')
->>>>>>> baa79e158e1bb61fe29f60baf72fd136cdb17482
+<<<<<<< HEAD
+
+def admin1(request):
+    return render(request,'admin1.html')
+
+def chat(request):
+    return render(request,'chat.html')
+
+def menu_principal(request):
+    return render(request,'menu_principal.html')
+=======
 def index(request):
     return render(request,'index.html')
+def register(request):
+    return render(request,'register.html')
+>>>>>>> 3f85413a8edfe777d6cc0174d995a70d23e796f2
