@@ -1,17 +1,21 @@
 from django.urls import path
-from .views import login, perfil, admin1, chat, menu_principal # Se importa la vista de urls
+<<<<<<< HEAD
+from .views import login, perfil, admin1, chat, menu_principal, register, completar_perfil# Se importa la vista de urls
+=======
+from .views import login, perfil,index,register,admin1, chat, menu_principal # Se importa la vista de urls
+>>>>>>> b518ab41ac6dda75a3ad26ba53823c4af92964c2
 
 urlpatterns = [
-    path('', login, name='login'),
-<<<<<<< HEAD
+    path('login', login, name='login'),
+    path('register', register, name='register'),
     path('perfil/', perfil, name='perfil'),
     path('admin1/', admin1, name='admin1'),
     path('chat/', chat, name='chat'),
-    path('menu_principal/', menu_principal, name='menu_principal')
-]
+    path('menu_principal/', menu_principal, name='menu_principal'),
+<<<<<<< HEAD
+    path('completar_perfil/', completar_perfil, name='completar_perfil'),
+    
 =======
-    path('register', register, name='register'),
-path('perfil/', perfil, name='perfil')
-path('', index, name='index'),
+    path('', index, name='index'),
+>>>>>>> b518ab41ac6dda75a3ad26ba53823c4af92964c2
 ]
->>>>>>> 3f85413a8edfe777d6cc0174d995a70d23e796f2
