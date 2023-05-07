@@ -1,0 +1,180 @@
+#si{
+  font-family: 'monospace';
+}
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #000000;
+
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to bottom right, #6200d1, #00b94e);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to bottom right, #6200d1, #00b94e)
+    }
+    
+    .mask-custom {
+    background: rgba(24, 24, 16, .2);
+    border-radius: 2em;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+    }
+
+    p{
+        color: aliceblue;
+        
+    }
+
+    .textover{
+        
+            
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+      
+    }
+
+    .textover-nom{
+        
+        
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+  
+    }
+
+   
+
+      
+
+/*emojis*/
+
+/* Estilos para el botón de emojis */
+#emoji-button {
+    background-color: #6a5acd;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para la ventana modal de emojis */
+#emoji-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* Estilos para el contenido de la ventana modal de emojis */
+#emoji-modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+}
+
+/* Estilos para el botón de cierre de la ventana modal de emojis */
+#emoji-modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Estilos para los emojis */
+.emoji {
+    display: inline-block;
+    font-size: 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.modal {
+    display: none; /* Ocultar la modal por defecto */
+    position: fixed; /* Posicion fija */
+    z-index: 1; /* Establecer la profundidad de la modal */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    overflow: auto; /* Permitir el desplazamiento vertical */
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semi-transparente */
+  }
+
+  /* Estilos para el contenido de la modal */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  /* Estilos para el botón que abre la modal */
+  .modal-button {
+    background-color: #4CAF50; /* Color de fondo */
+    border: none; /* Sin borde */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espacio alrededor del texto */
+    text-align: center; /* Centrar el texto */
+    text-decoration: none; /* Sin subrayado de texto */
+    display: inline-block; /* Mostrar como un elemento de bloque */
+    font-size: 16px; /* Tamaño de fuente */
+    margin: 20px; /* Espacio alrededor del botón */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  }
+
+  .modal {
+    display: none; /* Por defecto, estará oculto */
+    position: fixed; /* Posición fija */
+    z-index: 1; /* Se situará por encima de otros elementos de la página*/
+    padding-top: 200px; /* El contenido estará situado a 200px de la parte superior */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Algura completa */
+    overflow: auto; /* Se activará el scroll si es necesario */
+    background-color: rgba(0,0,0,0.5); /* Color negro con opacidad del 50% */
+  }
+
+  .contenido-modal {
+    position: relative; /* Relativo con respecto al contenedor -modal- */
+    background-color: white;
+    margin: auto; /* Centrada */
+    padding: 20px;
+    width: 60%;
+    -webkit-animation-name: animarsuperior;
+    -webkit-animation-duration: 0.5s;
+    animation-name: animarsuperior;
+    animation-duration: 0.5s
+  }
+
+  .close {
+    color: black;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }

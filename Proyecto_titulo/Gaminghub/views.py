@@ -25,3 +25,6 @@ def register(request):
 
 def form_publicacion(request):
     return render(request,'form_publicacion.html')
+
+def completar_perfil(request):
+    return render(request,'completar_perfil.html')

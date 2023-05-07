@@ -1,0 +1,82 @@
+.personal-image {
+    text-align: center;
+  }
+  .personal-image input[type="file"] {
+    display: none;
+  }
+  .personal-figure {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  .personal-avatar {
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    box-sizing: border-box;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    transition: all ease-in-out .3s;
+  }
+  .personal-avatar:hover {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+  }
+  .personal-figcaption {
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    width: inherit;
+    height: inherit;
+    border-radius: 100%;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all ease-in-out .3s;
+  }
+  .personal-figcaption:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, .5);
+  }
+  .personal-figcaption > img {
+    margin-top: 32.5px;
+    width: 50px;
+    height: 50px;
+  }
+
+  /*css register*/
+
+  .colorBoton2 {
+    background-color: #00b94e;
+    border-color: #000000;
+    font-weight: 600;
+  }
+  
+  .colorBoton2:hover {
+    background-color: #3f6d4e;
+    border-color: #1d1a2f;
+  }
+  
+  .div2 {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4); /* sombra */
+    border-radius: 7px;
+    background-color: aliceblue;
+    padding: 20px;
+  }
+  
+  .link {
+    text-decoration: none;
+  }
+
+  .fondo1{
+    font-family: monospace;
+  }
+  
+  body {
+    background-image: url('../../static/img/gaminghun_fondo.jpg');
+    font-family: 'monospace';
+    font-size: 5px;
+  }
+  
+
+  /*fin css register*/
+
