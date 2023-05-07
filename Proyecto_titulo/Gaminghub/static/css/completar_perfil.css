@@ -67,5 +67,16 @@
     text-decoration: none;
   }
 
+  .fondo1{
+    font-family: monospace;
+  }
+  
+  body {
+    background-image: url('../../static/img/gaminghun_fondo.jpg');
+    font-family: 'monospace';
+    font-size: 5px;
+  }
+  
+
   /*fin css register*/
 
