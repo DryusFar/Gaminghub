@@ -7,7 +7,6 @@ def login(request):
 
 def perfil(request):
     return render(request,'perfil.html')
-<<<<<<< HEAD
 
 def admin1(request):
     return render(request,'admin1.html')
@@ -17,9 +16,17 @@ def chat(request):
 
 def menu_principal(request):
     return render(request,'menu_principal.html')
-=======
+
 def index(request):
     return render(request,'index.html')
+
 def register(request):
     return render(request,'register.html')
->>>>>>> 3f85413a8edfe777d6cc0174d995a70d23e796f2
+
+<<<<<<< HEAD
+def form_publicacion(request):
+    return render(request,'form_publicacion.html')
+=======
+def completar_perfil(request):
+    return render(request,'completar_perfil.html')
+>>>>>>> 922878e53a374102f12d4ac5139c4c7bf96ae8b6

@@ -1,9 +1,9 @@
 from django.urls import path
 <<<<<<< HEAD
-from .views import login, perfil, admin1, chat, menu_principal, register, completar_perfil# Se importa la vista de urls
+from .views import login, perfil,index,register,admin1, chat, menu_principal,form_publicacion # Se importa la vista de urls
 =======
-from .views import login, perfil,index,register,admin1, chat, menu_principal # Se importa la vista de urls
->>>>>>> b518ab41ac6dda75a3ad26ba53823c4af92964c2
+from .views import login, perfil,index,register, admin1, chat, menu_principal, completar_perfil # Se importa la vista de urls
+>>>>>>> 922878e53a374102f12d4ac5139c4c7bf96ae8b6
 
 urlpatterns = [
     path('login', login, name='login'),
@@ -12,10 +12,10 @@ urlpatterns = [
     path('admin1/', admin1, name='admin1'),
     path('chat/', chat, name='chat'),
     path('menu_principal/', menu_principal, name='menu_principal'),
-<<<<<<< HEAD
-    path('completar_perfil/', completar_perfil, name='completar_perfil'),
-    
-=======
     path('', index, name='index'),
->>>>>>> b518ab41ac6dda75a3ad26ba53823c4af92964c2
+<<<<<<< HEAD
+    path('form_publicacion/', form_publicacion, name='form_publicacion'),
+=======
+    path('completar_perfil/', completar_perfil, name='completar_perfil'),
+>>>>>>> 922878e53a374102f12d4ac5139c4c7bf96ae8b6
 ]

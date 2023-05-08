@@ -1,0 +1,64 @@
+h1{
+    margin-top: 60px;
+    font-family: 'Press Start 2P';
+}
+
+
+.margin-abajo{
+    margin-bottom: 25px;
+}
+
+
+.label-color{
+    color: #fff;
+}
+
+
+
+/* ---- ----- ----- Header ----- ----- ----- */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: monospace;
+    background-image: url('../../static/img/gaminghun_fondo.jpg');
+}
+
+
+.center{
+	align-items: center;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+
+}
+
+.input {
+    height: 100%;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: #53535f;
+    caret-color: #fff;
+    color: #fff;
+    padding: 7px 10px;
+    border: 2px solid transparent;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    margin-right: 1px;
+    transition: all .2s ease;
+  }
+
+.input:hover {
+    border: 2px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .input:focus {
+    border: 2px solid #a970ff;
+    background-color: #0e0e10;
+    color: #fff;
+  }

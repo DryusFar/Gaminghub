@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form_publicacion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="{% static 'css/form_publicacion.css' %}" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+            
+                <form action="" method="POST" enctype="multipart/form-data" id="form">
+                    
+                    <h1 class="label-color">Que estás pensando?</h1>
+                    
+           
+                    
+                    <div>
+                        <label for="" class="label-color">Titulo</label>
+                        <input type="text" id="nombreDato" name="nombreDato" class="form-control margin-abajo input" required>
+                    </div>
+                    <div>
+                        <label for="" class="label-color">Seleccione imagen</label>
+                        <input type="file" id="foto" name="foto" class="form-control margin-abajo input" required>
+                    </div>
+                   
+                    <div>
+                        <label for="" class="label-color">Descripcion</label>
+                        <textarea name="descripcion" id="descripcion" cols="40" rows="5" class="margin-abajo separar-lados form-control input" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-dark form-control">Publicar</button>
+                        </div>
+                        <div class="col">
+                            <button type="reset" class="btn btn-dark form-control">Borrar</button>
+                        </div>
+                       
+                    </div>
+                    <div class="center">
+                        <p class="warnings" id="warnings"></p></div>
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</body>
+</html>
