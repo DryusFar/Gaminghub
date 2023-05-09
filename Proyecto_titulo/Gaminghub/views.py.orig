@@ -5,11 +5,28 @@ from django.http import HttpResponse
 def login(request):
     return render(request,'login.html')
 
-<<<<<<< HEAD
+def perfil(request):
+    return render(request,'perfil.html')
+
+def admin1(request):
+    return render(request,'admin1.html')
+
+def chat(request):
+    return render(request,'chat.html')
+
+def menu_principal(request):
+    return render(request,'menu_principal.html')
+
+def index(request):
+    return render(request,'index.html')
+
 def register(request):
     return render(request,'register.html')
 
+<<<<<<< HEAD
+def form_publicacion(request):
+    return render(request,'form_publicacion.html')
 =======
-def perfil(request):
-    return render(request,'perfil.html')
->>>>>>> baa79e158e1bb61fe29f60baf72fd136cdb17482
+def completar_perfil(request):
+    return render(request,'completar_perfil.html')
+>>>>>>> 922878e53a374102f12d4ac5139c4c7bf96ae8b6
