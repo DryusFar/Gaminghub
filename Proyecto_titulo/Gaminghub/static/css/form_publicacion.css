@@ -26,6 +26,9 @@ h1{
 body {
 	font-family: monospace;
     background-image: url('../../static/img/gaminghun_fondo.jpg');
+    background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 

@@ -11,5 +11,7 @@ urlpatterns = [
     path('', index, name='index'),
     path('completar_perfil/', completar_perfil, name='completar_perfil'),
     path('form_publicacion/', form_publicacion, name='form_publicacion'),
+    #Funciones pagina web#
+    
 ]
-]
+
