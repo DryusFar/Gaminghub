@@ -10,6 +10,8 @@ import datetime
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import CustomUserCreationForm
+from django.views.decorators.csrf import csrf_protect
+
 
 # Create your views here.
 
@@ -76,6 +78,28 @@ def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
+
+
+            # Obtener el nombre de usuario del formulario
+            username = form.cleaned_data.get('username')
+
+            # Comprobar si ya existe un usuario con ese nombre
+            if User.objects.filter(username=username).exists():
+                # Mostrar un mensaje de error
+                form.add_error('username', 'Ya existe un usuario con ese nombre.')
+                return render(request, 'signup.html', {'form': form})
+
+            # Obtener los valores de las contraseñas
+            password1 = form.cleaned_data.get('password1')
+            password2 = form.cleaned_data.get('password2')
+
+
+            # Comprobar si las contraseñas coinciden
+            if password1 != password2:
+                # Mostrar un mensaje de error
+                form.add_error('password2', 'Las contraseñas no coinciden.')
+                return render(request, 'signup.html', {'form': form})
+
             # Crear un objeto usuario con los datos del formulario
             user = form.save(commit=False)
             
@@ -100,6 +124,8 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+
 
 
 # CERRAR SESIÓN
