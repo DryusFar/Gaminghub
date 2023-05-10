@@ -270,12 +270,12 @@ def borrarPublicacion(request):
 
     user = User.objects.get(id=username_id)
 
-    usuario1 = Usuario.objects.get(id_usuario = usuario)
+    
     eliminar = Tabla.objects.get(id_tema = id_tema)
     eliminar.delete()
 
     contexto = {"usuario":usuario1}
-    messages.success(request,'---Contenido borrado exitosamente---')
+    messages.success(request,'Contenido borrado exitosamente')
     return render(request, 'Gaminghub/index.html', contexto)
 ###################Publicacion################################
 """
