@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class RolUsuario(models.Model):
     id_rol = models.BigAutoField(primary_key=True)
     nombre_rol = models.CharField(max_length=50)

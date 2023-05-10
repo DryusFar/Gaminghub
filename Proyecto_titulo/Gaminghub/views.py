@@ -9,12 +9,25 @@ import datetime
 
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from .forms import CustomUserCreationForm
 
 # Create your views here.
 
-
+#INICIAR SESIÓN
 def loginView(request):
-    return render(request, 'loginView.html')
+    if request.method == 'GET':
+        return render(request, 'loginView.html')
+    else:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            error = 'Usuario y/o contraseña incorrecto'
+            return render(request, 'loginView.html', {'error': error})
+
 
 
 def perfil(request):
@@ -46,6 +59,7 @@ def index(request):
 
 
 def register(request):
+        
     return render(request, 'register.html')
 
 
@@ -59,35 +73,39 @@ def completar_perfil(request):
 
 # REGISTRARSE
 def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            # Crear un objeto usuario con los datos del formulario
+            user = form.save(commit=False)
+            
+            # Obtener los campos adicionales del formulario
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            email = form.cleaned_data.get('email')
+            
+            # Asignar los campos adicionales al objeto usuario
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
 
-    if request.method == 'GET':
-        return render(request, 'signup.html', {
-            'form': UserCreationForm
-        })
+            # Guardar el objeto usuario en la base de datos
+            user.save()
+
+            # Autenticar al usuario y redirigir al usuario a la página de inicio
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return redirect('index')
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(
-                    username=request.POST['username'], password=request.POST['password1'])
-                user.save()
-                login(request, user)
-                return redirect('index')
-            except IntegrityError:
-                return render(request, 'signup.html', {
-                    'form': UserCreationForm,
-                    "error": 'Usuario ya existe'
-                })
-
-        return render(request, 'signup.html', {
-            'form': UserCreationForm,
-            'error': 'Las contraseñas no coinciden'
-        })
+        form = CustomUserCreationForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 # CERRAR SESIÓN
 def signout(request):
     logout(request)
-    return redirect('signin')
+    return redirect('loginView')
 
 
 
