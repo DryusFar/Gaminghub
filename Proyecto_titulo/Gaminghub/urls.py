@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion,signup,signout, signin# Se importa la vista de urls
+from .views import loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM # Se importa la vista de urls
 
 urlpatterns = [
     path('loginView', loginView, name='loginView'),
@@ -10,9 +10,12 @@ urlpatterns = [
     path('menu_principal/', menu_principal, name='menu_principal'),
     path('', index, name='index'),
     path('completar_perfil/', completar_perfil, name='completar_perfil'),
+    path('modificar_perfil/', modificar_perfil, name='modificar_perfil'),
     path('form_publicacion/', form_publicacion, name='form_publicacion'),
     path('signup/', signup, name='signup'),
     path('logout/',signout, name='signout'),
-    path('signin/',signin, name='signin')
+    path('signin/',signin, name='signin'),
+    path('perfilC/', perfilC, name='perfilC'),
+    path('perfilM/',perfilM, name='perfilM'),
 ]
 

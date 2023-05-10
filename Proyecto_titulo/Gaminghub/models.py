@@ -13,15 +13,14 @@ class RolUsuario(models.Model):
 
 class PerfilUsuario(models.Model):
     id_perfil = models.BigAutoField(primary_key=True)
-    nombre_completo = models.CharField(max_length=60)
     fecha_nacimiento = models.DateField(null = True, blank = True)
+    edad = models.IntegerField()
     genero = models.CharField(max_length=20)
     descripcion = models.CharField(max_length = 200)
     avatar = models.ImageField()
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE,)
 
-    def __str__(self):
-        return self.nombre_completo
+    
 
 class Publicacion(models.Model):
     id_publicacion = models.BigAutoField(primary_key=True)

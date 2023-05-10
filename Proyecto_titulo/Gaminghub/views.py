@@ -3,8 +3,12 @@ from django.http import HttpResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import RolUsuario,PerfilUsuario,Publicacion
 from django.contrib import messages
 import datetime
+from PIL import Image
+from django.conf import settings
+import os
 ##Import models cuando esten listos##
 
 from django.contrib.auth import login, logout, authenticate
@@ -36,12 +40,19 @@ def loginView(request):
 
 def perfil(request):
     if request.user.is_authenticated:
-        username = request.user.username
+        username_id = request.user.id
     else:
-        username = None
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    try:
+        perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+    except PerfilUsuario.DoesNotExist:
+        perfil = None  # O utiliza un valor por defecto si lo deseas
 
     context = {
-        'username': username
+        'username': user,
+        'perfil': perfil
     }
     return render(request, 'perfil.html',context)
 
@@ -72,7 +83,44 @@ def form_publicacion(request):
 
 
 def completar_perfil(request):
-    return render(request, 'completar_perfil.html')
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    context = {
+        'username': user
+    }
+
+
+   
+    return render(request, 'completar_perfil.html', context)
+
+def modificar_perfil(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    
+
+    user = User.objects.get(id=username_id)
+
+    try:
+        perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+    except PerfilUsuario.DoesNotExist:
+        perfil = None  # O utiliza un valor por defecto si lo deseas
+
+    context = {
+        'username': user,
+        'perfil': perfil
+    }
+
+
+   
+    return render(request, 'modificar_perfil.html', context)
 
 
 # REGISTRARSE
@@ -160,122 +208,89 @@ def signin(request):
 
 ##Pagina completarPerfil##
 
-"""
 
-def PerfilC(request,usuario):
 
-    usuario = Usuario.objects.get(id_usuario = usuario)
-    perfil_u = PerfilUsuario.objects.get(fk_id_usuario = usuario)
-    nombre_u = request.POST['nombre']
-    apellido_u = request.POST['apellido']
-    avatar_u = request.FILES['foto']
+def perfilC(request):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
     fecha_u = request.POST['fecha_nac']
     genero_u = request.POST['genero']
+    edad_u = request.POST['edad']
     descripcion_u = request.POST['descripcion']
-    fk_id_usuario = usuario
+    
 
-    nombre_completo = nombre_u + " " + apellido_u 
 
-    PerfilUsuario.objects.create(nombre_completo = nombre_completo, fecha_nacimiento = fecha_u, genero = genero_u, correo = correo_u, avatar = avatar_u, descripcion = descripcion_u, Usuario_id_usuario = fk_id_usuario)    
+    if request.FILES.get('foto'):
+        avatar_u = request.FILES['foto']
+    else:
+        avatar_u = None
+
+    PerfilUsuario.objects.create(fecha_nacimiento = fecha_u,avatar = avatar_u,edad = edad_u, genero = genero_u, descripcion = descripcion_u, id_usuario = user)    
     messages.success(request,'Datos completados exitosamente')
-    return render(request,'perfil.html')
+    return redirect('perfil')
 
 ##Pagina modificarPerfil##
 
-def PerfilM(request,usuario):
-    usuario = Usuario.objects.get(id_usuario = usuario)
-    perfil_u = Usuario.objects.get(fk_id_usuario = usuario)
-    username = request.POST['nickName']
+def perfilM(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    perfil = PerfilUsuario.objects.get(id_usuario = user)
+
     correo_u = request.POST['correo']
     edad_u = request.POST['edad']
-    password_u = request.POST['password']
+    ##password_u = request.POST['password']
     nombre_u = request.POST['nombre']
     apellido_u = request.POST['apellido']
-    if (request.FILES.get("foto")):
-        fotot = request.FILES['foto']
-        usuario.avatar = fotot
+    if request.FILES.get('foto'):
+        avatar_u = request.FILES['foto']
+    else:
+        avatar_u = None
+
     fecha_u = request.POST['fecha_nac']
+
+    if fecha_u:
+        fecha_u = fecha_u
+    else:
+        fecha_u = None
+
+    if(avatar_u == None or avatar_u == ""):
+        avatar_u = perfil.avatar
+    
+
+    if(fecha_u == "" or fecha_u == None):
+        fecha_u = perfil.fecha_nacimiento
+    
+
     genero_u = request.POST['genero']
     descripcion_u = request.POST['descripcion']
 
-    usuario.username = username
-    usuario.email = correo_u
-    usuario.edad = edad_u
-    usuario.password = password_u
-    perfil_u.nombre_completo = nombre_u + " " + apellido_u 
-    perfil_u.fecha_nacimiento = fecha_u
-    perfil_u.genero = genero_u
-    perfil_u.descripcion = descripcion_u
+    user.email = correo_u
+    ##usuario.password = password_u
+    user.first_name = nombre_u
+    user.last_name = apellido_u
+    perfil.edad = edad_u
+    perfil.fecha_nacimiento = fecha_u
+    perfil.genero = genero_u
+    perfil.descripcion = descripcion_u
+    perfil.avatar = avatar_u
 
-    usuario.save()
-    perfil_u.save()
+    user.save()
+    perfil.save()
     messages.success(request,'Datos modificados exitosamente')
-    return render(request,'perfil.html')
+    return redirect('perfil')
 
     """
-###################Publicacion################################  
-def registroPublicacion(request):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-
     
-    titulop = request.POST('titulo')
-    contenidop = request.POST('contenido')
-    multimediap = request.FILES('multimedia')
-    fechap = datetime.datetime.now()
 
-    Publicacion.objects.create(titulo = titulop, contenido = contenidop, multimedia = multimediap , fecha_creacion = fechap)
-    messages.success(request,'Publicacion registrada exitosamente')
-    return render(request,'Gaminghub/index.html')    
 
-""""
-def modificarPublicacion(request):
-
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-
-    nombre_u = request.POST['nombre']
-    apellido_u = request.POST['apellido']
-    usuario = Usuario.objects.get(id_usuario = usuario)
-    if (request.FILES.get("foto")):
-        fotot = request.FILES['foto']
-        usuario.foto = fotot
-    correo_u = request.POST['correo']
-    clave_u = request.POST['Clave1']
-
-    usuario.nombre = nombre_u
-    usuario.apellido = apellido_u
-    usuario.correo = correo_u
-    usuario.clave = clave_u
-
-   
-
-    usuario.save()
-    messages.success(request,'Publicación Modificada exitosamente')
-    return render(request,'Gaminghub/index.html')
-
-def borrarPublicacion(request):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-
-    
-    eliminar = Tabla.objects.get(id_tema = id_tema)
-    eliminar.delete()
-
-    contexto = {"usuario":usuario1}
-    messages.success(request,'Contenido borrado exitosamente')
-    return render(request, 'Gaminghub/index.html', contexto)
-###################Publicacion################################
-"""
