@@ -10,6 +10,8 @@ import datetime
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 
+from Proyecto_titulo.Gaminghub.models import Publicacion, User
+
 # Create your views here.
 
 
@@ -167,6 +169,69 @@ def PerfilM(request,usuario):
     return render(request,'perfil.html')
 
     """
+###################Publicacion################################  
+def registroPublicacion(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
     
+    titulop = request.POST('titulo')
+    contenidop = request.POST('contenido')
+    multimediap = request.FILES('multimedia')
+    fechap = datetime.datetime.now()
 
+    Publicacion.objects.create(titulo = titulop, contenido = contenidop, multimedia = multimediap , fecha_creacion = fechap)
+    messages.success(request,'Publicacion registrada exitosamente')
+    return render(request,'Gaminghub/index.html')    
 
+""""
+def modificarPublicacion(request):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    nombre_u = request.POST['nombre']
+    apellido_u = request.POST['apellido']
+    usuario = Usuario.objects.get(id_usuario = usuario)
+    if (request.FILES.get("foto")):
+        fotot = request.FILES['foto']
+        usuario.foto = fotot
+    correo_u = request.POST['correo']
+    clave_u = request.POST['Clave1']
+
+    usuario.nombre = nombre_u
+    usuario.apellido = apellido_u
+    usuario.correo = correo_u
+    usuario.clave = clave_u
+
+   
+
+    usuario.save()
+    messages.success(request,'Publicación Modificada exitosamente')
+    return render(request,'Gaminghub/index.html')
+
+def borrarPublicacion(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    usuario1 = Usuario.objects.get(id_usuario = usuario)
+    eliminar = Tabla.objects.get(id_tema = id_tema)
+    eliminar.delete()
+
+    contexto = {"usuario":usuario1}
+    messages.success(request,'---Contenido borrado exitosamente---')
+    return render(request, 'Gaminghub/index.html', contexto)
+###################Publicacion################################
+"""
