@@ -1,85 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/d37c5443c6.js" crossorigin="anonymous"></script>
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../static/css/perfil.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/d37c5443c6.js" crossorigin="anonymous"></script>
+  <title>Document</title>
+  {% load static %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="../static/css/perfil.css" />
 </head>
+
 <body id="fondo1">
-  <div class="container" style="margin-bottom: 25px;">
+  <div class="container" style="margin-bottom: 25px">
     <div class="row justify-content-center mt-5">
       <div class="col-md-6">
         <form class="div2">
+          {% if username %}
+          <div class="row">
             <div class="row">
-                <div class="row">
-                    <h3 style="text-align: center; font-family: monospace;">PERFIL</h3>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
-                      <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle img-fluid" style="width: 150px;"
-                      alt="Avatar" />
-                    </div>
-                    <div class="col-md-4"></div>
-                </div>
-                <h1 style="text-align: center; font-size: 40px; margin-bottom: 15px; font-family: monospace;">{% if username %}
-                  <p>{{ username }}</p>
-              {% endif %}</h1>
-                
-            </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <input type="text" class="form-control" id="edad" name="edad" placeholder="Edad" disabled>
-              </div>
-                  <div class="col-md-6 mb-3">
-                    <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo electrónico" disabled>
-                  </div>
-            </div>
-            
-            <h5 style="text-align: center; font-family: monospace;">Datos adicionales</h5>
-            <div class="row" style="margin-top: 15px;">
-                <div class="col-md-6 mb-3">
-                    <input type="text" class="form-control" id="nom_completo" name="nom_completo" placeholder="Nombre completo" disabled> 
-                  </div>
-                <div class="col-md-6 mb-3">
+              <h3 style="text-align: center; font-family: monospace">
+                PERFIL
+              </h3>
+              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                {% if perfil.avatar == null %}
+                <img src="{% static 'img/fotoperfil.jpeg' %}" class="rounded-circle img-fluid" style="width: 150px"
+                  alt="Avatar" />
 
-                    <input title="Fecha de nacimiento" type="date" class="form-control " id="fecha_nac" name="fecha_nac" placeholder="Fecha de nacimiento" disabled>
-                  </div>
-                  
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <input type="text" class="form-control" id="genero" name="genero" placeholder="Genero" disabled> 
-                  </div>
-            </div>
-            <h5 style="text-align: center; font-family: monospace;">Descripcion</h5>
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <p class="form-control">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit mollitia non aut doloremque rerum esse eius, possimus, culpa assumenda nisi quia velit. Natus, pariatur id aliquam similique rem et ex!</p>
-                  </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <button type="submit" class="btn btn-primary colorBoton form-control">Editar perfil</button>
+                {% elif perfil.avatar == "" %}
+
+                <img src="{% static 'img/fotoperfil.jpeg' %}" class="rounded-circle img-fluid" style="width: 150px"
+                  alt="Avatar" />
+
+                {% else %}
+                <img src="{{ perfil.avatar.url }}" class="rounded-circle img-fluid" style="width: 150px" alt="Avatar" />
+                {% endif %}
               </div>
-              <div class="col-6">
-                <a type="submit" class="btn btn-primary colorBoton2 form-control" href="{% url 'completar_perfil' %}">Completar perfil</a>
-              </div>
+              <div class="col-md-4"></div>
             </div>
-          
+            <h1 style="
+                  text-align: center;
+                  font-size: 40px;
+                  margin-bottom: 15px;
+                  font-family: monospace;
+                ">
+              <p>{{ username.username }}</p>
+            </h1>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="" style="font-size: 20px">Nombre:</label>
+              <label type="text" class="form-control label-limitado" id="nombre" name="" placeholder="Nombre" value="" disabled>{{ username.first_name }}</label>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="" style="font-size: 20px">Apellido:</label>
+              <label type="text" class="form-control label-limitado" id="apellido" name="apellido" placeholder="Apellido" value=""
+                disabled>{{ username.last_name }}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="" style="font-size: 20px">Correo electronico:</label>
+              <label type="email" class="form-control label-limitado" id="correo" name="correo" placeholder="Correo electrónico"
+                value="" disabled>{{ username.email }}</label>
+            </div>
+          </div>
+
+          <h5 style="text-align: center; font-family: monospace">
+            Datos adicionales
+          </h5>
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li class="text-danger" style="font-size: 20px">{{ message }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %} {% if perfil != None %}
+          <div class="row" style="margin-top: 15px">
+            <div class="col-md-6 mb-3">
+              <label for="" style="font-size: 20px">Edad:</label>
+              <label type="text" class="form-control" id="edad" name="edad" placeholder="Edad" disabled>{{ perfil.edad }}</label>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="" style="font-size: 20px">Genero:</label>
+              <label type="text" class="form-control label-limitado" id="genero" name="genero" value="" placeholder="Genero"
+                disabled>{{ perfil.genero }}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="" style="font-size: 20px">Fecha de nacimiento:
+              </label>
+              <label style="margin-bottom: 10px" class="form-control">{{ perfil.fecha_nacimiento|date:"d-m-Y" }}</label>
+            </div>
+          </div>
+
+          <h5 style="text-align: center; font-family: monospace">
+            Descripcion
+          </h5>
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <p class="form-control">{{ perfil.descripcion }}</p>
+            </div>
+          </div>
+          {% else %}
+          <div class="row" style="margin-top: 15px">
+            <div class="col-md-6 mb-3">
+              <label for="" style="font-size: 20px">Fecha de nacimiento:</label>
+              <label title="Fecha de nacimiento" type="date" class="form-control" id="fecha_nac" name="fecha_nac"
+                placeholder="Fecha de nacimiento" disabled >Desconocido...</label>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="" style="font-size: 20px">Genero:</label>
+              <label type="text" class="form-control" id="genero" name="genero" placeholder="Genero" disabled >Desconocido...</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="" style="font-size: 20px">Edad:</label>
+              <label type="text" class="form-control" id="edad" name="edad" placeholder="Edad" disabled>Desconocido...</label>
+            </div>
+          </div>
+
+          <h5 style="text-align: center; font-family: monospace">
+            Descripcion
+          </h5>
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <textarea class="form-control" name="" id="" cols="30" rows="5" disabled>Descripcion sobre ti...</textarea>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="row">
+            {% if perfil.id_perfil == null %}
+            <div class="col-12">
+              <a type="submit" class="btn btn-primary colorBoton2 form-control"
+                href="{% url 'completar_perfil' %}">Completar perfil</a>
+            </div>
+            {% else %}
+            <div class="col-12">
+              <a type="submit" class="btn btn-primary colorBoton2 form-control"
+                href="{% url 'modificar_perfil' %}">Modificar perfil</a>
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
         </form>
       </div>
     </div>
   </div>
 
-
-  
   <!-- Script -->
-  <script src="app.js"></script>   
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
