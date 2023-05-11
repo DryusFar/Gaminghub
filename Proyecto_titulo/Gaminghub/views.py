@@ -30,8 +30,15 @@ def loginView(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            return redirect('index')
+
+            usuariot = User.objects.get(username = username)
+            
+            if usuariot.is_active == False:
+               error = 'El usuario que ingreso se encuentra baneado xd'
+               return render(request, 'loginView.html', {'error': error})
+            else:
+                login(request, user)
+                return redirect('index')
         else:
             error = 'Usuario y/o contraseña incorrecto'
             return render(request, 'loginView.html', {'error': error})
@@ -58,7 +65,14 @@ def perfil(request):
 
 
 def admin1(request):
-    return render(request, 'admin1.html')
+
+    user = User.objects.all().filter(is_staff = 0)
+    
+    context = {
+        'username': user,
+    }
+
+    return render(request, 'admin1.html',context)
 
 
 def chat(request):
@@ -370,3 +384,19 @@ def listadopublicaciones(request):
     return render(request , 'index.html',contexto)
 ##############publicacion##################
 
+#####Admin°°°°°°°°°°°°°°°
+
+def banearUsuario(request, id_usuario):
+    usuariot = User.objects.get(id = id_usuario)
+
+    if usuariot.is_active == True:
+        usuariot.is_active = False
+        usuariot.save()
+        messages.success(request, '---Usuario baneado exitosamente---')
+    elif usuariot.is_active == False:
+        usuariot.is_active = True
+        usuariot.save()
+        messages.success(request, '---Usuario desbaneado exitosamente---')
+
+    return redirect('admin1')
+####Admin####
