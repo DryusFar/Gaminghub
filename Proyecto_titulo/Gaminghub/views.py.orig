@@ -371,9 +371,13 @@ def registrarpublicacion(request):
     Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,like = like_p,dislike = dislike_p ,id_usuario = user)    
     messages.success(request,'Datos completados exitosamente')
     return redirect('index')
+<<<<<<< HEAD
+ 
+=======
 
 
-    
+@login_required   
+>>>>>>> 9c4f20fdb128250e25b2ae91afa9ab5dbadd5275
 def listadopublicaciones(request):
     if request.user.is_authenticated:
         username_id = request.user.id

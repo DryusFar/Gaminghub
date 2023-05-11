@@ -16,6 +16,7 @@
 	position: relative;
 	transition: all 500ms ease;
 	color: #fff;
+	font-family: 'Press Start 2P';
 }
 .container-bar a:hover{
 	background: #1c1c1c;

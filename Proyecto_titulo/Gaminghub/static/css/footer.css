@@ -608,3 +608,15 @@ buscador
   background-color: rgba(54, 54, 56, 1);
 }
 
+/* ---- ----- ----- FOOTER ----- ----- ----- */
+footer {
+  background-color: #09101d;
+  color: white;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 5vh;
+}
