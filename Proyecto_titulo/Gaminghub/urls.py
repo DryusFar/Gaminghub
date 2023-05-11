@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario # Se importa la vista de urls
+from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -11,6 +11,7 @@ urlpatterns = [
     path('', index, name='index'),
     path('completar_perfil/', completar_perfil, name='completar_perfil'),
     path('modificar_perfil/', modificar_perfil, name='modificar_perfil'),
+    path('cambiar_clave/', cambiar_clave, name='cambiar_clave'),
     path('form_publicacion/', form_publicacion, name='form_publicacion'),
     path('signup/', signup, name='signup'),
     path('logout/',signout, name='signout'),
@@ -18,6 +19,7 @@ urlpatterns = [
 
     path('perfilC/', perfilC, name='perfilC'),
     path('perfilM/',perfilM, name='perfilM'),
+    path('cambiarC/',cambiarC,name='cambiarC'),
 
      path('banearUsuario/<id_usuario>', banearUsuario, name="banearUsuario"),
 

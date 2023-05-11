@@ -183,12 +183,20 @@
 
           <div class="row">
             {% if perfil.id_perfil == null %}
-            <div class="col-12">
+            <div class="col-6">
+              <a type="submit" class="btn btn-primary colorBoton form-control"
+                href="{% url 'cambiar_clave' %}">Cambiar contraseña</a>
+            </div>
+            <div class="col-6">
               <a type="submit" class="btn btn-primary colorBoton2 form-control"
                 href="{% url 'completar_perfil' %}">Completar perfil</a>
             </div>
             {% else %}
-            <div class="col-12">
+            <div class="col-6">
+              <a type="submit" class="btn btn-primary colorBoton form-control"
+                href="{% url 'cambiar_clave' %}">Cambiar contraseña</a>
+            </div>
+            <div class="col-6">
               <a type="submit" class="btn btn-primary colorBoton2 form-control"
                 href="{% url 'modificar_perfil' %}">Modificar perfil</a>
             </div>

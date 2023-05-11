@@ -21,8 +21,11 @@
 
 body {
   background-image: url('../../static/img/gaminghun_fondo.jpg');
-  font-family: 'monospace';
+  font-family: 'Press Start 2P';
   font-size: 5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .colorBoton2:hover {
