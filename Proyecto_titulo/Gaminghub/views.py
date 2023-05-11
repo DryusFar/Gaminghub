@@ -46,7 +46,7 @@ def loginView(request):
             return render(request, 'loginView.html', {'error': error})
 
 
-
+@login_required
 def perfil(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -65,7 +65,7 @@ def perfil(request):
     }
     return render(request, 'perfil.html',context)
 
-
+@login_required
 def admin1(request):
 
     user = User.objects.all().filter(is_staff = 0)
@@ -76,11 +76,11 @@ def admin1(request):
 
     return render(request, 'admin1.html',context)
 
-
+@login_required
 def chat(request):
     return render(request, 'chat.html')
 
-
+@login_required
 def menu_principal(request):
     return render(request, 'menu_principal.html')
 
@@ -107,12 +107,12 @@ def index(request):
     return render(request, 'index.html',context)
 
 
-
+@login_required
 def register(request):
         
     return render(request, 'register.html')
 
-
+@login_required
 def form_publicacion(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -133,7 +133,7 @@ def form_publicacion(request):
     return render(request, 'form_publicacion.html', context)
 
 
-
+@login_required
 def completar_perfil(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -150,6 +150,7 @@ def completar_perfil(request):
    
     return render(request, 'completar_perfil.html', context)
 
+@login_required
 def modificar_perfil(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -262,7 +263,7 @@ def signin(request):
 ##Pagina completarPerfil##
 
 
-
+@login_required
 def perfilC(request):
 
     if request.user.is_authenticated:
@@ -289,7 +290,7 @@ def perfilC(request):
     return redirect('perfil')
 
 ##Pagina modificarPerfil##
-
+@login_required
 def perfilM(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -344,6 +345,7 @@ def perfilM(request):
     return redirect('perfil')
 
 ##############publicacion##################
+@login_required
 def registrarpublicacion(request):
 
     if request.user.is_authenticated:
@@ -371,7 +373,7 @@ def registrarpublicacion(request):
     return redirect('index')
 
 
-    
+@login_required   
 def listadopublicaciones(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -388,7 +390,7 @@ def listadopublicaciones(request):
 ##############publicacion##################
 
 #####Admin°°°°°°°°°°°°°°°
-
+@login_required
 def banearUsuario(request, id_usuario):
     usuariot = User.objects.get(id = id_usuario)
 
