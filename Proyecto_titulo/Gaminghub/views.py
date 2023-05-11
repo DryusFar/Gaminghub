@@ -22,6 +22,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
 
+def is_superuser(user):
+    return user.is_superuser
+
+
 #INICIAR SESIÓN
 @user_passes_test(lambda u: not u.is_authenticated, login_url='index')
 def loginView(request):
@@ -30,20 +34,27 @@ def loginView(request):
     else:
         username = request.POST['username']
         password = request.POST['password']
+        
+        # Check if user is banned before authenticating
+        try:
+            user = User.objects.get(username=username)
+            if user.is_active == False:
+                error = 'El usuario que ingreso se encuentra baneado'
+                return render(request, 'loginView.html', {'error': error})
+        except User.DoesNotExist:
+            user = None
+        
         user = authenticate(request, username=username, password=password)
-        if user is not None:
-
-            usuariot = User.objects.get(username = username)
-            
-            if usuariot.is_active == False:
-               error = 'El usuario que ingreso se encuentra baneado xd'
-               return render(request, 'loginView.html', {'error': error})
-            else:
-                login(request, user)
-                return redirect('index')
+        if user is not None and user.is_superuser:
+            login(request, user)
+            return redirect('admin1')
+        elif user is not None:
+            login(request, user)
+            return redirect('index')
         else:
             error = 'Usuario y/o contraseña incorrecto'
             return render(request, 'loginView.html', {'error': error})
+
 
 
 @login_required
@@ -66,6 +77,7 @@ def perfil(request):
     return render(request, 'perfil.html',context)
 
 @login_required
+@user_passes_test(is_superuser)
 def admin1(request):
 
     user = User.objects.all().filter(is_staff = 0)
@@ -405,3 +417,5 @@ def banearUsuario(request, id_usuario):
 
     return redirect('admin1')
 ####Admin####
+
+

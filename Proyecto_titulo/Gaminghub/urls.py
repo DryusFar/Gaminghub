@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario # Se importa la vista de urls
+from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario# Se importa la vista de urls
+
+
+
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
