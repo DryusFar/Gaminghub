@@ -2,7 +2,7 @@ from django.urls import path
 from .views import loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM # Se importa la vista de urls
 
 urlpatterns = [
-    path('loginView', loginView, name='loginView'),
+    path('accounts/login/', loginView, name='loginView'),
     path('register', register, name='register'),
     path('perfil/', perfil, name='perfil'),
     path('admin1/', admin1, name='admin1'),

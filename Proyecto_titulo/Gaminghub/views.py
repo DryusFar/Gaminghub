@@ -15,11 +15,13 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import CustomUserCreationForm
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 # Create your views here.
 
 #INICIAR SESIÓN
+@user_passes_test(lambda u: not u.is_authenticated, login_url='index')
 def loginView(request):
     if request.method == 'GET':
         return render(request, 'loginView.html')
@@ -66,7 +68,7 @@ def chat(request):
 def menu_principal(request):
     return render(request, 'menu_principal.html')
 
-
+@login_required
 def index(request):
     return render(request, 'index.html')
 
@@ -122,6 +124,7 @@ def modificar_perfil(request):
 
 
 # REGISTRARSE
+@user_passes_test(lambda u: not u.is_authenticated, login_url='index')
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)

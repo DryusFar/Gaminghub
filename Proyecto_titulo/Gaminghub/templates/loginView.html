@@ -15,7 +15,7 @@
 <body>
   <div class="container d-flex flex-column flex-md-row justify-content-center align-items-center divPadre">
     <div class="col-md-6 text-center div1">
-      <img src="../static/img/Texto.png" alt="" class="img1" />
+      <img src="/static/img/Texto.png" alt="" class="img1" />
       <p class="parrafo">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae ad
         saepe eligendi maiores asperiores molestias, quae voluptas rerum
@@ -23,7 +23,7 @@
       </p>
     </div>
     <div class="col-md-6 text-center div2">
-      <img src="../static/img/Logo.png" alt="" class="img2" />
+      <img src="/static/img/Logo.png" alt="" class="img2" />
       <form method="post">
         {% csrf_token %}
         {% if error %}
@@ -47,7 +47,7 @@
         </button>
         <a href="#" class="link">¿ Olvidaste tu contraseña ?</a>
         <div class="divider"></div>
-        <a href="{% url 'register' %}" class="btn btn-success form-control colorBoton2">Registrarse</a>
+        <a href="{% url 'signup' %}" class="btn btn-success form-control colorBoton2">Registrarse</a>
       </form>
     </div>
   </div>
