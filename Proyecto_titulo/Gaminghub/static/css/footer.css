@@ -289,11 +289,23 @@ Navbar
 
 body {
   background-image: url('../../static/img/gaminghun_fondo.jpg');
-  font-family: 'Press Start 2P';
+  
   font-size: 5px;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+}
+
+.post-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-card {
+  width: 600px;
+  height: 600px;
+  margin-bottom: 20px;
 }
 
 

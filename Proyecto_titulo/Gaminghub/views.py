@@ -22,6 +22,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
 
+def is_superuser(user):
+    return user.is_superuser
+
+
 #INICIAR SESIÓN
 @user_passes_test(lambda u: not u.is_authenticated, login_url='index')
 def loginView(request):
@@ -30,20 +34,27 @@ def loginView(request):
     else:
         username = request.POST['username']
         password = request.POST['password']
+        
+        # Check if user is banned before authenticating
+        try:
+            user = User.objects.get(username=username)
+            if user.is_active == False:
+                error = 'El usuario que ingreso se encuentra baneado'
+                return render(request, 'loginView.html', {'error': error})
+        except User.DoesNotExist:
+            user = None
+        
         user = authenticate(request, username=username, password=password)
-        if user is not None:
-
-            usuariot = User.objects.get(username = username)
-            
-            if usuariot.is_active == False:
-               error = 'El usuario que ingreso se encuentra baneado xd'
-               return render(request, 'loginView.html', {'error': error})
-            else:
-                login(request, user)
-                return redirect('index')
+        if user is not None and user.is_superuser:
+            login(request, user)
+            return redirect('admin1')
+        elif user is not None:
+            login(request, user)
+            return redirect('index')
         else:
             error = 'Usuario y/o contraseña incorrecto'
             return render(request, 'loginView.html', {'error': error})
+
 
 
 @login_required
@@ -66,6 +77,7 @@ def perfil(request):
     return render(request, 'perfil.html',context)
 
 @login_required
+@user_passes_test(is_superuser)
 def admin1(request):
 
     user = User.objects.all().filter(is_staff = 0)
@@ -84,6 +96,32 @@ def chat(request):
 def menu_principal(request):
     return render(request, 'menu_principal.html')
 
+def cambiar_clave(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    
+
+    user = User.objects.get(id=username_id)
+
+    try:
+        perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+    except PerfilUsuario.DoesNotExist:
+        perfil = None  # O utiliza un valor por defecto si lo deseas
+
+    context = {
+        'username': user,
+        'perfil': perfil
+    }
+
+
+   
+    return render(request, 'cambiar_clave.html', context)
+
+
+
 @login_required
 def index(request):
     if request.user.is_authenticated:
@@ -94,6 +132,8 @@ def index(request):
     user = User.objects.get(id=username_id)
     listadopublicaciones = Publicacion.objects.all().order_by('fecha_creacion')
 
+    listadoperfiles = PerfilUsuario.objects.all()
+
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
     except PerfilUsuario.DoesNotExist:
@@ -102,7 +142,8 @@ def index(request):
     context = {
         'username': user,
         'perfil': perfil,
-        'listados': listadopublicaciones
+        'listados': listadopublicaciones,
+        'listadosp': listadoperfiles,
     }
     return render(request, 'index.html',context)
 
@@ -382,7 +423,8 @@ def listadopublicaciones(request):
     user = User.objects.get(id=username_id)
 
     listadop = Publicacion.objects.all()
-    
+
+   
     contexto = {'username': user, 
     "listados" : listadop}
 
@@ -405,3 +447,56 @@ def banearUsuario(request, id_usuario):
 
     return redirect('admin1')
 ####Admin####
+
+def csambiarC(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    password_u = request.POST['password1']
+
+    # Comprobar si las contraseñas coinciden
+
+    user.password = password_u
+    
+    user.save()
+
+    context = {
+        'username': user,
+        'perfil': perfil
+    }
+
+    messages.success(request,'Contraseña modificada exitosamente')
+    return render(request, 'perfil.html', context)
+
+@login_required
+def cambiarC(request):
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        old_password = request.POST.get('old_password')
+        new_password1 = request.POST.get('password1')
+        new_password2 = request.POST.get('password2')
+        # Obtener el usuario actual
+        user = request.user
+        # Verificar que la contraseña actual sea correcta
+        if not user.check_password(old_password):
+            messages.error(request, 'La contraseña actual es incorrecta')
+            return redirect('cambiar_clave')
+        # Verificar la longitud de la nueva contraseña
+        if len(new_password1) < 8:
+            messages.error(request, 'La contraseña debe tener al menos 8 caracteres')
+            return redirect('cambiar_clave')
+        # Verificar que las nuevas contraseñas coincidan
+        
+        if new_password1 != new_password2:
+            messages.error(request, 'Las nuevas contraseñas no coinciden')
+            return redirect('cambiar_clave')
+        # Actualizar la contraseña del usuario
+        user.set_password(new_password1)
+        user.save()
+        messages.success(request, 'La contraseña ha sido cambiada exitosamente')
+        return redirect('loginView')
+    return render(request, 'loginView.html')
