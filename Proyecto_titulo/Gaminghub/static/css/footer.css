@@ -520,11 +520,9 @@ h6{
   min-height: 150px;
   width: 100%;
   border-radius: 20px;
-  background-color: blueviolet;
-  background-image: linear-gradient(to top left, blueviolet,rgb(73, 31, 112));
   margin-bottom: 4px;
-}
-
+} 
+/*  background-color: blueviolet;*/
 .comment-like {
   display: flex;
   justify-content: space-around;

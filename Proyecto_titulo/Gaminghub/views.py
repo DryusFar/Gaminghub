@@ -18,6 +18,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 
+
+
 # Create your views here.
 
 #INICIAR SESIÓN
@@ -30,8 +32,15 @@ def loginView(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            return redirect('index')
+
+            usuariot = User.objects.get(username = username)
+            
+            if usuariot.is_active == False:
+               error = 'El usuario que ingreso se encuentra baneado xd'
+               return render(request, 'loginView.html', {'error': error})
+            else:
+                login(request, user)
+                return redirect('index')
         else:
             error = 'Usuario y/o contraseña incorrecto'
             return render(request, 'loginView.html', {'error': error})
@@ -58,7 +67,14 @@ def perfil(request):
 
 
 def admin1(request):
-    return render(request, 'admin1.html')
+
+    user = User.objects.all().filter(is_staff = 0)
+    
+    context = {
+        'username': user,
+    }
+
+    return render(request, 'admin1.html',context)
 
 
 def chat(request):
@@ -70,7 +86,26 @@ def menu_principal(request):
 
 @login_required
 def index(request):
-    return render(request, 'index.html')
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    listadopublicaciones = Publicacion.objects.all().order_by('fecha_creacion')
+
+    try:
+        perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+    except PerfilUsuario.DoesNotExist:
+        perfil = None  # O utiliza un valor por defecto si lo deseas
+
+    context = {
+        'username': user,
+        'perfil': perfil,
+        'listados': listadopublicaciones
+    }
+    return render(request, 'index.html',context)
+
 
 
 def register(request):
@@ -79,7 +114,24 @@ def register(request):
 
 
 def form_publicacion(request):
-    return render(request, 'form_publicacion.html')
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    try:
+        perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+    except PerfilUsuario.DoesNotExist:
+        perfil = None  # O utiliza un valor por defecto si lo deseas
+
+    context = {
+        'username': user,
+        'perfil':perfil
+    }
+
+    return render(request, 'form_publicacion.html', context)
+
 
 
 def completar_perfil(request):
@@ -291,8 +343,63 @@ def perfilM(request):
     messages.success(request,'Datos modificados exitosamente')
     return redirect('perfil')
 
+##############publicacion##################
+def registrarpublicacion(request):
 
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    titulo_p = request.POST['titulo']
+    contenido_p = request.POST['contenido']
+    fecha_p = datetime.datetime.now()
+    like_p = 0
+    dislike_p = 0
+
+    if request.FILES.get('multimedia'):
+        multimedia_p = request.FILES['multimedia']
+    else:
+        multimedia_p = None
 
     
 
+    Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,like = like_p,dislike = dislike_p ,id_usuario = user)    
+    messages.success(request,'Datos completados exitosamente')
+    return redirect('index')
 
+
+    
+def listadopublicaciones(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+    user = User.objects.get(id=username_id)
+
+    listadop = Publicacion.objects.all()
+    
+    contexto = {'username': user, 
+    "listados" : listadop}
+
+    return render(request , 'index.html',contexto)
+##############publicacion##################
+
+#####Admin°°°°°°°°°°°°°°°
+
+def banearUsuario(request, id_usuario):
+    usuariot = User.objects.get(id = id_usuario)
+
+    if usuariot.is_active == True:
+        usuariot.is_active = False
+        usuariot.save()
+        messages.success(request, '---Usuario baneado exitosamente---')
+    elif usuariot.is_active == False:
+        usuariot.is_active = True
+        usuariot.save()
+        messages.success(request, '---Usuario desbaneado exitosamente---')
+
+    return redirect('admin1')
+####Admin####

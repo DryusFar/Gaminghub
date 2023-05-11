@@ -26,7 +26,7 @@ class Publicacion(models.Model):
     id_publicacion = models.BigAutoField(primary_key=True)
     titulo = models.CharField(max_length=60)
     contenido = models.CharField(max_length = 200)
-    multimedia = models.ImageField(upload_to='imagenes/')
+    multimedia = models.ImageField()
     fecha_creacion = models.DateField()
     like = models.IntegerField()
     dislike = models.IntegerField()
