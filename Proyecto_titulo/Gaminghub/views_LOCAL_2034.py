@@ -15,7 +15,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import CustomUserCreationForm
 from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 
@@ -23,7 +22,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 # Create your views here.
 
 #INICIAR SESIÓN
-@user_passes_test(lambda u: not u.is_authenticated, login_url='index')
 def loginView(request):
     if request.method == 'GET':
         return render(request, 'loginView.html')
@@ -32,21 +30,14 @@ def loginView(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-
-            usuariot = User.objects.get(username = username)
-            
-            if usuariot.is_active == False:
-               error = 'El usuario que ingreso se encuentra baneado xd'
-               return render(request, 'loginView.html', {'error': error})
-            else:
-                login(request, user)
-                return redirect('index')
+            login(request, user)
+            return redirect('index')
         else:
             error = 'Usuario y/o contraseña incorrecto'
             return render(request, 'loginView.html', {'error': error})
 
 
-@login_required
+
 def perfil(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -65,26 +56,19 @@ def perfil(request):
     }
     return render(request, 'perfil.html',context)
 
-@login_required
+
 def admin1(request):
+    return render(request, 'admin1.html')
 
-    user = User.objects.all().filter(is_staff = 0)
-    
-    context = {
-        'username': user,
-    }
 
-    return render(request, 'admin1.html',context)
-
-@login_required
 def chat(request):
     return render(request, 'chat.html')
 
-@login_required
+
 def menu_principal(request):
     return render(request, 'menu_principal.html')
 
-@login_required
+
 def index(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -107,12 +91,12 @@ def index(request):
     return render(request, 'index.html',context)
 
 
-@login_required
+
 def register(request):
         
     return render(request, 'register.html')
 
-@login_required
+
 def form_publicacion(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -133,7 +117,7 @@ def form_publicacion(request):
     return render(request, 'form_publicacion.html', context)
 
 
-@login_required
+
 def completar_perfil(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -150,7 +134,6 @@ def completar_perfil(request):
    
     return render(request, 'completar_perfil.html', context)
 
-@login_required
 def modificar_perfil(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -177,7 +160,6 @@ def modificar_perfil(request):
 
 
 # REGISTRARSE
-@user_passes_test(lambda u: not u.is_authenticated, login_url='index')
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -263,7 +245,7 @@ def signin(request):
 ##Pagina completarPerfil##
 
 
-@login_required
+
 def perfilC(request):
 
     if request.user.is_authenticated:
@@ -290,7 +272,7 @@ def perfilC(request):
     return redirect('perfil')
 
 ##Pagina modificarPerfil##
-@login_required
+
 def perfilM(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -345,7 +327,6 @@ def perfilM(request):
     return redirect('perfil')
 
 ##############publicacion##################
-@login_required
 def registrarpublicacion(request):
 
     if request.user.is_authenticated:
@@ -371,9 +352,7 @@ def registrarpublicacion(request):
     Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,like = like_p,dislike = dislike_p ,id_usuario = user)    
     messages.success(request,'Datos completados exitosamente')
     return redirect('index')
-
-
-    
+ 
 def listadopublicaciones(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -389,19 +368,3 @@ def listadopublicaciones(request):
     return render(request , 'index.html',contexto)
 ##############publicacion##################
 
-#####Admin°°°°°°°°°°°°°°°
-@login_required
-def banearUsuario(request, id_usuario):
-    usuariot = User.objects.get(id = id_usuario)
-
-    if usuariot.is_active == True:
-        usuariot.is_active = False
-        usuariot.save()
-        messages.success(request, '---Usuario baneado exitosamente---')
-    elif usuariot.is_active == False:
-        usuariot.is_active = True
-        usuariot.save()
-        messages.success(request, '---Usuario desbaneado exitosamente---')
-
-    return redirect('admin1')
-####Admin####

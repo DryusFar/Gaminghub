@@ -373,7 +373,7 @@ def registrarpublicacion(request):
     return redirect('index')
 
 
-    
+@login_required   
 def listadopublicaciones(request):
     if request.user.is_authenticated:
         username_id = request.user.id

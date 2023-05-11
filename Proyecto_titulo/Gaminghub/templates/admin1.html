@@ -24,24 +24,41 @@
           <div class="col-4"></div>
         </div>
         <div class="table-responsive">
+          {% if messages %}
+                  <ul class="messages">
+                      {% for message in messages %}
+                      <li class="text-danger">{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+          {% endif %}
           <table class="table table-striped table-dark table-bordered">
             <thead class="thead">
               <tr>
-                <th>ID Usuario</th>
+                <th>Usuario</th>
                 <th>Correo</th>
                 <th>Estado</th>
-                <th colspan="3">Opciones de Administrador</th>
+                <th colspan="2">Opciones de Administrador</th>
               </tr>
             </thead>
             <tbody>
+              {% for u in username %}
               <tr>
-                <td>123</td>
-                <td>pepillo@.com</td>
+                <td>{{ u.username }}</td>
+                <td>{{ u.email }}</td>
+                {% if u.is_active == True %}
                 <td>Desbaneado</td>
+                {% elif u.is_active == False %}
+                <td>Baneado</td>
+                {% endif %}
                 <td><a href="" class="btn btn-info">Mensaje</a></td>
-                <td><a href="" class="btn btn-danger">Banear</a></td>
-                <td><a href="" class="btn btn-danger">Eliminar</a></td>
+                {% if u.is_active == 1 %}
+                  <td><a href="{% url 'banearUsuario' u.id %}" class="btn btn-danger">Banear</a></td>
+                {% elif u.is_active == 0 %}
+                  <td><a href="{% url 'banearUsuario' u.id %}" class="btn btn-danger">Desbanear</a></td>
+                {% endif %}
+                
               </tr>
+              {% endfor %}
 
         </div>
       </div>
