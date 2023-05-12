@@ -117,6 +117,7 @@ footer {
     font-size: 10px;
     margin-top: 54.8vh;
     font-family: 'Press Start 2P';
+	position: sticky bottom;
   }
 
 #fuente{
