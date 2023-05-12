@@ -10,6 +10,7 @@ font-size: 15px;
 font-family: monospace;
 }
 
+/* ---- ----- ----- fondo y table ----- ----- ----- */
 body{
     background-image: url('../../static/img/gaminghun_fondo.jpg');
     font-family: 'Press Start 2P';
@@ -116,6 +117,7 @@ footer {
     font-size: 10px;
     margin-top: 54.8vh;
     font-family: 'Press Start 2P';
+	position: sticky bottom;
   }
 
 #fuente{
