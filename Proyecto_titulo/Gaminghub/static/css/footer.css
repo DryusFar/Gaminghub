@@ -632,5 +632,7 @@ footer {
   font-size: 10px;
   margin-top: 5vh;
   font-family: 'Press Start 2P';
-  position: sticky bottom;
+  position: fixed;
+  bottom: 0; /* posición desde abajo */
+  width: 100%;
 }
