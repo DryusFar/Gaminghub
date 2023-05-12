@@ -13,6 +13,85 @@ h1{
     color: #fff;
 }
 
+/* ---- ----- ----- NAVBAR ----- ----- ----- */
+.navbar-container {
+	text-align: center;
+	background-color: #19003100;
+	box-shadow: 0px -20px 5px 20px #333333;
+	padding: 10px;
+	font-size: 0;
+  
+}
+
+.navbar-container ul {
+	margin: 0;
+	padding: 0;
+	text-align: right;
+	display: inline-block;
+	vertical-align: middle;
+  
+}
+
+.navbar-container ul li {
+	display: inline-block;
+	font-size: 16px;
+}
+
+.navbar-container ul li a {
+	color: #ffffff;
+	text-decoration: none;
+	display: inline-block;	
+	padding: 10px;
+	transition: color 0.5s;
+}
+
+.navbar-container ul li .underline {
+	height: 3px;
+	background-color: transparent;
+	width: 0%;
+	transition: width 0.2s, background-color 0.5s;
+	margin: 0 auto;
+}
+
+.navbar-container ul li.active-link .underline {
+	width: 100%;
+	background-color: white;
+
+}
+
+.navbar-container ul li:hover .underline {
+	background-color: white;
+	width: 100%;
+}
+
+.navbar-container ul li:hover a {
+}
+
+.navbar-container ul li:active a {
+	transition: none;
+	color: rgba(255,255,255,0.76);
+}
+
+.navbar-container ul li:active .underline {
+	transition: none;
+	background-color: rgba(255,255,255,0.76);
+}
+
+/* ---- ----- ----- FOOTER ----- ----- ----- */
+footer {
+  background-color: #09101d;
+  color: white;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 29.1vh;
+  font-family: 'Press Start 2P';
+  position: sticky bottom;
+}
+
 
 
 /* ---- ----- ----- Header ----- ----- ----- */
@@ -21,14 +100,16 @@ h1{
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+  
 }
 
 body {
-	font-family: monospace;
+  font-family: 'Press Start 2P';
     background-image: url('../../static/img/gaminghun_fondo.jpg');
     background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+
 }
 
 
@@ -54,6 +135,7 @@ body {
     border-bottom-left-radius: 7px;
     margin-right: 1px;
     transition: all .2s ease;
+    font-family: monospace;
   }
 
 .input:hover {
@@ -64,4 +146,281 @@ body {
     border: 2px solid #a970ff;
     background-color: #0e0e10;
     color: #fff;
+  }
+
+
+
+  body{
+    background-image: url('../../static/img/gaminghun_fondo.jpg');
+    font-family: 'Press Start 2P';
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  /* ---- ----- ----- NAVBAR ----- ----- ----- */
+  .navbar-container {
+    text-align: center;
+    background-color: #19003100;
+    box-shadow: 0px -20px 5px 20px #333333;
+    padding: 10px;
+    font-size: 0;
+    
+  }
+  
+  .navbar-container ul {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    display: inline-block;
+    vertical-align: middle;
+    
+  }
+  
+  .navbar-container ul li {
+    display: inline-block;
+    font-size: 16px;
+  }
+  
+  .navbar-container ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-block;	
+    padding: 10px;
+    transition: color 0.5s;
+  }
+  
+  .navbar-container ul li .underline {
+    height: 3px;
+    background-color: transparent;
+    width: 0%;
+    transition: width 0.2s, background-color 0.5s;
+    margin: 0 auto;
+  }
+  
+  .navbar-container ul li.active-link .underline {
+    width: 100%;
+    background-color: white;
+  
+  }
+  
+  .navbar-container ul li:hover .underline {
+    background-color: white;
+    width: 100%;
+  }
+  
+  .navbar-container ul li:hover a {
+  }
+  
+  .navbar-container ul li:active a {
+    transition: none;
+    color: rgba(255,255,255,0.76);
+  }
+  
+  .navbar-container ul li:active .underline {
+    transition: none;
+    background-color: rgba(255,255,255,0.76);
+  }
+  
+  
+  .img1 {
+      width: 100%;
+      height: auto;
+      max-width: 650px;
+    }
+    
+    .img2 {
+      width: 100%;
+      height: auto;
+      max-width: 250px;
+      margin-bottom: 10px;
+    }
+    
+    .div1 {
+      margin-inline: 50px;
+    }
+    
+    .div2 {
+      box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4); /* sombra */
+      border-radius: 7px;
+      background-color: #09101d;
+      padding: 10px;
+      margin-inline: 50px;
+      font-family: monospace;
+    }
+    
+    .divPadre {
+      margin-top: 6%;
+    }
+    
+    
+    .link{
+        text-decoration: none;
+    }
+    
+    .colorBoton{
+        background-color: #6200d1;
+        border-color: #000000;
+        font-weight: 600;
+    }
+    
+    .colorBoton:hover {
+        background-color: #734f9a;
+        border-color: #1d1a2f;
+    }
+    
+    .colorBoton2{
+        background-color: #00b94e;
+        border-color: #000000;
+        font-weight: 600;
+    }
+    
+    .colorBoton2:hover {
+        background-color: 	#3f6d4e;
+        border-color: #1d1a2f;
+    }
+    
+    .divider {
+        border-bottom: 1px solid #2e2e2e;
+        margin: 10px 0;
+    }
+  
+  .parrafo{
+      font-weight: 700;
+  }
+  
+  /* ---- ----- ----- FOOTER ----- ----- ----- */
+  footer {
+    background-color: #09101d;
+    color: white;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 10px;
+    margin-top: 24.3vh;
+    font-family: 'Press Start 2P';
+  }
+  
+  body{
+    background-image: url('../../static/img/gaminghun_fondo.jpg');
+    font-family: 'Press Start 2P';
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  /* ---- ----- ----- NAVBAR ----- ----- ----- */
+  .navbar-container {
+    text-align: center;
+    background-color: #19003100;
+    box-shadow: 0px -20px 5px 20px #333333;
+    padding: 10px;
+    font-size: 0;
+    
+  }
+  
+  .navbar-container ul {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    display: inline-block;
+    vertical-align: middle;
+    
+  }
+  
+  .navbar-container ul li {
+    display: inline-block;
+    font-size: 16px;
+  }
+  
+  .navbar-container ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-block;	
+    padding: 10px;
+    transition: color 0.5s;
+  }
+  
+  .navbar-container ul li .underline {
+    height: 3px;
+    background-color: transparent;
+    width: 0%;
+    transition: width 0.2s, background-color 0.5s;
+    margin: 0 auto;
+  }
+  
+  .navbar-container ul li.active-link .underline {
+    width: 100%;
+    background-color: white;
+  
+  }
+  
+  .navbar-container ul li:hover .underline {
+    background-color: white;
+    width: 100%;
+  }
+  
+  .navbar-container ul li:hover a {
+  }
+  
+  .navbar-container ul li:active a {
+    transition: none;
+    color: rgba(255,255,255,0.76);
+  }
+  
+  .navbar-container ul li:active .underline {
+    transition: none;
+    background-color: rgba(255,255,255,0.76);
+  }
+  
+  /* ---- ----- ----- FORMULARIO ----- ----- ----- */
+  .colorBoton2 {
+    background-color: #00b94e;
+    border-color: #000000;
+    font-weight: 600;
+  }
+  
+  .colorBoton2:hover {
+    background-color: #3f6d4e;
+    border-color: #1d1a2f;
+  }
+  
+  .div2 {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4); /* sombra */
+    border-radius: 7px;
+    background-color: #09101d;
+    padding: 20px;
+  }
+  
+  .link {
+    text-decoration: none;
+  }
+  
+  img{
+    width: 100%;
+      height: auto;
+      max-width: 650px;
+  
+  }
+  
+  form{
+    margin-top: 20px;
+    font-family: monospace;
+  }
+  
+  /* ---- ----- ----- FOOTER ----- ----- ----- */
+  footer {
+  background-color: #09101d;
+  color: white;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 29.6vh;
+  font-family: 'Press Start 2P';
+  position: sticky bottom;
   }

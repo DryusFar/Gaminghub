@@ -1,30 +1,22 @@
-:root {
-    --dark: #16191C;
-    --dark-x: #1E2126; 
-    --light: #ffffff;
-    --rojo: #ffc400;
-	--fondo: #1414148c;
+
+table{
+    font-family: monospace;
+    margin-top: 5px;
+    font-size: 15px;
 }
-* {
-    margin: 0;
-    padding: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-#colorcuerpo{
-    color: var(--dark);
+.barrabusqueda{
+margin-bottom: 10px; 
+font-size: 15px; 
+font-family: monospace;
 }
 
-.colora{
-    color: wheat;
-}
-
-#fondo1{
-    
-    background: linear-gradient(rgba(0, 0, 0, .363) 0%, rgba(0, 0, 0, 0.363) 100%);
-
-    background-image: url('/static/img/plei.jpg');
+/* ---- ----- ----- fondo y table ----- ----- ----- */
+body{
+    background-image: url('../../static/img/gaminghun_fondo.jpg');
+    font-family: 'Press Start 2P';
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .color-titulo{
@@ -37,7 +29,7 @@
 }
 
 .margin-abajo-titulo{
-    margin-top: 30px;
+    margin-top: 6vh;
     margin-bottom: 30px;
 }
 
@@ -49,222 +41,468 @@
     margin-left: 10px;
 }
 
+/* ---- ----- ----- NAVBAR ----- ----- ----- */
+.navbar-container {
+	text-align: center;
+	background-color: #19003100;
+	box-shadow: 0px -20px 5px 20px #333333;
+	padding: 10px;
+	font-size: 0;
+  
+}
+
+.navbar-container ul {
+	margin: 0;
+	padding: 0;
+	text-align: right;
+	display: inline-block;
+	vertical-align: middle;
+  
+}
+
+.navbar-container ul li {
+	display: inline-block;
+	font-size: 16px;
+}
+
+.navbar-container ul li a {
+	color: #ffffff;
+	text-decoration: none;
+	display: inline-block;	
+	padding: 10px;
+	transition: color 0.5s;
+}
+
+.navbar-container ul li .underline {
+	height: 3px;
+	background-color: transparent;
+	width: 0%;
+	transition: width 0.2s, background-color 0.5s;
+	margin: 0 auto;
+}
+
+.navbar-container ul li.active-link .underline {
+	width: 100%;
+	background-color: white;
+
+}
+
+.navbar-container ul li:hover .underline {
+	background-color: white;
+	width: 100%;
+}
+
+.navbar-container ul li:hover a {
+}
+
+.navbar-container ul li:active a {
+	transition: none;
+	color: rgba(255,255,255,0.76);
+}
+
+.navbar-container ul li:active .underline {
+	transition: none;
+	background-color: rgba(255,255,255,0.76);
+}
+
+/* ---- ----- ----- FOOTER ----- ----- ----- */
 footer {
-    background-color: rgba(36, 36, 36, 0.664);
+    background-color: #09101d;
     color: white;
     padding-top: 1.2rem;
     padding-bottom: 1.2rem;
     display: flex;
     flex-direction: column;
     text-align: center;
-	margin-top: 144px;
-   
-}
+    font-size: 10px;
+    margin-top: 54.8vh;
+    font-family: 'Press Start 2P';
+	position: sticky bottom;
+  }
 
 #fuente{
-	color: var(--rojo);
-	font-family: 'Bebas Neue', cursive;
-	font-size: 30px;
 	padding-left: 20px;
 }
-#piedepag{
-	font-family: 'Bebas Neue', cursive;
-	color: var(--rojo);
-	font-size: 20px;
-}
-nav{
-	font-family: 'Bebas Neue', cursive;
-	font-size: 22px;
-	color: var(--rojo);
-}
+
 #separarsearch{
 	padding-right: 20px;
 }
 
-
-/*=====================================
-estilos de la utilidad
-Copiar esto
-=====================================*/
-.seccion-perfil-usuario .perfil-usuario-body,
-.seccion-perfil-usuario {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
+/* ---- ----- ----- MENU FLOTANTE ----- ----- ----- */
+.container-bar{
+	width: 100%;
+	max-width: 50px;
+	position: fixed;
+	left: 0;
+	top: 25%;
 }
-
-.seccion-perfil-usuario .perfil-usuario-header {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-image: url('static/wiki/img/menu-img/Fondo3.jpg');
-    margin-bottom: 1.25rem;
+.container-bar a{
+	display: block;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 18px;
+	position: relative;
+	transition: all 500ms ease;
+	color: #fff;
+	font-family: 'Press Start 2P';
 }
-
-.seccion-perfil-usuario .perfil-usuario-portada {
-    display: block;
-    position: relative;
-    width: 90%;
-    height: 17rem;
-    
-    border-radius: 0 0 20px 20px;
-    /*
-    background-image: url('http://localhost/multimedia/png/user-portada-3.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    */
+.container-bar a:hover{
+	background: #1c1c1c;
 }
-
-.seccion-perfil-usuario .perfil-usuario-portada .boton-portada {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    border: 0;
-    border-radius: 8px;
-    padding: 12px 25px;
-    background-color: rgba(0, 0, 0, .5);
-    color: #fff;
-    cursor: pointer;
+.container-bar .bi-house-door-fill{
+	background: #09101d;
+	border-radius: 0px 5px 0px 0px;
 }
-
-.seccion-perfil-usuario .perfil-usuario-portada .boton-portada i {
-    margin-right: 1rem;
+.container-bar .bi-bell-fill{
+	background: #09101d;
 }
-
-.seccion-perfil-usuario .perfil-usuario-avatar {
-    display: flex;
-    width: 180px;
-    height: 180px;
-    align-items: center;
-    justify-content: center;
-    border: 7px solid #FFFFFF;
-    background-color: #DFE5F2;
-    border-radius: 50%;
-    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-    position: absolute;
-    bottom: -40px;
-    left: calc(50% - 90px);
-    z-index: 1;
+.container-bar .bi-chat-dots-fill{
+	background: #09101d;
 }
-
-.seccion-perfil-usuario .perfil-usuario-avatar img {
-    width: 100%;
-    position: relative;
-    border-radius: 50%;
+.container-bar .bi-person-circle{
+	background: #09101d;
 }
-
-.seccion-perfil-usuario .perfil-usuario-avatar .boton-avatar {
-    position: absolute;
-    left: -2px;
-    top: -2px;
-    border: 0;
-    background-color: #fff;
-    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
+.container-bar .bi-people-fill{
+	background: #09101d;
+	border-radius: 0px 0px 5px 0px;
 }
-
-.seccion-perfil-usuario .perfil-usuario-body {
-    width: 70%;
-    position: relative;
-    max-width: 750px;
+.container-bar .bi-chat-left-text{
+	background: #09101d;
+	border-radius: 0px 0px 5px 0px;
 }
-
-.seccion-perfil-usuario .perfil-usuario-body .titulo {
-    display: block;
-    width: 100%;
-    font-size: 1.75em;
-    margin-bottom: 0.5rem;
+.container-bar #title{
+	position: absolute;
+	background: #1c1c1c;
+	padding: 0px 8px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 3px;
+	font-size: 15px;
+	top:12px; left: 0px;
+	transition: all 500ms ease;
+	opacity: 0;
+	visibility: hidden;
+	z-index: -1;
 }
-
-.seccion-perfil-usuario .perfil-usuario-body .texto {
-    color: #848484;
-    font-size: 0.95em;
+.container-bar a:hover #title{
+	opacity: 1;
+	visibility: visible;
+	left: 64px;
 }
-
-.seccion-perfil-usuario .perfil-usuario-footer,
-.seccion-perfil-usuario .perfil-usuario-bio {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1.5rem 2rem;
-    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-    background-color: #fff;
-    border-radius: 15px;
-    width: 100%;
+.container-bar #title:after{
+	position: absolute;
+	content: '';
+	border-left: 7px solid transparent;
+	border-right: 6px solid #1c1c1c;
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	right: 100%;
+	top: 8px;
 }
-
-.seccion-perfil-usuario .perfil-usuario-bio {
-    margin-bottom: 1.25rem;
-    text-align: center;
+#btn-social{
+	display: none;
 }
-
-.seccion-perfil-usuario .lista-datos {
-    list-style: none;
-    padding-right: 10px;
+.fa-play{
+	cursor: pointer;
+	transition: all 0.4s;
+	font-size: 12px;
+	margin-bottom: 5px;
+	display: inline-block;
+	transform: rotate(180deg);
+	color: #49b0e6;
 }
-
-.seccion-perfil-usuario .lista-datos li {
-    padding: 5px 0;
-    font-size: 0.5cm;
+#btn-social:checked ~ .fa-play{
+	transform: rotate(0deg);
 }
-
-.seccion-perfil-usuario .lista-datos li>.icono {
-    margin-right: 1rem;
-    font-size: 1.2rem;
-    vertical-align: middle;
+.icon-social{
+	transition: all 0.4s;
+	transform: translateX(0%);
+	box-shadow: 0px 1px 10px rgba(0,0,0,0.3);
 }
-
-.seccion-perfil-usuario .redes-sociales {
-    position: absolute;
-    right: calc(0px - 50px - 1rem);
-    top: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.seccion-perfil-usuario .redes-sociales .boton-redes {
-    border: 0;
-    background-color: #fff;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    color: #fff;
-    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-    font-size: 1.3rem;
+#btn-social:checked ~ .icon-social{
+	transform: translateX(-100%);
 }
 
 
 
-/* adactacion a dispositivos */
-@media (max-width: 750px) {
-    .seccion-perfil-usuario .lista-datos {
-        width: 100%;
-    }
 
-    .seccion-perfil-usuario .perfil-usuario-portada,
-    .seccion-perfil-usuario .perfil-usuario-body {
-        width: 95%;
-    }
+body{
+	background-image: url('../../static/img/gaminghun_fondo.jpg');
+	font-family: 'Press Start 2P';
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+  }
+  
+  /* ---- ----- ----- NAVBAR ----- ----- ----- */
+  .navbar-container {
+	  text-align: center;
+	  background-color: #19003100;
+	  box-shadow: 0px -20px 5px 20px #333333;
+	  padding: 10px;
+	  font-size: 0;
+	
+  }
+  
+  .navbar-container ul {
+	  margin: 0;
+	  padding: 0;
+	  text-align: right;
+	  display: inline-block;
+	  vertical-align: middle;
+	
+  }
+  
+  .navbar-container ul li {
+	  display: inline-block;
+	  font-size: 16px;
+  }
+  
+  .navbar-container ul li a {
+	  color: #ffffff;
+	  text-decoration: none;
+	  display: inline-block;	
+	  padding: 10px;
+	  transition: color 0.5s;
+  }
+  
+  .navbar-container ul li .underline {
+	  height: 3px;
+	  background-color: transparent;
+	  width: 0%;
+	  transition: width 0.2s, background-color 0.5s;
+	  margin: 0 auto;
+  }
+  
+  .navbar-container ul li.active-link .underline {
+	  width: 100%;
+	  background-color: white;
+  
+  }
+  
+  .navbar-container ul li:hover .underline {
+	  background-color: white;
+	  width: 100%;
+  }
+  
+  .navbar-container ul li:hover a {
+  }
+  
+  .navbar-container ul li:active a {
+	  transition: none;
+	  color: rgba(255,255,255,0.76);
+  }
+  
+  .navbar-container ul li:active .underline {
+	  transition: none;
+	  background-color: rgba(255,255,255,0.76);
+  }
+  
+  
+  .img1 {
+	  width: 100%;
+	  height: auto;
+	  max-width: 650px;
+	}
+	
+	.img2 {
+	  width: 100%;
+	  height: auto;
+	  max-width: 250px;
+	  margin-bottom: 10px;
+	}
+	
+	.div1 {
+	  margin-inline: 50px;
+	}
+	
+	.div2 {
+	  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4); /* sombra */
+	  border-radius: 7px;
+	  background-color: #09101d;
+	  padding: 10px;
+	  margin-inline: 50px;
+	  font-family: monospace;
+	}
+	
+	.divPadre {
+	  margin-top: 6%;
+	}
+	
+	
+	.link{
+		text-decoration: none;
+	}
+	
+	.colorBoton{
+		background-color: #6200d1;
+		border-color: #000000;
+		font-weight: 600;
+	}
+	
+	.colorBoton:hover {
+		background-color: #734f9a;
+		border-color: #1d1a2f;
+	}
+	
+	.colorBoton2{
+		background-color: #00b94e;
+		border-color: #000000;
+		font-weight: 600;
+	}
+	
+	.colorBoton2:hover {
+		background-color: 	#3f6d4e;
+		border-color: #1d1a2f;
+	}
+	
+	.divider {
+		border-bottom: 1px solid #2e2e2e;
+		margin: 10px 0;
+	}
+  
+  .parrafo{
+	  font-weight: 700;
+  }
+  
+  /* ---- ----- ----- FOOTER ----- ----- ----- */
+  footer {
+	background-color: #09101d;
+	color: white;
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	font-size: 10px;
+	margin-top: 24.3vh;
+	font-family: 'Press Start 2P';
+  }
+  
+  body{
+	background-image: url('../../static/img/gaminghun_fondo.jpg');
+	font-family: 'Press Start 2P';
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+  }
+  
+  /* ---- ----- ----- NAVBAR ----- ----- ----- */
+  .navbar-container {
+	  text-align: center;
+	  background-color: #19003100;
+	  box-shadow: 0px -20px 5px 20px #333333;
+	  padding: 10px;
+	  font-size: 0;
+	
+  }
+  
+  .navbar-container ul {
+	  margin: 0;
+	  padding: 0;
+	  text-align: right;
+	  display: inline-block;
+	  vertical-align: middle;
+	
+  }
+  
+  .navbar-container ul li {
+	  display: inline-block;
+	  font-size: 16px;
+  }
+  
+  .navbar-container ul li a {
+	  color: #ffffff;
+	  text-decoration: none;
+	  display: inline-block;	
+	  padding: 10px;
+	  transition: color 0.5s;
+  }
+  
+  .navbar-container ul li .underline {
+	  height: 3px;
+	  background-color: transparent;
+	  width: 0%;
+	  transition: width 0.2s, background-color 0.5s;
+	  margin: 0 auto;
+  }
+  
+  .navbar-container ul li.active-link .underline {
+	  width: 100%;
+	  background-color: white;
+  
+  }
+  
+  .navbar-container ul li:hover .underline {
+	  background-color: white;
+	  width: 100%;
+  }
+  
+  .navbar-container ul li:hover a {
+  }
+  
+  .navbar-container ul li:active a {
+	  transition: none;
+	  color: rgba(255,255,255,0.76);
+  }
+  
+  .navbar-container ul li:active .underline {
+	  transition: none;
+	  background-color: rgba(255,255,255,0.76);
+  }
+  
+  /* ---- ----- ----- FORMULARIO ----- ----- ----- */
+  .colorBoton2 {
+	background-color: #00b94e;
+	border-color: #000000;
+	font-weight: 600;
+  }
+  
+  .colorBoton2:hover {
+	background-color: #3f6d4e;
+	border-color: #1d1a2f;
+  }
+  
+  .div2 {
+	box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4); /* sombra */
+	border-radius: 7px;
+	background-color: #09101d;
+	padding: 20px;
+  }
+  
+  .link {
+	text-decoration: none;
+  }
+  
+  img{
+	width: 100%;
+	  height: auto;
+	  max-width: 650px;
+  
+  }
+  
+  form{
+	margin-top: 20px;
+	font-family: monospace;
+  }
+  
+  /* ---- ----- ----- FOOTER ----- ----- ----- */
+  footer {
+  background-color: #09101d;
+  color: white;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 29.6vh;
+  font-family: 'Press Start 2P';
+  position: sticky bottom;
+  }
 
-    .seccion-perfil-usuario .redes-sociales {
-        position: relative;
-        flex-direction: row;
-        width: 100%;
-        left: 0;
-        text-align: center;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        align-items: center;
-        justify-content: center
-    }
 
-
-}
