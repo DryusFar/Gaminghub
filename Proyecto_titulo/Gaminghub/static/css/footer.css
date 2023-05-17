@@ -288,7 +288,7 @@ Navbar
 
 
 body {
-background-image: url('../../static/img/gaminghun_fondo.jpg');
+background-image: url('../../static/img/fondo01.gif');
 
 font-size: 5px;
 background-repeat: no-repeat;
@@ -632,7 +632,7 @@ text-align: center;
 font-size: 10px;
 margin-top: 5vh;
 font-family: 'Press Start 2P';
-position: fixed;
+position: sticky;
 bottom: 0; /* posición desde abajo */
 width: 100%;
 }

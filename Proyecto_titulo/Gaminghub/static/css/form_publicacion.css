@@ -105,7 +105,7 @@ box-sizing: border-box;
 
 body {
 font-family: 'Press Start 2P';
-  background-image: url('../../static/img/gaminghun_fondo.jpg');
+  background-image: url('../../static/img/fondo01.gif');
   background-repeat: no-repeat;
 background-size: cover;
 background-attachment: fixed;
@@ -150,13 +150,6 @@ justify-content: center;
 
 
 
-body{
-  background-image: url('../../static/img/gaminghun_fondo.jpg');
-  font-family: 'Press Start 2P';
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
 
 /* ---- ----- ----- NAVBAR ----- ----- ----- */
 .navbar-container {
@@ -303,13 +296,7 @@ footer {
   font-family: 'Press Start 2P';
 }
 
-body{
-  background-image: url('../../static/img/gaminghun_fondo.jpg');
-  font-family: 'Press Start 2P';
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
+
 
 /* ---- ----- ----- NAVBAR ----- ----- ----- */
 .navbar-container {

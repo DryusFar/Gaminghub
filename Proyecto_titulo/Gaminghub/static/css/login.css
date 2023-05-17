@@ -10,14 +10,6 @@
   animation: cambiaColor 2s infinite;
 }
 
-body{
-  background-image: url('../../static/img/gaminghun_fondo.jpg');
-  font-family: 'Press Start 2P';
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
 /* ---- ----- ----- NAVBAR ----- ----- ----- */
 .navbar-container {
 	text-align: center;
@@ -164,7 +156,7 @@ footer {
 }
 
 body{
-  background-image: url('../../static/img/gaminghun_fondo.jpg');
+  background-image: url('../../static/img/fondo01.gif');
   font-family: 'Press Start 2P';
   background-repeat: no-repeat;
   background-size: cover;

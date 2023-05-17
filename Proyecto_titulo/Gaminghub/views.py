@@ -80,7 +80,7 @@ def perfil(request):
 @user_passes_test(is_superuser)
 def admin1(request):
 
-    user = User.objects.all().filter(is_staff = 0)
+    user = User.objects.all().filter(is_superuser = 0)
     
     context = {
         'username': user,

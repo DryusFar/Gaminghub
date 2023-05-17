@@ -11,13 +11,7 @@ font-family: monospace;
 }
 
 /* ---- ----- ----- fondo y table ----- ----- ----- */
-body{
-    background-image: url('../../static/img/gaminghun_fondo.jpg');
-    font-family: 'Press Start 2P';
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-}
+
 
 .color-titulo{
     color: #9300FF;
@@ -231,7 +225,7 @@ footer {
 
 
 body{
-	background-image: url('../../static/img/gaminghun_fondo.jpg');
+	background-image: url('../../static/img/adminwallpaper.gif');
 	font-family: 'Press Start 2P';
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -382,14 +376,7 @@ body{
 	margin-top: 24.3vh;
 	font-family: 'Press Start 2P';
   }
-  
-  body{
-	background-image: url('../../static/img/gaminghun_fondo.jpg');
-	font-family: 'Press Start 2P';
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-attachment: fixed;
-  }
+
   
   /* ---- ----- ----- NAVBAR ----- ----- ----- */
   .navbar-container {
@@ -502,7 +489,9 @@ body{
   font-size: 10px;
   margin-top: 29.6vh;
   font-family: 'Press Start 2P';
-  position: sticky bottom;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
   }
 
 
