@@ -14,7 +14,7 @@ form.addEventListener("submit", e => {
     entrar = false;
 
     if(avatar.value == ""){
-        mensajesMostrar += 'Debes ingresar una imagen de peril...<br>'
+        mensajesMostrar += 'Debes ingresar una imagen de perfil...<br>'
         entrar = true
     }
 

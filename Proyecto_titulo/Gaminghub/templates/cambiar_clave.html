@@ -7,15 +7,42 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/cambiar_clave.css' %}">
     <link rel="stylesheet" href="{% static 'css/menuflotante.css' %}">
 </head>
 <body id="fondo1">
+    <div class="navbar-container">
+        <ul>
+            <li class="nav-link active-link">
+                <a href="#">Home
+                </a>
+                <div class="underline"></div>
+            </li>
+            <li class="nav-link">
+                <a href="#">About Us</a>
+                <div class="underline"></div>
+            </li>
+            <li class="nav-link">
+                <a href="#">Testimonials</a>
+                <div class="underline"></div>
+            </li>
+            <li class="nav-link">
+                <a href="#">Contact</a>
+                <div class="underline"></div>
+            </li>
+            <li class="nav-link">
+              <a href="/logout">Cerrar Sesión</a>
+              <div class="underline"></div>
+          </li>
+        </ul>
+    </div>
+
   <div class="container-bar">
     <input type="checkbox" id="btn-social">
     <label for="btn-social" class="fa fa-play"></label>
         <div class="icon-social">
-            <a href="#" class="bi bi-house-door-fill">
+            <a href="{% url 'index' %}" class="bi bi-house-door-fill">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
                     <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
                   </svg>
@@ -55,10 +82,9 @@
             </a>
             {% if username.is_superuser %}
             <a href="{% url 'admin1' %}" class="bi bi-chat-left-text">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/>
+                  </svg>
                 <span id="title">Admin</span>
             </a>
             {% endif %}
@@ -71,6 +97,12 @@
               {% csrf_token %}
               {% if username %}
                 <div class="row">
+                    <a href="#" onclick="history.go(-1);" style="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                        </svg>
+                      </a>
+                      <h4 style="text-align: center;">Cambiar Contraseña</h4>
                     <div class="col-md-6 mb-3">
                         <label for="" style="font-size: 20px">Usuario:</label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" value="{{ username.username }}" disabled>
@@ -115,7 +147,7 @@
              
                 
               <div class="text-center">
-                <button type="submit" class="btn btn-primary colorBoton2 form-control">Cambiar contraseña</button>
+                <button type="submit" class="btn btn-primary colorBoton2 form-control">Confirmar cambio de contraseña</button>
                 
               </div>
               <div class="center">
@@ -127,6 +159,13 @@
           </div>
         </div>
       </div>
+
+<!-- Footer -->
+<footer id="piedepag">
+<p>Chile, Santiago de Chile | Fono: 227369936 | Email: gaminghub@gmail.com</p>
+<p>Copyright 2023  <span style="color: #a970ff;">Gaming Hub</span></p>
+</footer>
+
       <script src="{% static '../static/js/cambiar_clave.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
