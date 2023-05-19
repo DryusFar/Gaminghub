@@ -34,3 +34,26 @@ class Publicacion(models.Model):
 
     def __str__(self):
         return self.titulo
+
+class Comentario(models.Model):
+    id_comentario = models.BigAutoField(primary_key=True)
+    descripcion = models.CharField(max_length=200)
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fk_id_publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
+
+class Grupo(models.Model):
+    id_grupo = models.BigAutoField(primary_key=True)
+    titulo = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=300)
+    privacidad = models.IntegerField()
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Sala(models.Model):
+    id_sala = models.BigAutoField(primary_key=True)
+    nombre_sala = models.CharField(max_length=200)
+    fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)
+
+class Miembro(models.Model):
+    id_miembro = models.BigAutoField(primary_key=True)
+    fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
