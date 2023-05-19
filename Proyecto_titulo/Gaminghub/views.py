@@ -65,6 +65,8 @@ def perfil(request):
         username_id = None
 
     user = User.objects.get(id=username_id)
+    listadopublicaciones = Publicacion.objects.all().filter(id_usuario_id = user)
+
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
     except PerfilUsuario.DoesNotExist:
@@ -72,7 +74,8 @@ def perfil(request):
 
     context = {
         'username': user,
-        'perfil': perfil
+        'perfil': perfil,
+        'listados':listadopublicaciones,
     }
     return render(request, 'perfil.html',context)
 

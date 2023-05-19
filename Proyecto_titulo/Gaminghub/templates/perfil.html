@@ -43,7 +43,7 @@
 </div>
 
 
-<div class="container-bar">
+<div class="container-bar" style="z-index: 100;">
   <input type="checkbox" id="btn-social">
   <label for="btn-social" class="fa fa-play"></label>
       <div class="icon-social">
@@ -118,7 +118,9 @@
                   alt="Avatar" />
 
                 {% else %}
-                <img src="{{ perfil.avatar.url }}" class="rounded-circle img-fluid" style="width: 150px" alt="Avatar" />
+                <div class="avatar">
+                  <img src="{{ perfil.avatar.url }}" class="rounded-circle img-fluid" style="width: 150px" alt="Avatar" />
+                </div>
                 {% endif %}
               </div>
               <div class="col-md-4"></div>
@@ -242,7 +244,148 @@
         </form>
       </div>
     </div>
+    <H4 style="text-align: center; margin-top: 35px; margin-bottom: 25px;">😎Publicaciones😎</H4>
+    <div class="card-group">
+      
+      <div class="row">
+        {% for l in listados %}
+        <div class="col-6">
+            <div class="card d-flex">
+            <img src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;">
+            <div class="card-body">
+              <h5 class="card-title">{{ l.titulo }}</h5>
+              <p class="card-text">{{ l.contenido }}</p>
+              <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small></p>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <button class="form-control btn btn-primary colorBoton" style="font-family: monospace;">sad</button>
+              </div>
+              <div class="col-6">
+                <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">asda</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card d-flex">
+          <img src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;">
+          <div class="card-body">
+            <h5 class="card-title">{{ l.titulo }}</h5>
+            <p class="card-text">{{ l.contenido }}</p>
+            <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small></p>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <button class="btn btn-primary colorBoton form-control" style="font-family: monospace;">sad</button>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-primary colorBoton2 form-control" style="font-family: monospace;">asda</button>
+            </div>
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <H4 style="text-align: center; margin-top: 35px; margin-bottom: 25px;">🎮Grupos asociados🎮</H4>
+
+    <div class="card-deck">
+      <div class="row">
+        <div class="col-4">
+          <div class="card">
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4">
+                <div class="avatar">
+                  <img src="{% static 'img/chad.jpg' %}" class="mx-auto" style="text-align: center; z-index: 1;" alt="Avatar">
+                </div>
+              </div>
+              <div class="col-4"></div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Los pepillos</h5>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Ultima conexion: 10/05/2023</small>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6">
+                  <button class="form-control btn btn-primary colorBoton" style="font-family: monospace;">Entrar</button>
+                </div>
+                <div class="col-6">
+                  <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">Salir</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4">
+                <div class="avatar">
+                  <img src="{% static 'img/payasito.jpg' %}" class="mx-auto" style="text-align: center;" alt="Avatar">
+                </div>
+              </div>
+              <div class="col-4"></div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Los Insanos wazaaaa</h5>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Ultima conexion: 10/05/2023</small>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6">
+                  <button class="form-control btn btn-primary colorBoton" style="font-family: monospace;">Entrar</button>
+                </div>
+                <div class="col-6">
+                  <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">Salir</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4">
+                <div class="avatar">
+                  <img src="{% static 'img/legion_holk.jpg' %}" class="mx-auto" style="text-align: center;" alt="Avatar">
+                </div>
+              </div>
+              <div class="col-4"></div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Los Grasosos</h5>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Ultima conexion: 10/05/2023</small>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6">
+                  <button class="form-control btn btn-primary colorBoton" style="font-family: monospace;">Entrar</button>
+                </div>
+                <div class="col-6">
+                  <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">Salir</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
   </div>
+
 
 <!-- Footer -->
 <footer id="piedepag">

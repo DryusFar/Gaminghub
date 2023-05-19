@@ -298,3 +298,23 @@ color: #000;
 .boton-volver:hover {
   background-color: #23527c;
 }
+
+.avatar {
+  width: 100px; /* Ajusta el tamaño del contenedor del avatar según tus necesidades */
+  height: 100px;
+  border-radius: 50%; /* Hace que el contenedor tenga forma de círculo */
+  overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del círculo */
+  position: relative; /* Establece el posicionamiento relativo para el contenedor */
+}
+
+.avatar img {
+  width: 100%; /* Asegura que la imagen ocupe todo el contenedor */
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen para que cubra todo el contenedor */
+  position: absolute; /* Establece el posicionamiento absoluto para la imagen */
+  top: 50%; /* Centra verticalmente la imagen */
+  left: 50%; /* Centra horizontalmente la imagen */
+  transform: translate(-50%, -50%); /* Ajusta la posición de la imagen al centro */
+  border-radius: 50%; /* Mantiene la forma circular de la imagen */
+
+}
