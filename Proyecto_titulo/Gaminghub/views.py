@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -503,3 +503,8 @@ def cambiarC(request):
         messages.success(request, 'La contraseña ha sido cambiada exitosamente')
         return redirect('loginView')
     return render(request, 'loginView.html')
+
+
+def perfiles(request, username):
+    usuario = get_object_or_404(User, username=username)
+    return render(request, 'perfiles.html',{'usuario': usuario})
