@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -506,5 +506,16 @@ def cambiarC(request):
 
 
 def perfiles(request, username):
-    usuario = get_object_or_404(User, username=username)
-    return render(request, 'perfiles.html',{'usuario': usuario})
+    usuario = get_object_or_404(User, username=username) #OBTENGO TODOS LOS MODELOS DE User COMPLETOS COMPARANDO EL USERNAME CON EL INGRESADO EN LA URL
+    perfil_usuario = PerfilUsuario.objects.get(id_usuario=usuario) #OBTENGO EL MODELO PERFILUSUARIO CON SU FK QUE COINCIDA CON EL USUARIO OBTENIDO ANTERIORMENTE
+    publicaciones = Publicacion.objects.filter(id_usuario=usuario)  # Utiliza filter en lugar de get si esperas múltiples publicaciones
+    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones})
+
+def buscar_usuarios(request):
+    if request.method == 'GET' and 'term' in request.GET:
+        term = request.GET.get('term')
+        usuarios = User.objects.filter(username__icontains=term)[:5]
+        resultados = [{'id': usuario.id, 'username': usuario.username} for usuario in usuarios]
+        return JsonResponse(resultados, safe=False)
+    else:
+        return JsonResponse([], safe=False)

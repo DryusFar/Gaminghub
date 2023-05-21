@@ -1,6 +1,74 @@
-body{
-    background-image: url('../img/fondo02.gif');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+body {
+  background-image: url("../img/fondo02.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+h1 {
+  color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+
+}
+
+.card {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 550px;
+  background-color: rgb(24 27 32);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  
+}
+
+.name {
+  font-weight: bold;
+}
+
+.date {
+  color: #888888;
+  margin-bottom: 10px;
+}
+
+.title {
+  margin-bottom: 5px;
+}
+
+.description {
+  color: #888888;
+}
+
+.image {
+  width: auto;
+  height: 300px;
+  object-fit: cover;
+  margin-top: 1px;
+  
+}
+
+.icon {
+  width: 70px;
+  height: auto;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.rowimg {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centrar horizontalmente */
+  background-color: #545454;
+  margin-inline: -11px;
 }
