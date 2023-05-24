@@ -259,28 +259,11 @@
             </div>
             <div class="row">
               <div class="col-6">
-                <button class="form-control btn btn-primary colorBoton" style="font-family: monospace;">sad</button>
+                <a href="{% url 'form_modificarPublicacion' l.id_publicacion %}"><button class="btn btn-primary colorBoton form-control" style="font-family: monospace;">Modificar</button></a>
               </div>
               <div class="col-6">
                 <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">asda</button>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="card d-flex">
-          <img src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;">
-          <div class="card-body">
-            <h5 class="card-title">{{ l.titulo }}</h5>
-            <p class="card-text">{{ l.contenido }}</p>
-            <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small></p>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <button class="btn btn-primary colorBoton form-control" style="font-family: monospace;">sad</button>
-            </div>
-            <div class="col-6">
-              <button class="btn btn-primary colorBoton2 form-control" style="font-family: monospace;">asda</button>
             </div>
           </div>
         </div>

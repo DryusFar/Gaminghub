@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import RolUsuario,PerfilUsuario,Publicacion
+from .models import RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro
 from django.contrib import messages
 import datetime
 from PIL import Image
@@ -96,6 +96,24 @@ def chat(request):
     return render(request, 'chat.html')
 
 @login_required
+def grupos(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    miembros = Miembro.objects.filter(fk_id_usuario=username_id).values_list('fk_id_grupo', flat=True)
+    listadogrupos = Grupo.objects.all()
+
+    context = {
+        'username': user,
+        'listados': listadogrupos,
+        'miembro':miembros,
+    }
+    return render(request, 'grupos.html',context)
+
+@login_required
 def menu_principal(request):
     return render(request, 'menu_principal.html')
 
@@ -175,6 +193,23 @@ def form_publicacion(request):
     }
 
     return render(request, 'form_publicacion.html', context)
+
+@login_required
+def form_modificarPublicacion(request, id_publicacion):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
+
+    context = {
+        'username': user,
+        'publicacion':publicacion,
+    }
+
+    return render(request, 'form_modificarPublicacion.html', context)
 
 
 @login_required
@@ -503,3 +538,84 @@ def cambiarC(request):
         messages.success(request, 'La contraseña ha sido cambiada exitosamente')
         return redirect('loginView')
     return render(request, 'loginView.html')
+
+@login_required
+def form_grupo(request):
+    return render(request, 'form_grupo.html')
+
+@login_required
+def registrargrupo(request):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    titulo_g = request.POST['titulo']
+    descripcion_g = request.POST['contenido']
+    privacidad_g = request.POST['privacidad_g']
+
+    if request.FILES.get('multimedia'):
+        multimedia_g = request.FILES['multimedia']
+    else:
+        multimedia_g = None
+
+    
+
+    Grupo.objects.create(titulo = titulo_g, descripcion = descripcion_g, multimedia = multimedia_g , fk_id_usuario = user, privacidad = privacidad_g)    
+    messages.success(request,'Grupo creado exitosamente')
+    return redirect('grupos')
+
+@login_required
+def unirse_grupo(request,id_grupo):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    grupo = Grupo.objects.get(id_grupo = id_grupo)
+
+    Miembro.objects.create(fk_id_usuario = user, fk_id_grupo = grupo)    
+    messages.success(request,'Te has unido exitosamente...')
+    return redirect('grupos')
+
+@login_required
+def salir_grupo(request, id_grupo):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    grupo = Grupo.objects.get(id_grupo=id_grupo)
+    miembro = Miembro.objects.filter(fk_id_grupo=grupo, fk_id_usuario=user).first()
+
+    if miembro is not None:  # Verificar si el objeto miembro existe
+        miembro.delete()
+        messages.success(request, 'Te has salido exitosamente...')
+    else:
+        messages.error(request, 'No eres miembro de este grupo.')
+
+    return redirect('grupos')
+
+@login_required
+def eliminar_grupo(request, id_grupo):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    grupo = Grupo.objects.get(id_grupo=id_grupo)
+
+    if grupo is not None:  # Verificar si el objeto miembro existe
+        grupo.delete()
+        messages.success(request, 'Se ha eliminado el grupo exitosamente...')
+    else:
+        messages.error(request, 'El grupo no existe de este grupo.')
+
+    return redirect('grupos')

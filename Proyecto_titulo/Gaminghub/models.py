@@ -45,6 +45,7 @@ class Grupo(models.Model):
     id_grupo = models.BigAutoField(primary_key=True)
     titulo = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=300)
+    multimedia = models.ImageField(max_length=200, default='static/img/Logo.png')
     privacidad = models.IntegerField()
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -56,4 +57,9 @@ class Sala(models.Model):
 class Miembro(models.Model):
     id_miembro = models.BigAutoField(primary_key=True)
     fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Amistad(models.Model):
+    id_amistad = models.BigAutoField(primary_key=True)
+    id_amigo = models.IntegerField()
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
