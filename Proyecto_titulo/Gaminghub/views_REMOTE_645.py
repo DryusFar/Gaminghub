@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect , JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.views import View
 from .models import RolUsuario,PerfilUsuario,Publicacion
 from django.contrib import messages
 import datetime
@@ -403,7 +402,8 @@ def registrarpublicacion(request):
     titulo_p = request.POST['titulo']
     contenido_p = request.POST['contenido']
     fecha_p = datetime.datetime.now()
-
+    like_p = 0
+    dislike_p = 0
 
     if request.FILES.get('multimedia'):
         multimedia_p = request.FILES['multimedia']
@@ -412,9 +412,7 @@ def registrarpublicacion(request):
 
     
 
-    publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,id_usuario = user)    
-    publicacion.like.set([])
-    publicacion.dislike.set([])
+    Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,like = like_p,dislike = dislike_p ,id_usuario = user)    
     messages.success(request,'Datos completados exitosamente')
     return redirect('index')
 
@@ -434,8 +432,7 @@ def listadopublicaciones(request):
     "listados" : listadop}
 
     return render(request , 'index.html',contexto)
-
-#######################################
+##############publicacion##################
 
 #####Admin°°°°°°°°°°°°°°°
 @login_required
@@ -522,65 +519,3 @@ def buscar_usuarios(request):
         return JsonResponse(resultados, safe=False)
     else:
         return JsonResponse([], safe=False)
-
-########################## LIKE Y DISLIKE ########################
-class Darlikes(View):
-    def post(self,request, id_publicacion,*args,**kwargs):
-        post = Publicacion.objects.get(id_publicacion=id_publicacion)
-
-        is_dislike = False
-        for dislike in post.dislike.all():
-            if dislike == request.user:
-                is_dislike = True
-                break
-        
-        if is_dislike:
-            post.dislike.remove(request.user)
-
-
-        is_like = False
-        for likes in post.like.all():
-            if likes == request.user:
-                is_like = True
-                break
-        
-        if not is_like:
-            post.like.add(request.user)
-        
-        if is_like:
-            post.like.remove(request.user)
-
-        next = request.POST.get('next','/')
-        return HttpResponseRedirect(next)
-
-class Dardislikes(View):
-    def post(self,request, id_publicacion,*args,**kwargs):
-
-        post = Publicacion.objects.get(id_publicacion=id_publicacion)
-
-        is_like = False
-        for likes in post.like.all():
-            if likes == request.user:
-                is_like = True
-                break
-        
-        if is_like:
-            post.like.remove(request.user)
-        
-        
-        is_dislike = False
-        for dislike in post.dislike.all():
-            if dislike == request.user:
-                is_dislike = True
-                break
-
-        if not is_dislike:
-            post.dislike.add(request.user)
-
-        if is_dislike:
-            post.dislike.remove(request.user)
-        
-        next = request.POST.get('next','/')
-        return HttpResponseRedirect(next)       
-     
-#######################################################

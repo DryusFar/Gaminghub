@@ -57,3 +57,4 @@ class Miembro(models.Model):
     id_miembro = models.BigAutoField(primary_key=True)
     fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+

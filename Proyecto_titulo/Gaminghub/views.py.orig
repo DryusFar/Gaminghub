@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect ,JsonResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.views import View
 from .models import RolUsuario,PerfilUsuario,Publicacion
 from django.contrib import messages
 import datetime
@@ -22,7 +23,12 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
 
+def is_superuser(user):
+    return user.is_superuser
 
+
+#INICIAR SESIÓN
+@user_passes_test(lambda u: not u.is_authenticated, login_url='index')
 def loginView(request):
     if request.method == 'GET':
         return render(request, 'loginView.html')
@@ -60,6 +66,8 @@ def perfil(request):
         username_id = None
 
     user = User.objects.get(id=username_id)
+    listadopublicaciones = Publicacion.objects.all().filter(id_usuario_id = user)
+
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
     except PerfilUsuario.DoesNotExist:
@@ -67,14 +75,16 @@ def perfil(request):
 
     context = {
         'username': user,
-        'perfil': perfil
+        'perfil': perfil,
+        'listados':listadopublicaciones,
     }
     return render(request, 'perfil.html',context)
 
-
+@login_required
+@user_passes_test(is_superuser)
 def admin1(request):
 
-    user = User.objects.all().filter(is_staff = 0)
+    user = User.objects.all().filter(is_superuser = 0)
     
     context = {
         'username': user,
@@ -90,7 +100,33 @@ def chat(request):
 def menu_principal(request):
     return render(request, 'menu_principal.html')
 
+def cambiar_clave(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
 
+    
+
+    user = User.objects.get(id=username_id)
+
+    try:
+        perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+    except PerfilUsuario.DoesNotExist:
+        perfil = None  # O utiliza un valor por defecto si lo deseas
+
+    context = {
+        'username': user,
+        'perfil': perfil
+    }
+
+
+   
+    return render(request, 'cambiar_clave.html', context)
+
+
+
+@login_required
 def index(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -100,6 +136,23 @@ def index(request):
     user = User.objects.get(id=username_id)
     listadopublicaciones = Publicacion.objects.all().order_by('fecha_creacion')
 
+    listadoperfiles = PerfilUsuario.objects.all()
+
+    try:
+        perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+    except PerfilUsuario.DoesNotExist:
+        perfil = None  # O utiliza un valor por defecto si lo deseas
+
+    context = {
+        'username': user,
+        'perfil': perfil,
+        'listados': listadopublicaciones,
+        'listadosp': listadoperfiles,
+    }
+    return render(request, 'index.html',context)
+
+
+@login_required
 def register(request):
         
     return render(request, 'register.html')
@@ -252,4 +305,282 @@ def signin(request):
 
 #Funciones pagina web#
 
->>>>>>> f87ea226a86b5bbc4109e973de3794c715e4984b
+##Pagina completarPerfil##
+
+
+@login_required
+def perfilC(request):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    fecha_u = request.POST['fecha_nac']
+    genero_u = request.POST['genero']
+    edad_u = request.POST['edad']
+    descripcion_u = request.POST['descripcion']
+    
+
+
+    if request.FILES.get('foto'):
+        avatar_u = request.FILES['foto']
+    else:
+        avatar_u = None
+
+    PerfilUsuario.objects.create(fecha_nacimiento = fecha_u,avatar = avatar_u,edad = edad_u, genero = genero_u, descripcion = descripcion_u, id_usuario = user)    
+    messages.success(request,'Datos completados exitosamente')
+    return redirect('perfil')
+
+##Pagina modificarPerfil##
+@login_required
+def perfilM(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    perfil = PerfilUsuario.objects.get(id_usuario = user)
+
+    correo_u = request.POST['correo']
+    edad_u = request.POST['edad']
+    ##password_u = request.POST['password']
+    nombre_u = request.POST['nombre']
+    apellido_u = request.POST['apellido']
+    if request.FILES.get('foto'):
+        avatar_u = request.FILES['foto']
+    else:
+        avatar_u = None
+
+    fecha_u = request.POST['fecha_nac']
+
+    if fecha_u:
+        fecha_u = fecha_u
+    else:
+        fecha_u = None
+
+    if(avatar_u == None or avatar_u == ""):
+        avatar_u = perfil.avatar
+    
+
+    if(fecha_u == "" or fecha_u == None):
+        fecha_u = perfil.fecha_nacimiento
+    
+
+    genero_u = request.POST['genero']
+    descripcion_u = request.POST['descripcion']
+
+    user.email = correo_u
+    ##usuario.password = password_u
+    user.first_name = nombre_u
+    user.last_name = apellido_u
+    perfil.edad = edad_u
+    perfil.fecha_nacimiento = fecha_u
+    perfil.genero = genero_u
+    perfil.descripcion = descripcion_u
+    perfil.avatar = avatar_u
+
+    user.save()
+    perfil.save()
+    messages.success(request,'Datos modificados exitosamente')
+    return redirect('perfil')
+
+##############publicacion##################
+@login_required
+def registrarpublicacion(request):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    titulo_p = request.POST['titulo']
+    contenido_p = request.POST['contenido']
+    fecha_p = datetime.datetime.now()
+
+
+    if request.FILES.get('multimedia'):
+        multimedia_p = request.FILES['multimedia']
+    else:
+        multimedia_p = None
+
+    
+
+    publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,id_usuario = user)    
+    publicacion.like.set([])
+    publicacion.dislike.set([])
+    messages.success(request,'Datos completados exitosamente')
+    return redirect('index')
+
+
+    
+def listadopublicaciones(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+    user = User.objects.get(id=username_id)
+
+    listadop = Publicacion.objects.all()
+
+   
+    contexto = {'username': user, 
+    "listados" : listadop}
+
+    return render(request , 'index.html',contexto)
+
+#######################################
+
+#####Admin°°°°°°°°°°°°°°°
+@login_required
+def banearUsuario(request, id_usuario):
+    usuariot = User.objects.get(id = id_usuario)
+
+    if usuariot.is_active == True:
+        usuariot.is_active = False
+        usuariot.save()
+        messages.success(request, '---Usuario baneado exitosamente---')
+    elif usuariot.is_active == False:
+        usuariot.is_active = True
+        usuariot.save()
+        messages.success(request, '---Usuario desbaneado exitosamente---')
+
+    return redirect('admin1')
+####Admin####
+
+def csambiarC(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    password_u = request.POST['password1']
+
+    # Comprobar si las contraseñas coinciden
+
+    user.password = password_u
+    
+    user.save()
+
+    context = {
+        'username': user,
+        'perfil': perfil
+    }
+
+    messages.success(request,'Contraseña modificada exitosamente')
+    return render(request, 'perfil.html', context)
+
+@login_required
+def cambiarC(request):
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        old_password = request.POST.get('old_password')
+        new_password1 = request.POST.get('password1')
+        new_password2 = request.POST.get('password2')
+        # Obtener el usuario actual
+        user = request.user
+        # Verificar que la contraseña actual sea correcta
+        if not user.check_password(old_password):
+            messages.error(request, 'La contraseña actual es incorrecta')
+            return redirect('cambiar_clave')
+        # Verificar la longitud de la nueva contraseña
+        if len(new_password1) < 8:
+            messages.error(request, 'La contraseña debe tener al menos 8 caracteres')
+            return redirect('cambiar_clave')
+        # Verificar que las nuevas contraseñas coincidan
+        
+        if new_password1 != new_password2:
+            messages.error(request, 'Las nuevas contraseñas no coinciden')
+            return redirect('cambiar_clave')
+        # Actualizar la contraseña del usuario
+        user.set_password(new_password1)
+        user.save()
+        messages.success(request, 'La contraseña ha sido cambiada exitosamente')
+        return redirect('loginView')
+    return render(request, 'loginView.html')
+
+
+def perfiles(request, username):
+    usuario = get_object_or_404(User, username=username) #OBTENGO TODOS LOS MODELOS DE User COMPLETOS COMPARANDO EL USERNAME CON EL INGRESADO EN LA URL
+    perfil_usuario = PerfilUsuario.objects.get(id_usuario=usuario) #OBTENGO EL MODELO PERFILUSUARIO CON SU FK QUE COINCIDA CON EL USUARIO OBTENIDO ANTERIORMENTE
+    publicaciones = Publicacion.objects.filter(id_usuario=usuario)  # Utiliza filter en lugar de get si esperas múltiples publicaciones
+    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones})
+
+def buscar_usuarios(request):
+    if request.method == 'GET' and 'term' in request.GET:
+        term = request.GET.get('term')
+        usuarios = User.objects.filter(username__icontains=term)[:5]
+        resultados = [{'id': usuario.id, 'username': usuario.username} for usuario in usuarios]
+        return JsonResponse(resultados, safe=False)
+    else:
+        return JsonResponse([], safe=False)
+
+########################## LIKE Y DISLIKE ########################
+class Darlikes(View):
+    def post(self,request, id_publicacion,*args,**kwargs):
+        post = Publicacion.objects.get(id_publicacion=id_publicacion)
+
+        is_dislike = False
+        for dislike in post.dislike.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+        
+        if is_dislike:
+            post.dislike.remove(request.user)
+
+
+        is_like = False
+        for likes in post.like.all():
+            if likes == request.user:
+                is_like = True
+                break
+        
+        if not is_like:
+            post.like.add(request.user)
+        
+        if is_like:
+            post.like.remove(request.user)
+
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)
+
+class Dardislikes(View):
+    def post(self,request, id_publicacion,*args,**kwargs):
+
+        post = Publicacion.objects.get(id_publicacion=id_publicacion)
+
+        is_like = False
+        for likes in post.like.all():
+            if likes == request.user:
+                is_like = True
+                break
+        
+        if is_like:
+            post.like.remove(request.user)
+        
+        
+        is_dislike = False
+        for dislike in post.dislike.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            post.dislike.add(request.user)
+
+        if is_dislike:
+            post.dislike.remove(request.user)
+        
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)       
+     
+#######################################################
