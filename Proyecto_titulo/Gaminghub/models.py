@@ -61,5 +61,5 @@ class Miembro(models.Model):
 
 class Amistad(models.Model):
     id_amistad = models.BigAutoField(primary_key=True)
-    id_amigo = models.IntegerField()
+    id_amigo = models.IntegerField(null=True)
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
