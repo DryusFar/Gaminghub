@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect , JsonResponse
+from django.http import HttpResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.views import View
-from .models import RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro
+from .models import RolUsuario,PerfilUsuario,Publicacion
 from django.contrib import messages
 import datetime
 from PIL import Image
@@ -97,24 +96,6 @@ def chat(request):
     return render(request, 'chat.html')
 
 @login_required
-def grupos(request):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-    miembros = Miembro.objects.filter(fk_id_usuario=username_id).values_list('fk_id_grupo', flat=True)
-    listadogrupos = Grupo.objects.all()
-
-    context = {
-        'username': user,
-        'listados': listadogrupos,
-        'miembro':miembros,
-    }
-    return render(request, 'grupos.html',context)
-
-@login_required
 def menu_principal(request):
     return render(request, 'menu_principal.html')
 
@@ -194,23 +175,6 @@ def form_publicacion(request):
     }
 
     return render(request, 'form_publicacion.html', context)
-
-@login_required
-def form_modificarPublicacion(request, id_publicacion):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-    publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
-
-    context = {
-        'username': user,
-        'publicacion':publicacion,
-    }
-
-    return render(request, 'form_modificarPublicacion.html', context)
 
 
 @login_required
@@ -438,7 +402,8 @@ def registrarpublicacion(request):
     titulo_p = request.POST['titulo']
     contenido_p = request.POST['contenido']
     fecha_p = datetime.datetime.now()
-
+    like_p = 0
+    dislike_p = 0
 
     if request.FILES.get('multimedia'):
         multimedia_p = request.FILES['multimedia']
@@ -447,50 +412,11 @@ def registrarpublicacion(request):
 
     
 
-    publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,id_usuario = user)    
-    publicacion.like.set([])
-    publicacion.dislike.set([])
+    Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,like = like_p,dislike = dislike_p ,id_usuario = user)    
     messages.success(request,'Datos completados exitosamente')
     return redirect('index')
 
-@login_required
-def modificarPublicacion(request,id_publicacion):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
 
-    user = User.objects.get(id=username_id)
-
-    publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
-
-    titulo_p = request.POST['titulo']
-    contenido_p = request.POST['edad']
-    ##password_u = request.POST['password']
-    
-    if request.FILES.get('multimedia'):
-        multimedia_p = request.FILES['multimedia']
-    else:
-        multimedia_p = None
-
-    if(multimedia_p == None or multimedia_p == ""):
-        multimedia_p = publicacion.multimedia
-    
-
-
-    user.email = correo_u
-    ##usuario.password = password_u
-    user.first_name = nombre_u
-    user.last_name = apellido_u
-    perfil.edad = edad_u
-    perfil.fecha_nacimiento = fecha_u
-    perfil.genero = genero_u
-    perfil.descripcion = descripcion_u
-    perfil.avatar = avatar_u
-
-    publicacion.save()
-    messages.success(request,'Datos modificados exitosamente')
-    return redirect('perfil')
     
 def listadopublicaciones(request):
     if request.user.is_authenticated:
@@ -506,8 +432,7 @@ def listadopublicaciones(request):
     "listados" : listadop}
 
     return render(request , 'index.html',contexto)
-
-#######################################
+##############publicacion##################
 
 #####Admin°°°°°°°°°°°°°°°
 @login_required
@@ -579,161 +504,7 @@ def cambiarC(request):
         return redirect('loginView')
     return render(request, 'loginView.html')
 
-@login_required
-def form_grupo(request):
-    return render(request, 'form_grupo.html')
-
-@login_required
-def registrargrupo(request):
-
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-
-    titulo_g = request.POST['titulo']
-    descripcion_g = request.POST['contenido']
-    privacidad_g = request.POST['privacidad_g']
-
-    if request.FILES.get('multimedia'):
-        multimedia_g = request.FILES['multimedia']
-    else:
-        multimedia_g = None
-
-    
-
-    Grupo.objects.create(titulo = titulo_g, descripcion = descripcion_g, multimedia = multimedia_g , fk_id_usuario = user, privacidad = privacidad_g)    
-    messages.success(request,'Grupo creado exitosamente')
-    return redirect('grupos')
-
-@login_required
-def unirse_grupo(request,id_grupo):
-
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-    grupo = Grupo.objects.get(id_grupo = id_grupo)
-
-    Miembro.objects.create(fk_id_usuario = user, fk_id_grupo = grupo)    
-    messages.success(request,'Te has unido exitosamente...')
-    return redirect('grupos')
-
-@login_required
-def salir_grupo(request, id_grupo):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-    grupo = Grupo.objects.get(id_grupo=id_grupo)
-    miembro = Miembro.objects.filter(fk_id_grupo=grupo, fk_id_usuario=user).first()
-
-    if miembro is not None:  # Verificar si el objeto miembro existe
-        miembro.delete()
-        messages.success(request, 'Te has salido exitosamente...')
-    else:
-        messages.error(request, 'No eres miembro de este grupo.')
-
-    return redirect('grupos')
-
-@login_required
-def eliminar_grupo(request, id_grupo):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
-    grupo = Grupo.objects.get(id_grupo=id_grupo)
-
-    if grupo is not None:  # Verificar si el objeto miembro existe
-        grupo.delete()
-        messages.success(request, 'Se ha eliminado el grupo exitosamente...')
-    else:
-        messages.error(request, 'El grupo no existe de este grupo.')
-
-    return redirect('grupos')
 
 def perfiles(request, username):
-    usuario = get_object_or_404(User, username=username) #OBTENGO TODOS LOS MODELOS DE User COMPLETOS COMPARANDO EL USERNAME CON EL INGRESADO EN LA URL
-    perfil_usuario = PerfilUsuario.objects.get(id_usuario=usuario) #OBTENGO EL MODELO PERFILUSUARIO CON SU FK QUE COINCIDA CON EL USUARIO OBTENIDO ANTERIORMENTE
-    publicaciones = Publicacion.objects.filter(id_usuario=usuario)  # Utiliza filter en lugar de get si esperas múltiples publicaciones
-    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones})
-
-def buscar_usuarios(request):
-    if request.method == 'GET' and 'term' in request.GET:
-        term = request.GET.get('term')
-        usuarios = User.objects.filter(username__icontains=term)[:5]
-        resultados = [{'id': usuario.id, 'username': usuario.username} for usuario in usuarios]
-        return JsonResponse(resultados, safe=False)
-    else:
-        return JsonResponse([], safe=False)
-
-########################## LIKE Y DISLIKE ########################
-class Darlikes(View):
-    def post(self,request, id_publicacion,*args,**kwargs):
-        post = Publicacion.objects.get(id_publicacion=id_publicacion)
-
-        is_dislike = False
-        for dislike in post.dislike.all():
-            if dislike == request.user:
-                is_dislike = True
-                break
-        
-        if is_dislike:
-            post.dislike.remove(request.user)
-
-
-        is_like = False
-        for likes in post.like.all():
-            if likes == request.user:
-                is_like = True
-                break
-        
-        if not is_like:
-            post.like.add(request.user)
-        
-        if is_like:
-            post.like.remove(request.user)
-
-        next = request.POST.get('next','/')
-        return HttpResponseRedirect(next)
-
-class Dardislikes(View):
-    def post(self,request, id_publicacion,*args,**kwargs):
-
-        post = Publicacion.objects.get(id_publicacion=id_publicacion)
-
-        is_like = False
-        for likes in post.like.all():
-            if likes == request.user:
-                is_like = True
-                break
-        
-        if is_like:
-            post.like.remove(request.user)
-        
-        
-        is_dislike = False
-        for dislike in post.dislike.all():
-            if dislike == request.user:
-                is_dislike = True
-                break
-
-        if not is_dislike:
-            post.dislike.add(request.user)
-
-        if is_dislike:
-            post.dislike.remove(request.user)
-        
-        next = request.POST.get('next','/')
-        return HttpResponseRedirect(next)       
-     
-#######################################################
-
+    usuario = get_object_or_404(User, username=username)
+    return render(request, 'perfiles.html',{'usuario': usuario})

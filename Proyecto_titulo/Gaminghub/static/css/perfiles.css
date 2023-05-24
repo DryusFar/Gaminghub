@@ -1,0 +1,150 @@
+body {
+  background-image: url("../img/fondo02.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 55px;
+}
+
+.card {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 550px;
+  background-color: rgb(24 27 32);
+}
+
+.row2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.name {
+  font-weight: bold;
+  color: aliceblue;
+}
+
+.date {
+  color: #888888;
+  margin-bottom: 10px;
+}
+
+.title {
+  margin-bottom: 5px;
+  color: white;
+}
+
+.description {
+  color: #888888;
+}
+
+.image {
+  width: auto;
+  height: 300px;
+  object-fit: cover;
+  margin-top: 1px;
+}
+
+.icon {
+  width: 70px;
+  height: auto;
+  border-radius: 10px;
+  margin-right: 10px;
+  
+}
+
+.rowimg {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centrar horizontalmente */
+  background-color: #545454;
+  margin-inline: -11px;
+}
+
+.fuente {
+  font-family: "Press Start 2P";
+  color: aliceblue;
+}
+
+.container3 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+}
+
+.divperfil {
+  background-color: #282828db;
+  border-bottom: solid black;
+  width: 60%;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: center;
+  box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #8800ff, 0 0 35px #8800ff, 0 0 40px #8800ff, 0 0 50px #8800ff, 0 0 75px #8800ff;"
+}
+
+
+
+.perfil {
+  width: 150px;
+  height: auto;
+  border-radius: 75px;
+  margin: 25px;
+}
+
+.datos-usuario {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.btn-enviar-solicitud {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #6830ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 30%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-enviar-solicitud:hover {
+  background-color: #8400ff;
+}
+
+@media (max-width: 768px) {
+  .divperfil {
+    width: 80%;
+    grid-template-columns: auto;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .perfil {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+
+
+@media (max-width: 1125px) {
+  .btn-enviar-solicitud {
+    width: 100%;
+  }
+}

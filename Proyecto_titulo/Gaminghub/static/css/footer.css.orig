@@ -644,6 +644,7 @@ bottom: 0; /* posición desde abajo */
 width: 100%;
 }
 
+<<<<<<< HEAD
 /* ---- -----*/
 
 button {
@@ -663,3 +664,5 @@ button:active {
   transform: translateY(5px);
   box-shadow: 0px 0px 0px 0px #a970ff;;
 }
+=======
+>>>>>>> f32cfd75e65e2d965c3a2c5ccf9d287c79322ff3
