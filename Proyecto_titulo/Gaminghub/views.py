@@ -462,18 +462,17 @@ def modificarPublicacion(request,id_publicacion):
 
     publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
 
-    correo_u = request.POST['correo']
-    edad_u = request.POST['edad']
+    titulo_p = request.POST['titulo']
+    contenido_p = request.POST['edad']
     ##password_u = request.POST['password']
-    nombre_u = request.POST['nombre']
     
-    if request.FILES.get('foto'):
-        avatar_u = request.FILES['foto']
+    if request.FILES.get('multimedia'):
+        multimedia_p = request.FILES['multimedia']
     else:
-        avatar_u = None
+        multimedia_p = None
 
-    if(avatar_u == None or avatar_u == ""):
-        avatar_u = perfil.avatar
+    if(multimedia_p == None or multimedia_p == ""):
+        multimedia_p = publicacion.multimedia
     
 
 
@@ -487,8 +486,7 @@ def modificarPublicacion(request,id_publicacion):
     perfil.descripcion = descripcion_u
     perfil.avatar = avatar_u
 
-    user.save()
-    perfil.save()
+    publicacion.save()
     messages.success(request,'Datos modificados exitosamente')
     return redirect('perfil')
     
