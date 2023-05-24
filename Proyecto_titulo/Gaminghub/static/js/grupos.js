@@ -1,6 +1,20 @@
 /*Boton salir grupo*/
 
 $(document).ready(function() {
+  $(".close").click(function() {
+    // Mostrar la modal correspondiente al botón de eliminar
+    $("#myModal").modal("hide");
+});
+});
+
+$(document).ready(function() {
+  $(".close").click(function() {
+    // Mostrar la modal correspondiente al botón de eliminar
+    $("#myModal2").modal("hide");
+});
+});
+
+$(document).ready(function() {
   $(".btn-abrir-modal").click(function() {
     // Mostrar la modal correspondiente al botón de eliminar
     $("#myModal").modal("show");
