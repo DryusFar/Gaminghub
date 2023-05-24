@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion # Se importa la vista de urls
+from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -34,10 +34,12 @@ urlpatterns = [
     #grupos
     path('grupos/',grupos, name='grupos'),
     path('form_grupo',form_grupo, name='form_grupo'),
+    path('form_modificarGrupo/<id_grupo>',form_modificarGrupo, name='form_modificarGrupo'),
     path('registrargrupo/',registrargrupo, name='registrargrupo'),
     path('unirse_grupo/<id_grupo>',unirse_grupo, name='unirse_grupo'),
     path('salir_grupo/<id_grupo>', salir_grupo, name='salir_grupo'),
     path('eliminar_grupo/<id_grupo>', eliminar_grupo, name='eliminar_grupo'),
+    path('modificargrupo/<id_grupo>', modificargrupo, name='modificargrupo'),
 
     path('perfiles/<str:username>/', perfiles, name='perfiles'),
     path('buscar_usuarios/', buscar_usuarios, name='buscar_usuarios'),

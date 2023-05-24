@@ -444,6 +444,8 @@ def registrarpublicacion(request):
     else:
         multimedia_p = None
 
+        
+
     
     
     publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p ,id_usuario = user)    
@@ -575,6 +577,40 @@ def cambiarC(request):
 @login_required
 def form_grupo(request):
     return render(request, 'form_grupo.html')
+
+@login_required
+def form_modificarGrupo(request, id_grupo):
+    grupo = Grupo.objects.get(id_grupo = id_grupo)
+    context ={
+        "grupo":grupo
+
+    }
+    return render(request, 'form_modificarGrupo.html', context)
+
+@login_required
+def registrargrupo(request):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    titulo_g = request.POST['titulo']
+    descripcion_g = request.POST['contenido']
+    privacidad_g = request.POST['privacidad_g']
+
+    if request.FILES.get('multimedia'):
+        multimedia_g = request.FILES['multimedia']
+    else:
+        multimedia_g = None
+
+    
+
+    Grupo.objects.create(titulo = titulo_g, descripcion = descripcion_g, multimedia = multimedia_g , fk_id_usuario = user, privacidad = privacidad_g)    
+    messages.success(request,'Grupo creado exitosamente')
+    return redirect('grupos')
 
 @login_required
 def registrargrupo(request):
@@ -745,3 +781,34 @@ def eliminar_publicacion(request,id_publicacion):
     messages.success(request,'Publicacion eliminada exitosamente...')
     return redirect('perfil')
 
+@login_required
+def modificargrupo(request,id_grupo):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    grupo = Grupo.objects.get(id_grupo = id_grupo)
+
+    titulo_g = request.POST['titulo']
+    descripcion_g = request.POST['descripcion']
+    privacidad_g = request.POST['privacidad_g']
+
+    if request.FILES.get('multimedia'):
+        multimedia_g = request.FILES['multimedia']
+    else:
+        multimedia_g = None
+
+    if(multimedia_g == None or multimedia_g == ""):
+        multimedia_g = grupo.multimedia
+
+    grupo.titulo = titulo_g
+    grupo.descripcion = descripcion_g
+    grupo.privacidad = privacidad_g
+    grupo.multimedia = multimedia_g
+
+    grupo.save()
+    messages.success(request,'Grupo Modificado exitosamente')
+    return redirect('grupos')
