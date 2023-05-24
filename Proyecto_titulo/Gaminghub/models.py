@@ -28,13 +28,13 @@ class Publicacion(models.Model):
     contenido = models.CharField(max_length = 200)
     multimedia = models.ImageField()
     fecha_creacion = models.DateField()
-    like = models.IntegerField()
-    dislike = models.IntegerField()
+    like = models.ManyToManyField(User, blank=True, related_name='like')
+    dislike = models.ManyToManyField(User,blank=True, related_name='dislike')
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE,)
 
     def __str__(self):
         return self.titulo
-
+ 
 class Comentario(models.Model):
     id_comentario = models.BigAutoField(primary_key=True)
     descripcion = models.CharField(max_length=200)

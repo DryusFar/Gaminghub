@@ -2,6 +2,13 @@ ul {
   margin: 0px;
   padding: 0px;
 }
+
+
+.tamanonum{
+  font-size: 11px;
+  color: #fff;
+  font-family: 'Press Start 2P';
+}
 .footer-section {
 background: #151414;
 position: relative;
@@ -635,4 +642,24 @@ font-family: 'Press Start 2P';
 position: sticky;
 bottom: 0; /* posición desde abajo */
 width: 100%;
+}
+
+/* ---- -----*/
+
+button {
+  border: none;
+  outline: none;
+  background-color: #6c5ce7;
+  padding: 6px 15px;
+  font-size: 7.9px;
+  color: #fff;
+  border-radius: 5px;
+  transition: all ease 0.1s;
+  box-shadow: 0px 5px 0px 0px #a970ff;;
+  font-family: 'Press Start 2P';
+}
+
+button:active {
+  transform: translateY(5px);
+  box-shadow: 0px 0px 0px 0px #a970ff;;
 }
