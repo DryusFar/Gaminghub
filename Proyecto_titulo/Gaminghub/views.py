@@ -403,7 +403,7 @@ def registrarpublicacion(request):
     titulo_p = request.POST['titulo']
     contenido_p = request.POST['contenido']
     fecha_p = datetime.datetime.now()
-
+    
 
     if request.FILES.get('multimedia'):
         multimedia_p = request.FILES['multimedia']
