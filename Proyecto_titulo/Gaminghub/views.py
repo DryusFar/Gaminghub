@@ -439,15 +439,14 @@ def registrarpublicacion(request):
     contenido_p = request.POST['contenido']
     fecha_p = datetime.datetime.now()
 
-
     if request.FILES.get('multimedia'):
         multimedia_p = request.FILES['multimedia']
     else:
         multimedia_p = None
 
     
-
-    publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,id_usuario = user)    
+    
+    publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p ,id_usuario = user)    
     publicacion.like.set([])
     publicacion.dislike.set([])
     messages.success(request,'Datos completados exitosamente')
@@ -465,7 +464,7 @@ def modificarPublicacion(request,id_publicacion):
     publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
 
     titulo_p = request.POST['titulo']
-    contenido_p = request.POST['edad']
+    contenido_p = request.POST['contenido']
     ##password_u = request.POST['password']
     
     if request.FILES.get('multimedia'):
@@ -478,18 +477,13 @@ def modificarPublicacion(request,id_publicacion):
     
 
 
-    user.email = correo_u
-    ##usuario.password = password_u
-    user.first_name = nombre_u
-    user.last_name = apellido_u
-    perfil.edad = edad_u
-    perfil.fecha_nacimiento = fecha_u
-    perfil.genero = genero_u
-    perfil.descripcion = descripcion_u
-    perfil.avatar = avatar_u
+    publicacion.titulo = titulo_p
+    publicacion.contenido = contenido_p
+    publicacion.multimedia = multimedia_p
+    
 
     publicacion.save()
-    messages.success(request,'Datos modificados exitosamente')
+    messages.success(request,'Publicacion modificada exitosamente')
     return redirect('perfil')
     
 def listadopublicaciones(request):
@@ -506,8 +500,7 @@ def listadopublicaciones(request):
     "listados" : listadop}
 
     return render(request , 'index.html',contexto)
-
-#######################################
+##############publicacion##################
 
 #####Admin°°°°°°°°°°°°°°°
 @login_required
@@ -736,4 +729,19 @@ class Dardislikes(View):
         return HttpResponseRedirect(next)       
      
 #######################################################
+
+def eliminar_publicacion(request,id_publicacion):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
+
+    publicacion.delete()
+    messages.success(request,'Publicacion eliminada exitosamente...')
+    return redirect('perfil')
 

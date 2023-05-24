@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes # Se importa la vista de urls
+from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -28,6 +28,8 @@ urlpatterns = [
     #publicaciones
     path('registrarpublicacion/',registrarpublicacion, name='registrarpublicacion'),
     path('listadopublicaciones/', listadopublicaciones, name='listadopublicaciones'),
+    path('modificarPublicacion/<id_publicacion>',modificarPublicacion,name='modificarPublicacion'),
+    path('eliminar_publicacion/<id_publicacion>',eliminar_publicacion,name='eliminar_publicacion'),
 
     #grupos
     path('grupos/',grupos, name='grupos'),
