@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/d37c5443c6.js" crossorigin="anonymous"></script>
+  <title>Document</title>
+  {% load static %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'ruta/a/sweetalert2.min.css' %}">
+  <script src="{% static 'ruta/a/sweetalert2.min.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="../static/css/perfil.css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/menuflotante.css' %}" />
+</head>
+
+<body id="fondo1">
+  <div class="navbar-container">
+    <ul>
+        <li class="nav-link active-link">
+            <a href="#">Home
+            </a>
+            <div class="underline"></div>
+        </li>
+        <li class="nav-link">
+            <a href="#">About Us</a>
+            <div class="underline"></div>
+        </li>
+        <li class="nav-link">
+            <a href="#">Testimonials</a>
+            <div class="underline"></div>
+        </li>
+        <li class="nav-link">
+            <a href="#">Contact</a>
+            <div class="underline"></div>
+        </li>
+        <li class="nav-link">
+          <a href="/logout">Cerrar Sesión</a>
+          <div class="underline"></div>
+      </li>
+    </ul>
+</div>
+
+
+<div class="container-bar" style="z-index: 100;">
+  <input type="checkbox" id="btn-social">
+  <label for="btn-social" class="fa fa-play"></label>
+      <div class="icon-social">
+          <a href="{% url 'index' %}" class="bi bi-house-door-fill">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                  <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                </svg>
+              <span id="title">Menu</span>
+          </a>
+          <a href="#" class="bi bi-bell-fill">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                </svg>
+              <span id="title">Notificaciones</span>
+          </a>
+          <a href="#" class="bi bi-chat-dots-fill">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+                  <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                </svg>
+              <span id="title">Chat</span>
+          </a>
+          <a href="{% url 'perfil' %}" class="bi bi-person-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
+              <span id="title">Perfil</span>
+          </a>
+          <a href="" class="bi bi-people-fill">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                  <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                </svg>
+              <span id="title">Amigos</span>
+          </a>
+          <a href="{% url 'form_publicacion' %}" class="bi bi-chat-left-text">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
+              <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+              <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+            <span id="title">Publicar</span>
+        </a>
+        {% if username.is_superuser %}
+            <a href="{% url 'admin1' %}" class="bi bi-chat-left-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/>
+              </svg>
+              <span id="title">Admin</span>
+            </a>
+            {% endif %}
+      </div>
+  </div>
+  <div class="container">
+    <!--Estos son los grupos(listados)-->
+    {% for l in listados %}
+    
+      <p>{{ l.titulo }}</p>
+      <p>{{ miembro.fk_id_usuario }}</p>
+      <div class="row">
+        {% if l.id_grupo in miembro %}
+        <div class="col-6"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver grupo</a></div>
+        <div class="col-6"><button class="btn colorBoton btn-abrir-modal" style="font-family: monospace;" data-grupo-id="{{ l.id_grupo }}">Salir del grupo</button></div>
+        {% elif username.id == l.fk_id_usuario.id %}
+        <div class="col-6"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver grupo</a></div>
+        <div class="col-6"><button class="btn colorBoton btn-abrir-modal2" style="font-family: monospace;" data-grupo-id="{{ l.id_grupo }}">Eliminar grupo</button></div>
+        {% else %}
+        <div class="col-6"><a href="{% url 'unirse_grupo' l.id_grupo %}" class="btn colorBoton2" style="font-family: monospace;">Unirse a grupo</a></div>
+        {% endif %}
+      </div>
+
+    {% endfor %}
+
+    <a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Crear grupo</a>
+
+  </div>
+<!-- MODAL PARA SALIR DE GRUPO-->
+  <div id="myModal" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Contenido de la modal -->
+        <div class="modal-header">
+          <h5 class="modal-title">Modal</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Estas seguro de que quieres salir de este grupo?</p>
+        </div>
+        <div class="modal-footer">
+          <span id="grupo-id"></span>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <a href="#" class="btn btn-danger" id="btn-salir">Salir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL PARA ELIMINAR GRUPO-->
+  <div id="myModal2" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Contenido de la modal -->
+        <div class="modal-header">
+          <h5 class="modal-title">Modal</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Estas seguro de que quieres eliminar de este grupo?</p>
+        </div>
+        <div class="modal-footer">
+          <span id="grupo-id2"></span>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <a href="#" class="btn btn-danger" id="btn-eliminar">Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Script -->
+  <script src="app.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-PZl+kB6TnldN1yCv5KJtl2jFdoCBs0IIw6G6Gj5tsTlKwKKgJPwPpATP5mnTfDkm" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+    <script src="{% static 'js/grupos.js' %}"></script>
+</body>
+
+
+
+<!-- Footer -->
+<footer id="piedepag">
+    <p>Chile, Santiago de Chile | Fono: 227369936 | Email: gaminghub@gmail.com</p>
+    <p>Copyright 2023  <span style="color: #a970ff;">Gaming Hub</span></p>
+    </footer>
+</html>

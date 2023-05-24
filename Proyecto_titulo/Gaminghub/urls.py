@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Dardislikes,listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC, perfiles ,Darlikes ,buscar_usuarios# Se importa la vista de urls
+from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -13,6 +13,7 @@ urlpatterns = [
     path('modificar_perfil/', modificar_perfil, name='modificar_perfil'),
     path('cambiar_clave/', cambiar_clave, name='cambiar_clave'),
     path('form_publicacion/', form_publicacion, name='form_publicacion'),
+    path('form_modificarPublicacion/<id_publicacion>', form_modificarPublicacion, name='form_modificarPublicacion'),
     path('signup/', signup, name='signup'),
     path('logout/',signout, name='signout'),
     path('signin/',signin, name='signin'),
@@ -27,6 +28,14 @@ urlpatterns = [
     #publicaciones
     path('registrarpublicacion/',registrarpublicacion, name='registrarpublicacion'),
     path('listadopublicaciones/', listadopublicaciones, name='listadopublicaciones'),
+
+    #grupos
+    path('grupos/',grupos, name='grupos'),
+    path('form_grupo',form_grupo, name='form_grupo'),
+    path('registrargrupo/',registrargrupo, name='registrargrupo'),
+    path('unirse_grupo/<id_grupo>',unirse_grupo, name='unirse_grupo'),
+    path('salir_grupo/<id_grupo>', salir_grupo, name='salir_grupo'),
+    path('eliminar_grupo/<id_grupo>', eliminar_grupo, name='eliminar_grupo'),
 
     path('perfiles/<str:username>/', perfiles, name='perfiles'),
     path('buscar_usuarios/', buscar_usuarios, name='buscar_usuarios'),

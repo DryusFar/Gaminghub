@@ -59,7 +59,10 @@ class Miembro(models.Model):
     fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
+<<<<<<< HEAD
 class Amistad(models.Model):
     id_amistad = models.BigAutoField(primary_key=True)
     id_amigo = models.IntegerField()
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+=======
+>>>>>>> origin/develop
