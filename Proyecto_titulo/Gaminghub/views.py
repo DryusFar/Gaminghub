@@ -451,7 +451,46 @@ def registrarpublicacion(request):
     messages.success(request,'Datos completados exitosamente')
     return redirect('index')
 
+@login_required
+def modificarPublicacion(request,id_publicacion):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
 
+    user = User.objects.get(id=username_id)
+
+    publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
+
+    correo_u = request.POST['correo']
+    edad_u = request.POST['edad']
+    ##password_u = request.POST['password']
+    nombre_u = request.POST['nombre']
+    
+    if request.FILES.get('foto'):
+        avatar_u = request.FILES['foto']
+    else:
+        avatar_u = None
+
+    if(avatar_u == None or avatar_u == ""):
+        avatar_u = perfil.avatar
+    
+
+
+    user.email = correo_u
+    ##usuario.password = password_u
+    user.first_name = nombre_u
+    user.last_name = apellido_u
+    perfil.edad = edad_u
+    perfil.fecha_nacimiento = fecha_u
+    perfil.genero = genero_u
+    perfil.descripcion = descripcion_u
+    perfil.avatar = avatar_u
+
+    user.save()
+    perfil.save()
+    messages.success(request,'Datos modificados exitosamente')
+    return redirect('perfil')
     
 def listadopublicaciones(request):
     if request.user.is_authenticated:
