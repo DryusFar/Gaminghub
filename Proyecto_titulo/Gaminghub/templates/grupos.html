@@ -106,16 +106,16 @@
       <div class="row">
         {% if l.id_grupo in miembro %}
         <div class="col-4"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver grupo</a></div>
-        <div class="col-4"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
+        <div class="col-4"><a href="{% url 'vista_miembros' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
         <div class="col-4"><button class="btn colorBoton btn-abrir-modal" style="font-family: monospace;" data-grupo-id="{{ l.id_grupo }}">Salir del grupo</button></div>
         {% elif username.id == l.fk_id_usuario.id %}
         <div class="col-3"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver grupo</a></div>
-        <div class="col-3"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
+        <div class="col-3"><a href="{% url 'vista_miembros' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
         <div class="col-3"><a href="{% url 'form_modificarGrupo' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace;">Modificar grupo</a></div>
         <div class="col-3"><button class="btn colorBoton btn-abrir-modal2" style="font-family: monospace;" data-grupo-id="{{ l.id_grupo }}">Eliminar grupo</button></div>
         {% else %}
         <div class="col-6"><a href="{% url 'unirse_grupo' l.id_grupo %}" class="btn colorBoton2" style="font-family: monospace;">Unirse a grupo</a></div>
-        <div class="col-6"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
+        <div class="col-6"><a href="{% url 'vista_miembros' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
         {% endif %}
       </div>
 

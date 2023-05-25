@@ -812,3 +812,21 @@ def modificargrupo(request,id_grupo):
     grupo.save()
     messages.success(request,'Grupo Modificado exitosamente')
     return redirect('grupos')
+
+
+
+#Ver miembros de los grupos
+def vista_miembros(request, grupo_id):
+    grupo = Grupo.objects.get(id_grupo=grupo_id) #Obtengo el grupo correspondiente comparando la idGrupo de la url
+    creador = grupo.fk_id_usuario #Obtengo el creador del grupo ( fk_id_usuario corresponde a la relacion con el Usuario creador)
+    miembros = Miembro.objects.filter(fk_id_grupo=grupo) # Obtengo los miembros filtrando (fk_id_grupo corresponde a la realacion de los miembros conel grupo correspondiente)
+    cantidad_miembros = miembros.count()  # Obtiene la cantidad de miembros
+    
+    return render(request, 'vista_miembros.html', {
+        'grupo': grupo, 
+        'creador': creador, 
+        'miembros': miembros, 
+        'cantidad_miembros': cantidad_miembros,
+        })
+
+

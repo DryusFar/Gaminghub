@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo # Se importa la vista de urls
+from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -48,5 +48,8 @@ urlpatterns = [
     #Like y Dislike
     path('post/<int:id_publicacion>/like', Darlikes.as_view(), name='like'),
     path('post/<int:id_publicacion>/dislike>', Dardislikes.as_view(), name='dislike'),
+
+
+    path('vista_miembros/<int:grupo_id>/', vista_miembros, name='vista_miembros'),
 ]
 
