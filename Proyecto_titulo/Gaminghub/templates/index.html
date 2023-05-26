@@ -118,32 +118,32 @@ $(document).ready(function() {
         </div>
 
 
-    {% if username %}
+    {% if username %}    
     <div class="navbar-container" style="font-family: 'Press Start 2P';">
-        <ul>
-            <li class="nav-link active-link">
-                <a href="#">Home
-                </a>
-                <div class="underline"></div>
-            </li>
-            <li class="nav-link">
-                <a href="#">About Us</a>
-                <div class="underline"></div>
-            </li>
-            <li class="nav-link">
-                <a href="#">Testimonials</a>
-                <div class="underline"></div>
-            </li>
-            <li class="nav-link">
-                <a href="#">Contact</a>
-                <div class="underline"></div>
-            </li>
-            <li class="nav-link active-link">
-              <a href="/logout">Cerrar Sesión</a>
+      <ul>
+          <li class="nav-link ">
+              <a href="#">Home
+              </a>
               <div class="underline"></div>
           </li>
-        </ul>
-    </div>
+          <li class="nav-link">
+              <a href="#">About Us</a>
+              <div class="underline"></div>
+          </li>
+          <li class="nav-link">
+              <a href="#">Testimonials</a>
+              <div class="underline"></div>
+          </li>
+          <li class="nav-link">
+              <a href="#">Contact</a>
+              <div class="underline"></div>
+          </li>
+          <li class="nav-link">
+            <a href="/logout">Cerrar Sesión</a>
+            <div class="underline"></div>
+        </li>
+      </ul>
+  </div>
     {% endif %}
     <div class="container2" style="margin-top: 20px;">
       <input type="text" id="search_input" name="search_input" class="input" placeholder="Buscar en Gaming Hub...">
@@ -172,14 +172,15 @@ $(document).ready(function() {
               
               
           </div>
-          <a class="title" href="#">{{ l.titulo }}</a>
+          <a class="title" href="">{{ l.titulo }}</a>
           <h6> {{ l.contenido }}</h6>
           <span class="datetime">{{ l.fecha_creacion|date:"d-m-Y" }}</span>
           <img src="{{ l.multimedia.url }}" class="image-preview" style="max-height: 400px; max-width: 600px;"/>
           <div class="comment-like">
             <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px' > {{ l.like.all.count }}</i></span>
             <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count }}</i></span>
-            <span class="tamanonum"><i class='fas fa-comment' style='font-size:20px'> 4</i></span>
+            
+            <a href="{% url 'comentarios' l.id_publicacion %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
             <span>
               <form method="POST" action="{% url 'like' l.id_publicacion %}" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -210,7 +211,6 @@ $(document).ready(function() {
     </div>
 
 {% endif %}
-
 
 
 
