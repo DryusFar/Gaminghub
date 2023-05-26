@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'ruta/a/sweetalert2.min.css' %}">
   <script src="{% static 'ruta/a/sweetalert2.min.js' %}"></script>
-  <link rel="stylesheet" type="text/css" href="../static/css/perfil.css" />
+  <link rel="stylesheet" type="text/css" href="../static/css/grupos.css" />
   <link rel="stylesheet" type="text/css" href="{% static 'css/menuflotante.css' %}" />
 </head>
 
@@ -99,29 +99,33 @@
   </div>
   <div class="container">
     <!--Estos son los grupos(listados)-->
+    <a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace; margin-top: 15px;">Crear grupo</a>
     {% for l in listados %}
-    
-      <p>{{ l.titulo }}</p>
-      <p>{{ miembro.fk_id_usuario }}</p>
+    <div class="divgrupo" style="margin-bottom: 25px; margin-top: 25px;">
+      <div class="avatar-container" style="margin-top: 10px; margin-left: 10px; margin-bottom: 10px;">
+        <img src="{{ l.multimedia.url }}" alt="" class="avatar-image" >
+      </div>
+      
+      
+      
       <div class="row">
+        <p class="titulo">{{ l.titulo }}</p>
         {% if l.id_grupo in miembro %}
-        <div class="col-4"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver grupo</a></div>
+        <div class="col-4"><a href="{% url 'form_grupo' %}" class="btn colorBoton2" style="font-family: monospace;">Ver grupo</a></div>
         <div class="col-4"><a href="{% url 'vista_miembros' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
-        <div class="col-4"><button class="btn colorBoton btn-abrir-modal" style="font-family: monospace;" data-grupo-id="{{ l.id_grupo }}">Salir del grupo</button></div>
+        <div class="col-4"><button class="btn btn-danger btn-abrir-modal" style="font-family: monospace; margin-bottom: 10px; margin-right: 10px; font-weight: 600;" data-grupo-id="{{ l.id_grupo }}">Salir del grupo</button></div>
         {% elif username.id == l.fk_id_usuario.id %}
         <div class="col-3"><a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Ver grupo</a></div>
-        <div class="col-3"><a href="{% url 'vista_miembros' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
+        <div class="col-3"><a href="{% url 'vista_miembros' l.id_grupo %}" class="btn colorBoton2" style="font-family: monospace;">Ver miembros</a></div>
         <div class="col-3"><a href="{% url 'form_modificarGrupo' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace;">Modificar grupo</a></div>
-        <div class="col-3"><button class="btn colorBoton btn-abrir-modal2" style="font-family: monospace;" data-grupo-id="{{ l.id_grupo }}">Eliminar grupo</button></div>
+        <div class="col-3"><button class="btn btn-danger btn-abrir-modal2" style="font-family: monospace; margin-bottom: 10px; margin-right: 10px; font-weight: 600;" data-grupo-id="{{ l.id_grupo }}">Eliminar grupo</button></div>
         {% else %}
         <div class="col-6"><a href="{% url 'unirse_grupo' l.id_grupo %}" class="btn colorBoton2" style="font-family: monospace;">Unirse a grupo</a></div>
-        <div class="col-6"><a href="{% url 'vista_miembros' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace;">Ver miembros</a></div>
+        <div class="col-6"><a href="{% url 'vista_miembros' l.id_grupo %}" class="btn colorBoton" style="font-family: monospace; margin-bottom: 10px; margin-right: 10px;">Ver miembros</a></div>
         {% endif %}
       </div>
-
+    </div>
     {% endfor %}
-
-    <a href="{% url 'form_grupo' %}" class="btn colorBoton" style="font-family: monospace;">Crear grupo</a>
 
   </div>
 <!-- MODAL PARA SALIR DE GRUPO-->
@@ -130,18 +134,18 @@
       <div class="modal-content">
         <!-- Contenido de la modal -->
         <div class="modal-header">
-          <h5 class="modal-title">Modal</h5>
+          <h5 class="modal-title" style="color: black;">Grupo</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Estas seguro de que quieres salir de este grupo?</p>
+          <p style="color: black; font-family: monospace;">Estas seguro de que quieres salir de este grupo?</p>
         </div>
         <div class="modal-footer">
           <span id="grupo-id"></span>
-          <button type="button" class="btn btn-secondary close" data-dismiss="modal">Cerrar</button>
-          <a href="#" class="btn btn-danger" id="btn-salir">Salir</a>
+          <button type="button" class="btn btn-secondary close2" data-dismiss="modal" style="font-family: monospace;">Cerrar</button>
+          <a href="#" class="btn btn-danger" id="btn-salir" style="font-family: monospace;">Salir</a>
         </div>
       </div>
     </div>
@@ -152,18 +156,18 @@
       <div class="modal-content">
         <!-- Contenido de la modal -->
         <div class="modal-header">
-          <h5 class="modal-title">Modal</h5>
+          <h5 class="modal-title" style="color: black;">Grupo</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Estas seguro de que quieres eliminar de este grupo?</p>
+          <p style="color: black; font-family: monospace;">Estas seguro de que quieres eliminar de este grupo?</p>
         </div>
         <div class="modal-footer">
           <span id="grupo-id2"></span>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <a href="#" class="btn btn-danger" id="btn-eliminar">Eliminar</a>
+          <button type="button" class="btn btn-secondary close" data-dismiss="modal" style="font-family: monospace;">Cerrar</button>
+          <a href="#" class="btn btn-danger" id="btn-eliminar" style="font-family: monospace;">Eliminar</a>
         </div>
       </div>
     </div>

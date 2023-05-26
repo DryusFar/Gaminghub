@@ -38,7 +38,7 @@ class Publicacion(models.Model):
  
 class Comentario(models.Model):
     id_comentario = models.BigAutoField(primary_key=True)
-    descripcion = models.CharField(max_length=200)
+    descripcion = models.TextField(max_length=200)
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fk_id_publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
 

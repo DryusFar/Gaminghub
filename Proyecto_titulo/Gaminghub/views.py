@@ -851,7 +851,8 @@ def registrarcomentario(request,id_publicacion):
         'publicacion':publicacion,
         'listados': listadoc,
     }
-    Comentario.objects.create(descripcion = descripcion_c,fk_id_usuario = user,fk_id_publicacion = publicacion)    
+    Comentario.objects.create(descripcion = descripcion_c,fk_id_usuario = user,fk_id_publicacion = publicacion)   
+
     return render(request,'comentarios.html',context)
 
 
