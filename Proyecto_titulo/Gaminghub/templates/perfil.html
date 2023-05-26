@@ -250,6 +250,7 @@
       
       <div class="row">
         {% for l in listados %}
+        
         <div class="col-6">
             <div class="card d-flex">
             <img src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;">
@@ -259,33 +260,17 @@
               <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small></p>
             </div>
             <div class="row">
+              
               <div class="col-6">
                 <a href="{% url 'form_modificarPublicacion' l.id_publicacion %}"><button class="btn btn-primary colorBoton form-control" style="font-family: monospace;">Modificar</button></a>
               </div>
               <div class="col-6">
-                <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">Eliminar</button>
+                <button class="form-control btn colorBoton2 btn-abrir-modal2" style="font-family: monospace;" data-id-publicacion="{{ l.id_publicacion }}">Eliminar</button>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-6">
-          <div class="card d-flex">
-          <img src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;">
-          <div class="card-body">
-            <h5 class="card-title">{{ l.titulo }}</h5>
-            <p class="card-text">{{ l.contenido }}</p>
-            <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small></p>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <button class="btn btn-primary colorBoton form-control" style="font-family: monospace;">sad</button>
-            </div>
-            <div class="col-6">
-              <button class="btn btn-primary colorBoton2 form-control" style="font-family: monospace;">asda</button>
-            </div>
-          </div>
-        </div>
-      </div>
+       
         {% endfor %}
       </div>
     </div>
@@ -387,6 +372,28 @@
 
   </div>
 
+  <!-- MODAL PARA ELIMINAR PUBLICACION-->
+  <div id="myModal2" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Contenido de la modal -->
+        <div class="modal-header">
+          <h5 class="modal-title">Modal</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Estas seguro de que quieres eliminar de esta publicacion?</p>
+        </div>
+        <div class="modal-footer">
+          <span id="publicacion-id"></span>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <a class="btn btn-danger" id="btn-eliminar">Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!-- Footer -->
 <footer id="piedepag">
@@ -405,7 +412,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
     integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
     crossorigin="anonymous"></script>
-    <script src="{% static 'js/index.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="{% static 'js/perfil.js' %}"></script>
 </body>
 
 </html>

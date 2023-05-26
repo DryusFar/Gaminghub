@@ -20,7 +20,7 @@ class PerfilUsuario(models.Model):
     avatar = models.ImageField()
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE,)
 
-    
+   
 
 class Publicacion(models.Model):
     id_publicacion = models.BigAutoField(primary_key=True)
@@ -57,10 +57,11 @@ class Sala(models.Model):
 
 class Miembro(models.Model):
     id_miembro = models.BigAutoField(primary_key=True)
-    fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)
-    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)#Grupo 
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)#Usuario
 
 class Amistad(models.Model):
     id_amistad = models.BigAutoField(primary_key=True)
-    id_amigo = models.IntegerField()
+    id_amigo = models.IntegerField(null=True)
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+

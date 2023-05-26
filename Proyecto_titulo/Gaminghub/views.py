@@ -440,16 +440,17 @@ def registrarpublicacion(request):
     titulo_p = request.POST['titulo']
     contenido_p = request.POST['contenido']
     fecha_p = datetime.datetime.now()
-    
 
     if request.FILES.get('multimedia'):
         multimedia_p = request.FILES['multimedia']
     else:
         multimedia_p = None
 
-    
+        
 
-    publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p,id_usuario = user)    
+    
+    
+    publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p ,id_usuario = user)    
     publicacion.like.set([])
     publicacion.dislike.set([])
     messages.success(request,'Datos completados exitosamente')
@@ -467,7 +468,7 @@ def modificarPublicacion(request,id_publicacion):
     publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
 
     titulo_p = request.POST['titulo']
-    contenido_p = request.POST['edad']
+    contenido_p = request.POST['contenido']
     ##password_u = request.POST['password']
     
     if request.FILES.get('multimedia'):
@@ -480,18 +481,13 @@ def modificarPublicacion(request,id_publicacion):
     
 
 
-    user.email = correo_u
-    ##usuario.password = password_u
-    user.first_name = nombre_u
-    user.last_name = apellido_u
-    perfil.edad = edad_u
-    perfil.fecha_nacimiento = fecha_u
-    perfil.genero = genero_u
-    perfil.descripcion = descripcion_u
-    perfil.avatar = avatar_u
+    publicacion.titulo = titulo_p
+    publicacion.contenido = contenido_p
+    publicacion.multimedia = multimedia_p
+    
 
     publicacion.save()
-    messages.success(request,'Datos modificados exitosamente')
+    messages.success(request,'Publicacion modificada exitosamente')
     return redirect('perfil')
     
 def listadopublicaciones(request):
@@ -508,8 +504,7 @@ def listadopublicaciones(request):
     "listados" : listadop}
 
     return render(request , 'index.html',contexto)
-
-#######################################
+##############publicacion##################
 
 #####Admin°°°°°°°°°°°°°°°
 @login_required
@@ -584,6 +579,40 @@ def cambiarC(request):
 @login_required
 def form_grupo(request):
     return render(request, 'form_grupo.html')
+
+@login_required
+def form_modificarGrupo(request, id_grupo):
+    grupo = Grupo.objects.get(id_grupo = id_grupo)
+    context ={
+        "grupo":grupo
+
+    }
+    return render(request, 'form_modificarGrupo.html', context)
+
+@login_required
+def registrargrupo(request):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    titulo_g = request.POST['titulo']
+    descripcion_g = request.POST['contenido']
+    privacidad_g = request.POST['privacidad_g']
+
+    if request.FILES.get('multimedia'):
+        multimedia_g = request.FILES['multimedia']
+    else:
+        multimedia_g = None
+
+    
+
+    Grupo.objects.create(titulo = titulo_g, descripcion = descripcion_g, multimedia = multimedia_g , fk_id_usuario = user, privacidad = privacidad_g)    
+    messages.success(request,'Grupo creado exitosamente')
+    return redirect('grupos')
 
 @login_required
 def registrargrupo(request):
@@ -738,6 +767,69 @@ class Dardislikes(View):
         return HttpResponseRedirect(next)       
      
 #######################################################
+
+def eliminar_publicacion(request,id_publicacion):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+
+    publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
+
+    publicacion.delete()
+    messages.success(request,'Publicacion eliminada exitosamente...')
+    return redirect('perfil')
+
+@login_required
+def modificargrupo(request,id_grupo):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    grupo = Grupo.objects.get(id_grupo = id_grupo)
+
+    titulo_g = request.POST['titulo']
+    descripcion_g = request.POST['descripcion']
+    privacidad_g = request.POST['privacidad_g']
+
+    if request.FILES.get('multimedia'):
+        multimedia_g = request.FILES['multimedia']
+    else:
+        multimedia_g = None
+
+    if(multimedia_g == None or multimedia_g == ""):
+        multimedia_g = grupo.multimedia
+
+    grupo.titulo = titulo_g
+    grupo.descripcion = descripcion_g
+    grupo.privacidad = privacidad_g
+    grupo.multimedia = multimedia_g
+
+    grupo.save()
+    messages.success(request,'Grupo Modificado exitosamente')
+    return redirect('grupos')
+
+
+
+#Ver miembros de los grupos
+def vista_miembros(request, grupo_id):
+    grupo = Grupo.objects.get(id_grupo=grupo_id) #Obtengo el grupo correspondiente comparando la idGrupo de la url
+    creador = grupo.fk_id_usuario #Obtengo el creador del grupo ( fk_id_usuario corresponde a la relacion con el Usuario creador)
+    miembros = Miembro.objects.filter(fk_id_grupo=grupo) # Obtengo los miembros filtrando (fk_id_grupo corresponde a la realacion de los miembros conel grupo correspondiente)
+    cantidad_miembros = miembros.count()  # Obtiene la cantidad de miembros
+    
+    return render(request, 'vista_miembros.html', {
+        'grupo': grupo, 
+        'creador': creador, 
+        'miembros': miembros, 
+        'cantidad_miembros': cantidad_miembros,
+        })
 
 ########################## COMENTARIOS ########################
 
