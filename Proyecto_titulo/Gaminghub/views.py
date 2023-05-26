@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
-from .models import RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro
+from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro
 from django.contrib import messages
 import datetime
 from PIL import Image
@@ -153,8 +153,8 @@ def index(request):
 
     user = User.objects.get(id=username_id)
     listadopublicaciones = Publicacion.objects.all().order_by('fecha_creacion')
-
     listadoperfiles = PerfilUsuario.objects.all()
+
 
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
@@ -169,6 +169,8 @@ def index(request):
     }
     return render(request, 'index.html',context)
 
+def comentarios(request):
+    return render(request, 'comentarios.html')
 
 @login_required
 def register(request):
@@ -829,4 +831,44 @@ def vista_miembros(request, grupo_id):
         'cantidad_miembros': cantidad_miembros,
         })
 
+########################## COMENTARIOS ########################
 
+@login_required
+def registrarcomentario(request,id_publicacion):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    publicacion = Publicacion.objects.get(id_publicacion=id_publicacion)
+    descripcion_c = request.POST['descripcion']
+    listadoc = Comentario.objects.filter(fk_id_publicacion=id_publicacion)
+
+    context = {
+        'username': user,
+        'publicacion':publicacion,
+        'listados': listadoc,
+    }
+    Comentario.objects.create(descripcion = descripcion_c,fk_id_usuario = user,fk_id_publicacion = publicacion)    
+    return render(request,'comentarios.html',context)
+
+
+def comentarios(request,id_publicacion):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+    
+    user = User.objects.get(id=username_id)
+    publicacion_id = Publicacion.objects.get(id_publicacion = id_publicacion)
+    listadoc = Comentario.objects.filter(fk_id_publicacion=id_publicacion)
+
+
+    context = {
+        'username': user,
+        'publicacion':publicacion_id,
+        'listados': listadoc,
+    }
+    return render(request , 'comentarios.html',context)
