@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
 from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion
+from django.db.models import Q
 from django.contrib import messages
 import datetime
 from PIL import Image
@@ -697,7 +698,21 @@ def perfiles(request, username):
     usuario = get_object_or_404(User, username=username) #OBTENGO TODOS LOS MODELOS DE User COMPLETOS COMPARANDO EL USERNAME CON EL INGRESADO EN LA URL
     perfil_usuario = PerfilUsuario.objects.get(id_usuario=usuario) #OBTENGO EL MODELO PERFILUSUARIO CON SU FK QUE COINCIDA CON EL USUARIO OBTENIDO ANTERIORMENTE
     publicaciones = Publicacion.objects.filter(id_usuario=usuario)  # Utiliza filter en lugar de get si esperas múltiples publicaciones
-    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones})
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    notificacion_pendiente = Notificacion.objects.filter(
+    Q(fk_id_usuario=request.user, fk_recibidor=perfil_usuario.id_usuario) |
+    Q(fk_id_usuario=perfil_usuario.id_usuario, fk_recibidor=request.user),
+    tipo=1
+    ).exists()
+
+
+
+    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente})
 
 def buscar_usuarios(request):
     if request.method == 'GET' and 'term' in request.GET:
@@ -893,10 +908,15 @@ def solicitudAmistad(request, id_amigo):
 
     user = User.objects.get(id=username_id)  
 
-    Solicitud.objects.create(recibidor = id_amigo, fk_id_usuario = user)  
-    Notificacion.objects.create(recibidor = id_amigo, tipo = 1, fk_id_usuario = user)
+    amigo = User.objects.get(id=id_amigo)  
 
-    return redirect('index')
+    
+
+    Solicitud.objects.create(recibidor = id_amigo, fk_id_usuario = user)  
+    Notificacion.objects.create(fk_recibidor = amigo, tipo = 1, fk_id_usuario = user)
+
+
+    return redirect('perfiles', username=amigo.username)
 
 def notificaciones(request):
     if request.user.is_authenticated:
@@ -906,7 +926,7 @@ def notificaciones(request):
 
     user = User.objects.get(id=username_id)  
 
-    listadonotificaciones = Notificacion.objects.all().filter(recibidor = user.id)
+    listadonotificaciones = Notificacion.objects.all().filter(fk_recibidor = user)
 
     context = {
         'username': user,
@@ -914,3 +934,60 @@ def notificaciones(request):
     }
 
     return render(request, 'notificaciones.html', context)
+
+def agregarAmigo(request,id_notifi, id_enviador):
+    
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    amigo = User.objects.get(id = id_enviador)
+
+    Amistad.objects.create(persona = user.id, amigo = amigo.id)
+    Amistad.objects.create(persona = amigo.id, amigo = user.id)
+
+    solicitud = Solicitud.objects.get(recibidor=user.id, fk_id_usuario=id_enviador)
+    
+    solicitud.delete()
+
+    notificacion = Notificacion.objects.get(id_notificacion = id_notifi)
+
+    notificacion.delete()
+
+    Notificacion.objects.create(fk_recibidor = amigo, tipo = 2, fk_id_usuario = user)
+
+    return redirect ('notificaciones')
+
+def declinarSolicitud(request,id_notifi, id_enviador):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    amigo = User.objects.get(id = id_enviador)
+
+    solicitud = Solicitud.objects.get(recibidor=user.id, fk_id_usuario=id_enviador)
+    
+    solicitud.delete()
+
+    notificacion = Notificacion.objects.get(id_notificacion = id_notifi)
+
+    notificacion.delete()
+
+    Notificacion.objects.create(fk_recibidor = amigo, tipo = 3, fk_id_usuario = user)
+
+    return redirect ('notificaciones')
+
+def botonOK(request,id_notifi):
+
+    notificacion = Notificacion.objects.get(id_notificacion = id_notifi)
+
+    notificacion.delete()
+
+    return redirect('notificaciones')

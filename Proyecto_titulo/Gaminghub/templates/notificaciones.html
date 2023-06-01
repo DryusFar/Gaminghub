@@ -100,7 +100,22 @@
   <div class="container" style="margin-bottom: 25px">
     <div class="row justify-content-center mt-5">
       {% for l in listados %}
-      <p>{{ l.tipo }}</p>
+      {% if l.tipo == 1 %}
+        <!--{{ l.fk_id_usuario }} ES EL USUARIO QUE LE ENVIO LA SOLICITUD O NOTIFICACION-->
+        <!--{{ l.fk_recibidor }} ES EL USUARIO QUE ESTA INICIADO EN LA PAGINA-->
+        <p>El usuario {{ l.fk_id_usuario }} quiere ser tu amigo!</p>
+        <a href="{% url 'agregarAmigo' l.id_notificacion  l.fk_id_usuario.id %}"><button>Si</button></a>
+        <a href="{% url 'declinarSolicitud' l.id_notificacion  l.fk_id_usuario.id %}"><button>No</button></a>
+      {% elif l.tipo == 2 %}
+        <p>Tu y el usuario {{ l.fk_id_usuario }} ya son amigos! </p>
+        <a href="{% url 'botonOK' l.id_notificacion %}"><button>Ok</button></a>
+      {% elif l.tipo == 3 %}
+        <p>El usuario {{ l.fk_id_usuario }} rechazo tu solicitud! :c </p>
+        <a href="{% url 'botonOK' l.id_notificacion %}"><button>Ok</button></a>
+      {% else %}
+        <p>Aviso</p>
+        <a href=""><button>Ok</button></a>
+      {% endif %}
       {% endfor %}
     </div>
 
