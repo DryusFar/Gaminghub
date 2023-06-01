@@ -167,20 +167,22 @@
 }
 
 /* ---- ----- ----- FOOTER ----- ----- ----- */
+/* ---- ----- ----- FOOTER ----- ----- ----- */
 footer {
-  background-color: #09101d;
-  color: white;
-  padding-top: 1.2rem;
-  padding-bottom: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  font-size: 10px;
-  margin-top: 0vh;
-  font-family: 'Press Start 2P';
-  position: sticky bottom;
-  margin-top: 228px;
-}
+	background-color: #09101d;
+	color: white;
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	font-size: 10px;
+	margin-top: 30vh;
+	font-family: 'Press Start 2P';
+	position: sticky;
+	bottom: 0; /* posición desde abajo */
+	width: 100%;
+	}
 
 /* ---- ----- ----- NAVBAR ----- ----- ----- */
 .navbar-container {
@@ -247,3 +249,189 @@ footer {
 	transition: none;
 	background-color: rgba(255,255,255,0.76);
 }
+
+/*footer*/
+
+/* ---- ----- ----- FOOTER ----- ----- ----- */
+footer {
+	background-color: #09101d;
+	color: white;
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	font-size: 10px;
+	margin-top: 5vh;
+	font-family: 'Press Start 2P';
+	position: sticky;
+	bottom: 0; /* posición desde abajo */
+	width: 100%;
+	}
+
+	.navbar-container {
+		text-align: center;
+		background-color: #19003100;
+		box-shadow: 0px -20px 5px 20px #333333;
+		padding: 10px;
+		font-size: 0;
+		
+		}
+		
+		.navbar-container ul {
+		margin: 0;
+		padding: 0;
+		text-align: right;
+		display: inline-block;
+		vertical-align: middle;
+		
+		}
+		
+		.navbar-container ul li {
+		display: inline-block;
+		font-size: 16px;
+		}
+		
+		.navbar-container ul li a {
+		color: #ffffff;
+		text-decoration: none;
+		display: inline-block;	
+		padding: 10px;
+		transition: color 0.5s;
+		}
+		
+		.navbar-container ul li .underline {
+		height: 3px;
+		background-color: transparent;
+		width: 0%;
+		transition: width 0.2s, background-color 0.5s;
+		margin: 0 auto;
+		}
+		
+		.navbar-container ul li.active-link .underline {
+		width: 100%;
+		background-color: white;
+		
+		}
+		
+		.navbar-container ul li:hover .underline {
+		background-color: white;
+		width: 100%;
+		}
+		
+		.navbar-container ul li:hover a {
+		}
+		
+		.navbar-container ul li:active a {
+		transition: none;
+		color: rgba(255,255,255,0.76);
+		}
+		
+		.navbar-container ul li:active .underline {
+		transition: none;
+		background-color: rgba(255,255,255,0.76);
+		}
+		
+		/*
+		Barra flotante
+		*/
+		.container-bar{
+		width: 100%;
+		max-width: 50px;
+		position: fixed;
+		left: 0;
+		top: 25%;
+		}
+		.container-bar a{
+		display: block;
+		width: 50px;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		text-decoration: none;
+		font-size: 18px;
+		position: relative;
+		transition: all 500ms ease;
+		color: #fff;
+		}
+		.container-bar a:hover{
+		background: #1c1c1c;
+		}
+		.container-bar .bi-house-door-fill{
+		background: #09101d;
+		border-radius: 0px 5px 0px 0px;
+		}
+		.container-bar .bi-bell-fill{
+		background: #09101d;
+		}
+		.container-bar .bi-chat-dots-fill{
+		background: #09101d;
+		}
+		.container-bar .bi-person-circle{
+		background: #09101d;
+		}
+		.container-bar .bi-people-fill{
+		background: #09101d;
+		border-radius: 0px 0px 5px 0px;
+		}
+		.container-bar .bi-chat-left-text{
+		background: #09101d;
+		border-radius: 0px 0px 5px 0px;
+		}
+		.container-bar #title{
+		position: absolute;
+		background: #1c1c1c;
+		padding: 0px 8px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 3px;
+		font-size: 15px;
+		top:12px; left: 0px;
+		transition: all 500ms ease;
+		opacity: 0;
+		visibility: hidden;
+		z-index: -1;
+		}
+		.container-bar a:hover #title{
+		opacity: 1;
+		visibility: visible;
+		left: 64px;
+		}
+		.container-bar #title:after{
+		position: absolute;
+		content: '';
+		border-left: 7px solid transparent;
+		border-right: 6px solid #1c1c1c;
+		border-top: 7px solid transparent;
+		border-bottom: 7px solid transparent;
+		right: 100%;
+		top: 8px;
+		}
+		#btn-social{
+		display: none;
+		}
+		.fa-play{
+		cursor: pointer;
+		transition: all 0.4s;
+		font-size: 12px;
+		margin-bottom: 5px;
+		display: inline-block;
+		transform: rotate(180deg);
+		color: #49b0e6;
+		}
+		#btn-social:checked ~ .fa-play{
+		transform: rotate(0deg);
+		}
+		.icon-social{
+		transition: all 0.4s;
+		transform: translateX(0%);
+		box-shadow: 0px 1px 10px rgba(0,0,0,0.3);
+		}
+		#btn-social:checked ~ .icon-social{
+		transform: translateX(-100%);
+		box-shadow: 0px 1px 10px rgba(0,0,0,0.0);
+		}
+
+		
+	

@@ -15,10 +15,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'css/vistaMiembros.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}" />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
-<body>
+
 
   <body id="fondo1">
     <div class="navbar-container">
@@ -121,7 +122,7 @@
       <div class="col-md-2 col-sm-12 fondo"></div>
       <div class="col-md-8 col-sm-12">
         <h1 class="grupo-title fuente">Grupo "{{ grupo.titulo }}"</h1>
-        <p class="grupo-description blanco">Descripción: {{ grupo.descripcion }}</p>
+        <p class="grupo-description blanco" style="font-size: 20px;">Descripción: {{ grupo.descripcion }}</p>
         <h5 class="grupo-creator blanco">Creado por: {{ creador.username }}</h5>
 
         <img class="grupo-image" src="{{ grupo.multimedia.url }}" alt="Foto del grupo">
@@ -129,7 +130,7 @@
         <h2 class="miembros-title blanco">{{ cantidad_miembros }} Miembros:</h2>
         <ul class="miembros-list blanco">
           {% for miembro in miembros %}
-          <li>{{ miembro.fk_id_usuario.username }}</li>
+          <li style="font-size: 20px;">{{ miembro.fk_id_usuario.username }}</li>
           {% endfor %}
         </ul>
       </div>

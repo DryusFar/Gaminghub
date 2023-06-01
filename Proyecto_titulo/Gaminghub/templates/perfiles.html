@@ -120,7 +120,7 @@
             <h4 class="fuente">{{ usuario.username }}</h4>
             <p class="fuente">{{ usuario.first_name }} {{ usuario.last_name }}</p>
             <p style="color: aliceblue;">139 Amigos</p>
-            <button class="btn-enviar-solicitud">Enviar solicitud de amistad</button>
+            <a href="{% url 'solicitudAmistad'  usuario.id %}"><button class="btn-enviar-solicitud">Enviar solicitud de amistad</button></a>
           </div>
         </div>
       </div>
