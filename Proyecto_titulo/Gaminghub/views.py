@@ -4,12 +4,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
-from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro
+from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion
 from django.contrib import messages
 import datetime
 from PIL import Image
 from django.conf import settings
 import os
+from urllib.parse import urlencode
+
 ##Import models cuando esten listos##
 
 from django.contrib.auth import login, logout, authenticate
@@ -733,8 +735,14 @@ class Darlikes(View):
         if is_like:
             post.like.remove(request.user)
 
-        next = request.POST.get('next','/')
-        return HttpResponseRedirect(next)
+        # Obtener la URL actual de la página
+        next = request.META.get('HTTP_REFERER', '/')
+
+        anchor = 'likes'  # Cambia esto al nombre del ancla deseado
+        params = urlencode({'#': anchor})
+        next_url = f'{next}?{params}'
+
+        return HttpResponseRedirect(next_url)
 
 class Dardislikes(View):
     def post(self,request, id_publicacion,*args,**kwargs):
@@ -851,7 +859,8 @@ def registrarcomentario(request,id_publicacion):
         'publicacion':publicacion,
         'listados': listadoc,
     }
-    Comentario.objects.create(descripcion = descripcion_c,fk_id_usuario = user,fk_id_publicacion = publicacion)    
+    Comentario.objects.create(descripcion = descripcion_c,fk_id_usuario = user,fk_id_publicacion = publicacion)   
+
     return render(request,'comentarios.html',context)
 
 
@@ -872,3 +881,36 @@ def comentarios(request,id_publicacion):
         'listados': listadoc,
     }
     return render(request , 'comentarios.html',context)
+
+###SolicitudAmistad###
+
+def solicitudAmistad(request, id_amigo):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    Solicitud.objects.create(recibidor = id_amigo, fk_id_usuario = user)  
+    Notificacion.objects.create(recibidor = id_amigo, tipo = 1, fk_id_usuario = user)
+
+    return redirect('index')
+
+def notificaciones(request):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    listadonotificaciones = Notificacion.objects.all().filter(recibidor = user.id)
+
+    context = {
+        'username': user,
+        'listados': listadonotificaciones,
+    }
+
+    return render(request, 'notificaciones.html', context)

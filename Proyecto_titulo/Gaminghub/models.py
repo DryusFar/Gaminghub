@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 # Create your models here.
 
@@ -38,7 +39,7 @@ class Publicacion(models.Model):
  
 class Comentario(models.Model):
     id_comentario = models.BigAutoField(primary_key=True)
-    descripcion = models.CharField(max_length=200)
+    descripcion = models.TextField(max_length=200)
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fk_id_publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
 
@@ -60,8 +61,24 @@ class Miembro(models.Model):
     fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)#Grupo 
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)#Usuario
 
+class Notificacion(models.Model):
+    id_notificacion = models.BigAutoField(primary_key=True)
+    info = models.TextField(max_length = 300, null = True)
+    recibidor = models.IntegerField(null=True)
+    fecha_creacion = models.DateField(null=True, auto_now_add=True)
+    tipo = models.IntegerField(null=True)
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Solicitud(models.Model):
+    id_solicitud = models.BigAutoField(primary_key=True)
+    recibidor = models.IntegerField(null=True)##Recibidorxd
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)##Enviador
+
 class Amistad(models.Model):
     id_amistad = models.BigAutoField(primary_key=True)
-    id_amigo = models.IntegerField(null=True)
-    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    persona = models.IntegerField(null=True)##persona1
+    amigo = models.IntegerField(null=True)##persona2
+
+
+
 

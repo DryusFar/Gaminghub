@@ -15,6 +15,13 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
+  $(".close2").click(function() {
+    // Mostrar la modal correspondiente al botón de eliminar
+    $("#myModal").modal("hide");
+});
+});
+
+$(document).ready(function() {
   $(".btn-abrir-modal").click(function() {
     // Mostrar la modal correspondiente al botón de eliminar
     $("#myModal").modal("show");
