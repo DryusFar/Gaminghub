@@ -1,0 +1,125 @@
+body {
+    background-image: url("../../static/img/fondo03.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+    background-color: rgb(24 27 32);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    box-sizing: border-box; /* Incluye el padding en el ancho total del contenedor */
+  }
+
+h1 {
+  text-align: center;
+}
+
+.amigos-list {
+  margin-top: 20px;
+}
+
+.amigo-item {
+    display: flex; /* Alinea el avatar y la información en una fila */
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+
+  .btn {
+    margin: 0 5px;
+    flex-grow: 1; /* Los botones ocupan todo el espacio disponible */
+  }
+
+.fuente {
+  font-family: "Press Start 2P";
+  color: aliceblue;
+}
+
+.colorBoton {
+  background-color: #6200d1;
+  border-color: #000000;
+  font-weight: 600;
+  width: 100%;
+}
+
+.colorBoton:hover {
+  background-color: #734f9a;
+  border-color: #1d1a2f;
+}
+
+.colorBoton2 {
+  background-color: #970505;
+  border-color: #000000;
+  font-weight: 600;
+}
+
+.colorBoton2:hover {
+  background-color: #640b0b;
+  border-color: #1d1a2f;
+}
+
+.avatar-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+  }
+
+.avatar {
+  width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
+  height: 100%; /* Hace que la imagen ocupe todo el alto del contenedor */
+  object-fit: cover; /* Ajusta la imagen para que cubra completamente el contenedor sin perder proporciones */
+}
+
+.amigo-item {
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.avatar-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px; /* Agregamos un margen a la derecha para separar el avatar de la información */
+}
+
+.info-container {
+  flex-grow: 1; /* Hace que el contenedor de información ocupe todo el espacio disponible */
+}
+
+.nombre-usuario {
+  text-align: center;
+  color: aliceblue;
+  margin-bottom: 10px; /* Agregamos un margen inferior para separar el nombre de usuario de los botones */
+}
+
+.botones {
+    display: flex;
+    justify-content: space-between; /* Coloca los botones al final y los separa */
+    align-items: center; /* Centra verticalmente los botones */
+    margin-top: 10px;
+  }
+
+.btn {
+  margin: 0 5px;
+  width: auto; /* Quitamos la propiedad width: 100% para que los botones ocupen su tamaño natural */
+}

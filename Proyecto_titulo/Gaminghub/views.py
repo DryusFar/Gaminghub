@@ -991,3 +991,31 @@ def botonOK(request,id_notifi):
     notificacion.delete()
 
     return redirect('notificaciones')
+
+
+def amigos(request):
+    # Obtener el usuario actual
+    usuario_actual = request.user
+
+    # Obtener todas las amistades del usuario actual
+    amistades = Amistad.objects.filter(persona=usuario_actual.id)
+
+    # Crear una lista para almacenar los amigos
+    amigos = []
+
+    # Recorrer las amistades y obtener los amigos
+    for amistad in amistades:
+        amigo_id = amistad.amigo
+        # Obtener el nombre de usuario del amigo utilizando el ID
+        amigo = User.objects.get(id=amigo_id)
+        # Obtener el perfil del amigo utilizando la relación id_usuario en PerfilUsuario
+        amigo_perfil = PerfilUsuario.objects.get(id_usuario=amigo_id)
+        # Agregar el amigo y su avatar a la lista
+        amigos.append({
+            'username': amigo.username,
+            'avatar': amigo_perfil.avatar.url if amigo_perfil else None
+        })
+
+    # Puedes pasar la lista de amigos al contexto de renderización
+    return render(request, 'amigos.html', {'amigos': amigos})
+
