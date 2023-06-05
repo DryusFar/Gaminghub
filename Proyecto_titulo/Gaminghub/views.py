@@ -1013,9 +1013,21 @@ def amigos(request):
         # Agregar el amigo y su avatar a la lista
         amigos.append({
             'username': amigo.username,
+            'id_u' : amigo.id,
             'avatar': amigo_perfil.avatar.url if amigo_perfil else None
         })
 
     # Puedes pasar la lista de amigos al contexto de renderización
     return render(request, 'amigos.html', {'amigos': amigos})
 
+def eliminarAmigo(request, id_enviador):
+
+    usuario_actual = request.user
+    
+    eliminar1 = Amistad.objects.get(persona = id_enviador, amigo = usuario_actual.id)
+    eliminar2 = Amistad.objects.get(persona = usuario_actual.id, amigo = id_enviador)
+
+    eliminar1.delete()
+    eliminar2.delete()
+
+    return redirect('amigos')
