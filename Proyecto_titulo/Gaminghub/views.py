@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
-from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion
+from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion, Mensaje
 from django.db.models import Q
 from django.contrib import messages
 import datetime
@@ -96,8 +96,8 @@ def admin1(request):
     return render(request, 'admin1.html',context)
 
 @login_required
-def chat(request):
-    return render(request, 'chat.html')
+def chat2(request):
+    return render(request, 'chat2.html')
 
 @login_required
 def grupos(request):
@@ -1031,3 +1031,41 @@ def eliminarAmigo(request, id_enviador):
     eliminar2.delete()
 
     return redirect('amigos')
+
+def chat(request, amigo_id):
+    # Obtener el usuario actual
+    usuario_actual = request.user
+
+    # Obtener el amigo utilizando el ID recibido
+    amigo = User.objects.get(id=amigo_id)
+
+    # Obtener los mensajes entre el usuario actual y el amigo
+    mensajes = Mensaje.objects.filter(
+        (Q(remitente=usuario_actual) & Q(destinatario=amigo)) |
+        (Q(remitente=amigo) & Q(destinatario=usuario_actual))
+    ).order_by('fecha_envio')
+
+    return render(request, 'chat.html', {'amigo': amigo, 'mensajes': mensajes})
+
+def enviarMensaje(request, amigo_id):
+    if request.method == 'POST':
+        # Obtener el usuario actual
+        usuario_actual = request.user
+
+        # Obtener el amigo utilizando el ID recibido
+        amigo = User.objects.get(id=amigo_id)
+
+        # Obtener el contenido del mensaje desde el formulario
+        contenido = request.POST.get('mensaje')
+
+        # Crear un nuevo objeto de Mensaje
+        mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido)
+
+        # Redireccionar a la vista de chat con el amigo
+        return redirect('chat', amigo_id=amigo_id)
+
+    # Si no se envió un formulario POST, puedes manejarlo según tus necesidades
+    # Por ejemplo, mostrar un error o redireccionar a otra página
+
+    # Agrega un retorno de respuesta adecuado aquí
+    return HttpResponse("Solo se permite enviar mensajes a través de POST")

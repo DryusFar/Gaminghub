@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import comentarios,listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo # Se importa la vista de urls
+from .views import comentarios,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
     path('register', register, name='register'),
     path('perfil/', perfil, name='perfil'),
     path('admin1/', admin1, name='admin1'),
-    path('chat/', chat, name='chat'),
+    path('chat2/', chat2, name='chat2'),
     path('menu_principal/', menu_principal, name='menu_principal'),
     path('', index, name='index'),
     path('completar_perfil/', completar_perfil, name='completar_perfil'),
@@ -63,6 +63,7 @@ urlpatterns = [
     path('botonOK/<id_notifi>',botonOK,name='botonOK'),
     path('amigos/', amigos, name='amigos'),
     path('eliminarAmigo/<id_enviador>', eliminarAmigo, name='eliminarAmigo'),
-
+    path('chat/<amigo_id>', chat, name='chat'),
+    path('enviarMensaje/<int:amigo_id>/', enviarMensaje, name='enviarMensaje'),
 ]
 
