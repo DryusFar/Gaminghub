@@ -13,11 +13,14 @@
     <!-- Puedes utilizar el modelo Mensaje y filtrar por remitente y destinatario -->
 
     {% for mensaje in mensajes %}
-        <p>{{ mensaje.remitente.username }}: {{ mensaje.contenido }}</p>
+        {% if mensaje.contenido == None %}
+        {% else %}
+            <p>{{ mensaje.remitente.username }}: {{ mensaje.contenido }}</p>
+        {% endif %}
     {% endfor %}
 
     <!-- Aquí puedes agregar el formulario para enviar nuevos mensajes -->
-    <form method="post" action="{% url 'enviar_mensaje' amigo_id=amigo.id %}">
+    <form method="post" action="{% url 'enviarMensaje' amigo_id=amigo.id %}">
         {% csrf_token %}
         <input type="text" name="mensaje" placeholder="Escribe tu mensaje..." required>
         <button type="submit">Enviar</button>
