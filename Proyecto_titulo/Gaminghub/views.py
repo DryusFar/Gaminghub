@@ -4,7 +4,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
-from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion
+from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion, Mensaje
+from django.db.models import Q
 from django.contrib import messages
 import datetime
 from PIL import Image
@@ -95,8 +96,8 @@ def admin1(request):
     return render(request, 'admin1.html',context)
 
 @login_required
-def chat(request):
-    return render(request, 'chat.html')
+def chat2(request):
+    return render(request, 'chat2.html')
 
 @login_required
 def grupos(request):
@@ -697,7 +698,21 @@ def perfiles(request, username):
     usuario = get_object_or_404(User, username=username) #OBTENGO TODOS LOS MODELOS DE User COMPLETOS COMPARANDO EL USERNAME CON EL INGRESADO EN LA URL
     perfil_usuario = PerfilUsuario.objects.get(id_usuario=usuario) #OBTENGO EL MODELO PERFILUSUARIO CON SU FK QUE COINCIDA CON EL USUARIO OBTENIDO ANTERIORMENTE
     publicaciones = Publicacion.objects.filter(id_usuario=usuario)  # Utiliza filter en lugar de get si esperas múltiples publicaciones
-    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones})
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    notificacion_pendiente = Notificacion.objects.filter(
+    Q(fk_id_usuario=request.user, fk_recibidor=perfil_usuario.id_usuario) |
+    Q(fk_id_usuario=perfil_usuario.id_usuario, fk_recibidor=request.user),
+    tipo=1
+    ).exists()
+
+
+
+    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente})
 
 def buscar_usuarios(request):
     if request.method == 'GET' and 'term' in request.GET:
@@ -893,10 +908,15 @@ def solicitudAmistad(request, id_amigo):
 
     user = User.objects.get(id=username_id)  
 
-    Solicitud.objects.create(recibidor = id_amigo, fk_id_usuario = user)  
-    Notificacion.objects.create(recibidor = id_amigo, tipo = 1, fk_id_usuario = user)
+    amigo = User.objects.get(id=id_amigo)  
 
-    return redirect('index')
+    
+
+    Solicitud.objects.create(recibidor = id_amigo, fk_id_usuario = user)  
+    Notificacion.objects.create(fk_recibidor = amigo, tipo = 1, fk_id_usuario = user)
+
+
+    return redirect('perfiles', username=amigo.username)
 
 def notificaciones(request):
     if request.user.is_authenticated:
@@ -906,7 +926,7 @@ def notificaciones(request):
 
     user = User.objects.get(id=username_id)  
 
-    listadonotificaciones = Notificacion.objects.all().filter(recibidor = user.id)
+    listadonotificaciones = Notificacion.objects.all().filter(fk_recibidor = user)
 
     context = {
         'username': user,
@@ -914,3 +934,138 @@ def notificaciones(request):
     }
 
     return render(request, 'notificaciones.html', context)
+
+def agregarAmigo(request,id_notifi, id_enviador):
+    
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    amigo = User.objects.get(id = id_enviador)
+
+    Amistad.objects.create(persona = user.id, amigo = amigo.id)
+    Amistad.objects.create(persona = amigo.id, amigo = user.id)
+
+    solicitud = Solicitud.objects.get(recibidor=user.id, fk_id_usuario=id_enviador)
+    
+    solicitud.delete()
+
+    notificacion = Notificacion.objects.get(id_notificacion = id_notifi)
+
+    notificacion.delete()
+
+    Notificacion.objects.create(fk_recibidor = amigo, tipo = 2, fk_id_usuario = user)
+
+    return redirect ('notificaciones')
+
+def declinarSolicitud(request,id_notifi, id_enviador):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    amigo = User.objects.get(id = id_enviador)
+
+    solicitud = Solicitud.objects.get(recibidor=user.id, fk_id_usuario=id_enviador)
+    
+    solicitud.delete()
+
+    notificacion = Notificacion.objects.get(id_notificacion = id_notifi)
+
+    notificacion.delete()
+
+    Notificacion.objects.create(fk_recibidor = amigo, tipo = 3, fk_id_usuario = user)
+
+    return redirect ('notificaciones')
+
+def botonOK(request,id_notifi):
+
+    notificacion = Notificacion.objects.get(id_notificacion = id_notifi)
+
+    notificacion.delete()
+
+    return redirect('notificaciones')
+
+
+def amigos(request):
+    # Obtener el usuario actual
+    usuario_actual = request.user
+
+    # Obtener todas las amistades del usuario actual
+    amistades = Amistad.objects.filter(persona=usuario_actual.id)
+
+    # Crear una lista para almacenar los amigos
+    amigos = []
+
+    # Recorrer las amistades y obtener los amigos
+    for amistad in amistades:
+        amigo_id = amistad.amigo
+        # Obtener el nombre de usuario del amigo utilizando el ID
+        amigo = User.objects.get(id=amigo_id)
+        # Obtener el perfil del amigo utilizando la relación id_usuario en PerfilUsuario
+        amigo_perfil = PerfilUsuario.objects.get(id_usuario=amigo_id)
+        # Agregar el amigo y su avatar a la lista
+        amigos.append({
+            'username': amigo.username,
+            'id_u' : amigo.id,
+            'avatar': amigo_perfil.avatar.url if amigo_perfil else None
+        })
+
+    # Puedes pasar la lista de amigos al contexto de renderización
+    return render(request, 'amigos.html', {'amigos': amigos})
+
+def eliminarAmigo(request, id_enviador):
+
+    usuario_actual = request.user
+    
+    eliminar1 = Amistad.objects.get(persona = id_enviador, amigo = usuario_actual.id)
+    eliminar2 = Amistad.objects.get(persona = usuario_actual.id, amigo = id_enviador)
+
+    eliminar1.delete()
+    eliminar2.delete()
+
+    return redirect('amigos')
+
+def chat(request, amigo_id):
+    # Obtener el usuario actual
+    usuario_actual = request.user
+
+    # Obtener el amigo utilizando el ID recibido
+    amigo = User.objects.get(id=amigo_id)
+
+    # Obtener los mensajes entre el usuario actual y el amigo
+    mensajes = Mensaje.objects.filter(
+        (Q(remitente=usuario_actual) & Q(destinatario=amigo)) |
+        (Q(remitente=amigo) & Q(destinatario=usuario_actual))
+    ).order_by('fecha_envio')
+
+    return render(request, 'chat.html', {'amigo': amigo, 'mensajes': mensajes})
+
+def enviarMensaje(request, amigo_id):
+    if request.method == 'POST':
+        # Obtener el usuario actual
+        usuario_actual = request.user
+
+        # Obtener el amigo utilizando el ID recibido
+        amigo = User.objects.get(id=amigo_id)
+
+        # Obtener el contenido del mensaje desde el formulario
+        contenido = request.POST.get('mensaje')
+
+        # Crear un nuevo objeto de Mensaje
+        mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido)
+
+        # Redireccionar a la vista de chat con el amigo
+        return redirect('chat', amigo_id=amigo_id)
+
+    # Si no se envió un formulario POST, puedes manejarlo según tus necesidades
+    # Por ejemplo, mostrar un error o redireccionar a otra página
+
+    # Agrega un retorno de respuesta adecuado aquí
+    return HttpResponse("Solo se permite enviar mensajes a través de POST")

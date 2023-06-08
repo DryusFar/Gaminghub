@@ -64,14 +64,14 @@ class Miembro(models.Model):
 class Notificacion(models.Model):
     id_notificacion = models.BigAutoField(primary_key=True)
     info = models.TextField(max_length = 300, null = True)
-    recibidor = models.IntegerField(null=True)
     fecha_creacion = models.DateField(null=True, auto_now_add=True)
     tipo = models.IntegerField(null=True)
-    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fk_id_usuario = models.ForeignKey(User, related_name='notificaciones_enviador', on_delete=models.CASCADE)
+    fk_recibidor = models.ForeignKey(User, related_name='notificaciones_recibidor', on_delete=models.CASCADE, null = True)
 
 class Solicitud(models.Model):
     id_solicitud = models.BigAutoField(primary_key=True)
-    recibidor = models.IntegerField(null=True)##Recibidorxd
+    recibidor = models.IntegerField(null=True)##El usuario que esta iniciado en la pagina
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)##Enviador
 
 class Amistad(models.Model):
@@ -80,5 +80,11 @@ class Amistad(models.Model):
     amigo = models.IntegerField(null=True)##persona2
 
 
+class Mensaje(models.Model):
+    id_mensaje = models.BigAutoField(primary_key=True)
+    remitente = models.ForeignKey(User, on_delete=models.CASCADE , related_name='mensajes_enviados')
+    destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensajes_recibidos')
+    contenido = models.TextField(null=True)
+    fecha_envio = models.DateTimeField(auto_now_add=True)
 
 

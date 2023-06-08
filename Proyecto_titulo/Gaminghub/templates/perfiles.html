@@ -120,7 +120,13 @@
             <h4 class="fuente">{{ usuario.username }}</h4>
             <p class="fuente">{{ usuario.first_name }} {{ usuario.last_name }}</p>
             <p style="color: aliceblue;">139 Amigos</p>
-            <a href="{% url 'solicitudAmistad'  usuario.id %}"><button class="btn-enviar-solicitud">Enviar solicitud de amistad</button></a>
+            {% if notificacion_pendiente %}
+                  <button class="btn-enviar-solicitud" disabled>Solicitud pendiente</button>
+            {% else %}
+                <a href="{% url 'solicitudAmistad' usuario.id %}">
+                  <button class="btn-enviar-solicitud">Enviar solicitud de amistad</button>
+                </a>
+            {% endif %}
           </div>
         </div>
       </div>
