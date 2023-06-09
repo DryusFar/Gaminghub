@@ -26,7 +26,7 @@ urlpatterns = [
     path('banearUsuario/<id_usuario>', banearUsuario, name="banearUsuario"),
 
     #publicaciones
-    path('registrarpublicacion/5',registrarpublicacion, name='registrarpublicacion'),
+    path('registrarpublicacion/',registrarpublicacion, name='registrarpublicacion'),
     path('listadopublicaciones/', listadopublicaciones, name='listadopublicaciones'),
     path('modificarPublicacion/<id_publicacion>',modificarPublicacion,name='modificarPublicacion'),
     path('eliminar_publicacion/<id_publicacion>',eliminar_publicacion,name='eliminar_publicacion'),
