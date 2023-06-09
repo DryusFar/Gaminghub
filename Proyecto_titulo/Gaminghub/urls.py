@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import comentarios,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje # Se importa la vista de urls
+from .views import comentarios,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje,salas,chatSala, enviarMensajeGrupo, enviarNotificacionMensaje,mensajeAdmin # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -26,7 +26,7 @@ urlpatterns = [
     path('banearUsuario/<id_usuario>', banearUsuario, name="banearUsuario"),
 
     #publicaciones
-    path('registrarpublicacion/',registrarpublicacion, name='registrarpublicacion'),
+    path('registrarpublicacion/5',registrarpublicacion, name='registrarpublicacion'),
     path('listadopublicaciones/', listadopublicaciones, name='listadopublicaciones'),
     path('modificarPublicacion/<id_publicacion>',modificarPublicacion,name='modificarPublicacion'),
     path('eliminar_publicacion/<id_publicacion>',eliminar_publicacion,name='eliminar_publicacion'),
@@ -40,6 +40,11 @@ urlpatterns = [
     path('salir_grupo/<id_grupo>', salir_grupo, name='salir_grupo'),
     path('eliminar_grupo/<id_grupo>', eliminar_grupo, name='eliminar_grupo'),
     path('modificargrupo/<id_grupo>', modificargrupo, name='modificargrupo'),
+    path('salas/<grupo_id>', salas, name='salas'),
+    path('chatSala/<sala_id>', chatSala, name='chatSala'),
+    path('enviarNotificacionMensaje/<id_usuario>',enviarNotificacionMensaje, name='enviarNotificacionMensaje'),
+
+
 
     path('perfiles/<str:username>/', perfiles, name='perfiles'),
     path('buscar_usuarios/', buscar_usuarios, name='buscar_usuarios'),
@@ -65,5 +70,9 @@ urlpatterns = [
     path('eliminarAmigo/<id_enviador>', eliminarAmigo, name='eliminarAmigo'),
     path('chat/<amigo_id>', chat, name='chat'),
     path('enviarMensaje/<int:amigo_id>/', enviarMensaje, name='enviarMensaje'),
+
+
+    path('enviarMensajeGrupo/<int:sala_id>/', enviarMensajeGrupo, name='enviarMensajeGrupo'),
+    path('mensajeAdmin/<id_usuario>', mensajeAdmin, name='mensajeAdmin')
 ]
 

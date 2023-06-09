@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
-from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion, Mensaje
+from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion, Mensaje, Titulo, Puntaje, RegistroGrupo,Sala,MensajeGrupo
 from django.db.models import Q
 from django.contrib import messages
 import datetime
@@ -70,6 +70,7 @@ def perfil(request):
 
     user = User.objects.get(id=username_id)
     listadopublicaciones = Publicacion.objects.all().filter(id_usuario_id = user)
+    puntaje = Puntaje.objects.get(fk_id_usuario = user)
 
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
@@ -80,7 +81,10 @@ def perfil(request):
         'username': user,
         'perfil': perfil,
         'listados':listadopublicaciones,
+        'titulo':puntaje,
     }
+
+
     return render(request, 'perfil.html',context)
 
 @login_required
@@ -652,10 +656,54 @@ def unirse_grupo(request,id_grupo):
 
     user = User.objects.get(id=username_id)
     grupo = Grupo.objects.get(id_grupo = id_grupo)
+    puntaje = Puntaje.objects.get(fk_id_usuario = user)
+    Miembro.objects.create(fk_id_usuario = user, fk_id_grupo = grupo)   
 
-    Miembro.objects.create(fk_id_usuario = user, fk_id_grupo = grupo)    
-    messages.success(request,'Te has unido exitosamente...')
+    try:
+        registro = RegistroGrupo.objects.get(fk_id_grupo=grupo, fk_id_usuario=user)
+    except RegistroGrupo.DoesNotExist:
+        registro = None
+
+    if registro is not None:
+        puntaje_antiguo = puntaje.puntos
+        puntaje_final = puntaje.puntos
+
+    else:
+        puntaje_antiguo = puntaje.puntos
+        puntaje.puntos += 1000
+        puntaje.save()
+        RegistroGrupo.objects.create(fk_id_usuario = user, fk_id_grupo = grupo) 
+        puntaje_final = puntaje.puntos
+
+    cambiar_titulo(puntaje, puntaje_antiguo, puntaje_final)
+
     return redirect('grupos')
+
+def cambiar_titulo(puntaje, puntaje_antiguo, puntaje_final):
+    ###Se verifica si se hubo algun cambio con el puntaje del usuario###
+    if(puntaje_antiguo != puntaje_final):
+        if(puntaje.puntos == 1000):
+            titulo = Titulo.objects.get(id_titulo=2)
+            puntaje.fk_id_titulo = titulo
+            puntaje.save()
+            pass
+
+        elif(puntaje.puntos == 3000):
+            titulo = Titulo.objects.get(id_titulo=3)
+            puntaje.fk_id_titulo = titulo
+            puntaje.save()
+            pass
+
+        elif(puntaje.puntos == 6000):
+            titulo = Titulo.objects.get(id_titulo=4)
+            puntaje.fk_id_titulo = titulo
+            puntaje.save()
+            pass
+        else:
+            pass
+    else:
+        pass
+    
 
 @login_required
 def salir_grupo(request, id_grupo):
@@ -1069,3 +1117,89 @@ def enviarMensaje(request, amigo_id):
 
     # Agrega un retorno de respuesta adecuado aquí
     return HttpResponse("Solo se permite enviar mensajes a través de POST")
+
+def salas(request, grupo_id):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    grupo = Grupo.objects.get(id_grupo = grupo_id)
+
+    
+    salas = Sala.objects.filter(fk_id_grupo = grupo)
+    
+    context = {
+        'user':user,
+        'grupo':grupo,
+        'salas':salas
+    }
+
+    return render(request, 'salas.html',context)
+
+def chatSala(request, sala_id):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    sala = Sala.objects.get(id_sala = sala_id)
+
+    chatSala = MensajeGrupo.objects.filter(fk_id_sala = sala)
+    
+    context = {
+        'user':user,
+        'chat':chatSala,
+        'sala':sala
+    }
+
+    return render(request, 'chatSala.html',context)
+
+def enviarMensajeGrupo(request, sala_id):
+    if request.method == 'POST':
+        # Obtener el usuario actual
+        usuario_actual = request.user
+
+        sala = Sala.objects.get(id_sala = sala_id)
+
+        # Obtener el contenido del mensaje desde el formulario
+        contenido = request.POST.get('mensaje')
+
+        # Crear un nuevo objeto de Mensaje
+        MensajeGrupo.objects.create(remitente=usuario_actual, contenido=contenido, fk_id_sala = sala)
+
+        # Redireccionar a la vista de chat con el amigo
+        return redirect('chatSala',sala.id_sala)
+
+    # Si no se envió un formulario POST, puedes manejarlo según tus necesidades
+    # Por ejemplo, mostrar un error o redireccionar a otra página
+
+    # Agrega un retorno de respuesta adecuado aquí
+    return HttpResponse("Solo se permite enviar mensajes a través de POST")
+
+def enviarNotificacionMensaje(request, id_usuario):
+
+    usuario = User.objects.get(id=id_usuario)
+
+    context = {
+        'usuario':usuario
+    }
+
+    return render(request, 'enviarNotificacionMensaje.html', context)
+
+def mensajeAdmin(request, id_usuario):
+
+    usuario_actual = request.user
+
+    usuario_recibidor = User.objects.get(id=id_usuario)
+
+    mensaje = request.POST['mensaje']
+
+    Notificacion.objects.create(info = mensaje, tipo = 4, fk_id_usuario = usuario_actual, fk_recibidor = usuario_recibidor)
+
+    messages.success(request, 'Notificacion enviada')
+    return redirect('admin1')

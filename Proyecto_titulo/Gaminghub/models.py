@@ -61,6 +61,11 @@ class Miembro(models.Model):
     fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)#Grupo 
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)#Usuario
 
+class RegistroGrupo(models.Model):
+    id_registro = models.BigAutoField(primary_key=True)
+    fk_id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)#Grupo 
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)#Usuario
+
 class Notificacion(models.Model):
     id_notificacion = models.BigAutoField(primary_key=True)
     info = models.TextField(max_length = 300, null = True)
@@ -84,7 +89,23 @@ class Mensaje(models.Model):
     id_mensaje = models.BigAutoField(primary_key=True)
     remitente = models.ForeignKey(User, on_delete=models.CASCADE , related_name='mensajes_enviados')
     destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensajes_recibidos')
-    contenido = models.TextField(null=True)
+    contenido = models.CharField(null=True, max_length = 400)
     fecha_envio = models.DateTimeField(auto_now_add=True)
 
+class MensajeGrupo(models.Model):
+    id_mensajeGrupo = models.BigAutoField(primary_key=True)
+    remitente = models.ForeignKey(User, on_delete=models.CASCADE)
+    contenido = models.CharField(null=True, max_length = 400)
+    fecha_envio = models.DateTimeField(auto_now_add=True)
+    fk_id_sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
+
+class Titulo(models.Model):
+    id_titulo = models.BigAutoField(primary_key=True)
+    nombre_titulo = models.CharField(null=True, max_length=100)
+
+class Puntaje(models.Model):
+    id_puntaje = models.BigAutoField(primary_key=True)
+    puntos = models.IntegerField(null=True)
+    fk_id_titulo = models.ForeignKey(Titulo, on_delete=models.CASCADE)
+    fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 

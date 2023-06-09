@@ -112,6 +112,10 @@
       {% elif l.tipo == 3 %}
         <p>El usuario {{ l.fk_id_usuario }} rechazo tu solicitud! :c </p>
         <a href="{% url 'botonOK' l.id_notificacion %}"><button>Ok</button></a>
+      {% elif l.tipo == 4 %}
+        <p>El admin te a enviado un mensaje! !!</p>
+        <p>{{ l.info }}</p>
+        <a href="{% url 'botonOK' l.id_notificacion %}"><button>Ok</button></a>
       {% else %}
         <p>Aviso</p>
         <a href=""><button>Ok</button></a>
