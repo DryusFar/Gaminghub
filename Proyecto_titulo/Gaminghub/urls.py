@@ -65,5 +65,6 @@ urlpatterns = [
     path('eliminarAmigo/<id_enviador>', eliminarAmigo, name='eliminarAmigo'),
     path('chat/<amigo_id>', chat, name='chat'),
     path('enviarMensaje/<int:amigo_id>/', enviarMensaje, name='enviarMensaje'),
+    
 ]
 

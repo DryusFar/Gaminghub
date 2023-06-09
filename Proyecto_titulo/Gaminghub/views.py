@@ -12,6 +12,8 @@ from PIL import Image
 from django.conf import settings
 import os
 from urllib.parse import urlencode
+from django.http import Http404
+
 
 ##Import models cuando esten listos##
 
@@ -1072,3 +1074,6 @@ def enviarMensaje(request, amigo_id):
 
     # Agrega un retorno de respuesta adecuado aquí
     return HttpResponse("Solo se permite enviar mensajes a través de POST")
+
+def error_404(request, exception):
+    return render(request, '404.html', status=404)
