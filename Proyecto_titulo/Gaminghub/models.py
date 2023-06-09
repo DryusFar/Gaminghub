@@ -90,6 +90,7 @@ class Mensaje(models.Model):
     remitente = models.ForeignKey(User, on_delete=models.CASCADE , related_name='mensajes_enviados')
     destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensajes_recibidos')
     contenido = models.CharField(null=True, max_length = 400)
+    estado = models.IntegerField(null = True)
     fecha_envio = models.DateTimeField(auto_now_add=True)
 
 class MensajeGrupo(models.Model):

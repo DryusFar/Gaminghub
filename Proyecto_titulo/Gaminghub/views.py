@@ -165,6 +165,8 @@ def index(request):
     listadoperfiles = PerfilUsuario.objects.all()
 
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
     except PerfilUsuario.DoesNotExist:
@@ -175,6 +177,7 @@ def index(request):
         'perfil': perfil,
         'listados': listadopublicaciones,
         'listadosp': listadoperfiles,
+        'chat': chat,
     }
     return render(request, 'index.html',context)
 
@@ -1098,6 +1101,12 @@ def chat(request, amigo_id):
         (Q(remitente=amigo) & Q(destinatario=usuario_actual))
     ).order_by('fecha_envio')
 
+    mensajes2 = Mensaje.objects.filter(Q(remitente=amigo) & Q(destinatario=usuario_actual))
+
+    for mensaje in mensajes2:
+        mensaje.estado = 2
+        mensaje.save()
+
     return render(request, 'chat.html', {'amigo': amigo, 'mensajes': mensajes, 'perfil_amigo': perfil_amigo})
 
 def enviarMensaje(request, amigo_id):
@@ -1112,7 +1121,7 @@ def enviarMensaje(request, amigo_id):
         contenido = request.POST.get('mensaje')
 
         # Crear un nuevo objeto de Mensaje
-        mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido)
+        mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido, estado = 1)
 
         # Redireccionar a la vista de chat con el amigo
         return redirect('chat', amigo_id=amigo_id)
