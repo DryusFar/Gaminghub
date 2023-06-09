@@ -1,16 +1,12 @@
 from django.urls import path
-<<<<<<< HEAD
-from .views import comentarios, listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarcomentario, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes # Se importa la vista de urls
-=======
-from .views import listadopublicaciones, loginView, perfil,index,register,admin1, chat, menu_principal, completar_perfil,form_publicacion, registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros # Se importa la vista de urls
->>>>>>> 2e4ff2910aed3f6bfe9c4371e0a17b620ed7c1ca
+from .views import comentarios,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje,salas,chatSala, enviarMensajeGrupo, enviarNotificacionMensaje,mensajeAdmin # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
     path('register', register, name='register'),
     path('perfil/', perfil, name='perfil'),
     path('admin1/', admin1, name='admin1'),
-    path('chat/', chat, name='chat'),
+    path('chat2/', chat2, name='chat2'),
     path('menu_principal/', menu_principal, name='menu_principal'),
     path('', index, name='index'),
     path('completar_perfil/', completar_perfil, name='completar_perfil'),
@@ -30,7 +26,7 @@ urlpatterns = [
     path('banearUsuario/<id_usuario>', banearUsuario, name="banearUsuario"),
 
     #publicaciones
-    path('registrarpublicacion/',registrarpublicacion, name='registrarpublicacion'),
+    path('registrarpublicacion/5',registrarpublicacion, name='registrarpublicacion'),
     path('listadopublicaciones/', listadopublicaciones, name='listadopublicaciones'),
     path('modificarPublicacion/<id_publicacion>',modificarPublicacion,name='modificarPublicacion'),
     path('eliminar_publicacion/<id_publicacion>',eliminar_publicacion,name='eliminar_publicacion'),
@@ -44,6 +40,11 @@ urlpatterns = [
     path('salir_grupo/<id_grupo>', salir_grupo, name='salir_grupo'),
     path('eliminar_grupo/<id_grupo>', eliminar_grupo, name='eliminar_grupo'),
     path('modificargrupo/<id_grupo>', modificargrupo, name='modificargrupo'),
+    path('salas/<grupo_id>', salas, name='salas'),
+    path('chatSala/<sala_id>', chatSala, name='chatSala'),
+    path('enviarNotificacionMensaje/<id_usuario>',enviarNotificacionMensaje, name='enviarNotificacionMensaje'),
+
+
 
     path('perfiles/<str:username>/', perfiles, name='perfiles'),
     path('buscar_usuarios/', buscar_usuarios, name='buscar_usuarios'),
@@ -53,14 +54,29 @@ urlpatterns = [
     path('post/<int:id_publicacion>/like', Darlikes.as_view(), name='like'),
     path('post/<int:id_publicacion>/dislike>', Dardislikes.as_view(), name='dislike'),
 
-<<<<<<< HEAD
     #Comentarios
     path('comentarios/<int:id_publicacion>', comentarios, name='comentarios'),
     path('registrarcomentario/<int:id_publicacion>',registrarcomentario, name='registrarcomentario'),
 
-=======
-
     path('vista_miembros/<int:grupo_id>/', vista_miembros, name='vista_miembros'),
->>>>>>> 2e4ff2910aed3f6bfe9c4371e0a17b620ed7c1ca
+
+    #Solicitud
+    path('solicitudAmistad/<int:id_amigo>',solicitudAmistad, name='solicitudAmistad'),
+    path('notificaciones/',notificaciones, name='notificaciones'),
+    path('agregarAmigo/<id_notifi>/<id_enviador>',agregarAmigo,name='agregarAmigo'),
+    path('declinarSolicitud/<id_notifi>/<id_enviador>',declinarSolicitud,name='declinarSolicitud'),
+    path('botonOK/<id_notifi>',botonOK,name='botonOK'),
+    path('amigos/', amigos, name='amigos'),
+    path('eliminarAmigo/<id_enviador>', eliminarAmigo, name='eliminarAmigo'),
+    path('chat/<amigo_id>', chat, name='chat'),
+    path('enviarMensaje/<int:amigo_id>/', enviarMensaje, name='enviarMensaje'),
+<<<<<<< HEAD
+
+
+    path('enviarMensajeGrupo/<int:sala_id>/', enviarMensajeGrupo, name='enviarMensajeGrupo'),
+    path('mensajeAdmin/<id_usuario>', mensajeAdmin, name='mensajeAdmin')
+=======
+    
+>>>>>>> origin/develop
 ]
 

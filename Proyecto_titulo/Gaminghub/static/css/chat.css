@@ -1,180 +1,155 @@
-#si{
-  font-family: 'monospace';
+/* Estilos adicionales */
+body {
+  padding-top: 50px;
+  background-image: url(../img/chat.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-.gradient-custom {
-    /* fallback for old browsers */
-    background: #000000;
-
-    
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to bottom right, #6200d1, #00b94e);
-    
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to bottom right, #6200d1, #00b94e)
-    }
-    
-    .mask-custom {
-    background: rgba(24, 24, 16, .2);
-    border-radius: 2em;
-    backdrop-filter: blur(15px);
-    border: 2px solid rgba(255, 255, 255, 0.05);
-    background-clip: padding-box;
-    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
-    }
-
-    p{
-        color: aliceblue;
-        
-    }
-
-    .textover{
-        
-            
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-      
-    }
-
-    .textover-nom{
-        
-        
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-  
-    }
-
-   
-
-      
-
-/*emojis*/
-
-/* Estilos para el botón de emojis */
-#emoji-button {
-    background-color: #6a5acd;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    margin-bottom: 10px;
+.container {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-/* Estilos para la ventana modal de emojis */
-#emoji-modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+.avatar-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-/* Estilos para el contenido de la ventana modal de emojis */
-#emoji-modal-content {
-    background-color: white;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
-    position: relative;
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
-/* Estilos para el botón de cierre de la ventana modal de emojis */
-#emoji-modal-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    cursor: pointer;
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
 }
 
-/* Estilos para los emojis */
-.emoji {
-    display: inline-block;
-    font-size: 20px;
-    padding: 5px;
-    cursor: pointer;
+.message-content {
+  flex: 1;
+  max-width: 80%;
+  word-wrap: break-word; /* Agrega esta propiedad para permitir el ajuste de palabras largas */
 }
 
-.modal {
-    display: none; /* Ocultar la modal por defecto */
-    position: fixed; /* Posicion fija */
-    z-index: 1; /* Establecer la profundidad de la modal */
-    left: 0;
-    top: 0;
-    width: 100%; /* Ancho completo */
-    height: 100%; /* Altura completa */
-    overflow: auto; /* Permitir el desplazamiento vertical */
-    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semi-transparente */
-  }
+.message .sender {
+  font-weight: bold;
+}
 
-  /* Estilos para el contenido de la modal */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-  }
+.chat {
+  background-color: rgb(24 30 35 / 69%);
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 650px; /* Tamaño máximo deseado */
+  overflow-y: auto; /* Aparecerá el scroll vertical si se excede la altura */
+  overflow-x: hidden; /* Oculta el scroll horizontal */
+}
 
-  /* Estilos para el botón que abre la modal */
-  .modal-button {
-    background-color: #4CAF50; /* Color de fondo */
-    border: none; /* Sin borde */
-    color: white; /* Color del texto */
-    padding: 10px 20px; /* Espacio alrededor del texto */
-    text-align: center; /* Centrar el texto */
-    text-decoration: none; /* Sin subrayado de texto */
-    display: inline-block; /* Mostrar como un elemento de bloque */
-    font-size: 16px; /* Tamaño de fuente */
-    margin: 20px; /* Espacio alrededor del botón */
-    cursor: pointer; /* Cambiar el cursor al pasar por encima */
-  }
+/* Estilos del scrollbar para navegadores basados en WebKit, como Chrome y Safari */
+.chat::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar */
+}
 
-  .modal {
-    display: none; /* Por defecto, estará oculto */
-    position: fixed; /* Posición fija */
-    z-index: 1; /* Se situará por encima de otros elementos de la página*/
-    padding-top: 200px; /* El contenido estará situado a 200px de la parte superior */
-    left: 0;
-    top: 0;
-    width: 100%; /* Ancho completo */
-    height: 100%; /* Algura completa */
-    overflow: auto; /* Se activará el scroll si es necesario */
-    background-color: rgba(0,0,0,0.5); /* Color negro con opacidad del 50% */
-  }
+.chat::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color de fondo del track */
+}
 
-  .contenido-modal {
-    position: relative; /* Relativo con respecto al contenedor -modal- */
-    background-color: white;
-    margin: auto; /* Centrada */
-    padding: 20px;
-    width: 60%;
-    -webkit-animation-name: animarsuperior;
-    -webkit-animation-duration: 0.5s;
-    animation-name: animarsuperior;
-    animation-duration: 0.5s
-  }
+.chat::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del thumb */
+  border-radius: 4px; /* Borde del thumb */
+}
 
-  .close {
-    color: black;
-    float: right;
-    font-size: 30px;
-    font-weight: bold;
-  }
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
+.chat::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color del thumb en estado hover */
+}
+
+.chat::-webkit-scrollbar-thumb:active {
+  background-color: #333; /* Color del thumb en estado activo (click) */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header .avatar-container {
+  margin-right: 10px;
+}
+
+.header h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.fuente {
+  font-family: "Press Start 2P";
+  color: aliceblue;
+}
+
+.message-sent {
+  align-self: flex-end;
+  background-color: #dcf8c6;
+  margin-left: auto;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.message-received {
+  align-self: flex-start;
+  background-color: #f5f5f5;
+  margin-right: auto;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.chat-messages {
+  flex: 1;
+  background-color: rgb(24 30 35 / 69%);
+  border-radius: 10px;
+  padding: 10px;
+  max-height: calc(
+    100% - 150px
+  ); /* Resta la altura de la cabecera y el formulario de enviar mensaje */
+  overflow-y: auto; /* Aparecerá el scroll vertical si se excede la altura */
+  overflow-x: hidden; /* Oculta el scroll horizontal */
+}
+
+/* Estilos del scrollbar para navegadores basados en WebKit, como Chrome y Safari */
+.chat-messages::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar */
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color de fondo del track */
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del thumb */
+  border-radius: 4px; /* Borde del thumb */
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color del thumb en estado hover */
+}
+
+.chat-messages::-webkit-scrollbar-thumb:active {
+  background-color: #333; /* Color del thumb en estado activo (click) */
+}
+
+.form-group {
+  margin-bottom: 0; /* Evita el espacio adicional en el formulario */
+}
+
+.input-group {
+  position: sticky;
+  bottom: 0;
+  padding-top: 10px;
+}

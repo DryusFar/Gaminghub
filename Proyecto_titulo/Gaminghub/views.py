@@ -12,6 +12,8 @@ from PIL import Image
 from django.conf import settings
 import os
 from urllib.parse import urlencode
+from django.http import Http404
+
 
 ##Import models cuando esten listos##
 
@@ -1087,13 +1089,16 @@ def chat(request, amigo_id):
     # Obtener el amigo utilizando el ID recibido
     amigo = User.objects.get(id=amigo_id)
 
+    # Obtener el perfil del amigo
+    perfil_amigo = PerfilUsuario.objects.get(id_usuario=amigo)
+
     # Obtener los mensajes entre el usuario actual y el amigo
     mensajes = Mensaje.objects.filter(
         (Q(remitente=usuario_actual) & Q(destinatario=amigo)) |
         (Q(remitente=amigo) & Q(destinatario=usuario_actual))
     ).order_by('fecha_envio')
 
-    return render(request, 'chat.html', {'amigo': amigo, 'mensajes': mensajes})
+    return render(request, 'chat.html', {'amigo': amigo, 'mensajes': mensajes, 'perfil_amigo': perfil_amigo})
 
 def enviarMensaje(request, amigo_id):
     if request.method == 'POST':
@@ -1117,6 +1122,9 @@ def enviarMensaje(request, amigo_id):
 
     # Agrega un retorno de respuesta adecuado aquí
     return HttpResponse("Solo se permite enviar mensajes a través de POST")
+
+def error_404(request, exception):
+    return render(request, '404.html', status=404)
 
 def salas(request, grupo_id):
     if request.user.is_authenticated:
