@@ -765,7 +765,7 @@ def perfiles(request, username):
 
 
 
-    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente})
+    return render(request, 'perfiles.html',{'user':username_id, 'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente})
 
 def buscar_usuarios(request):
     if request.method == 'GET' and 'term' in request.GET:
@@ -858,6 +858,33 @@ def eliminar_publicacion(request,id_publicacion):
     publicacion.delete()
     messages.success(request,'Publicacion eliminada exitosamente...')
     return redirect('perfil')
+
+def eliminar_publicacion_perfiles(request,id_publicacion,id_username):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    usuario = get_object_or_404(User, username=id_username)
+    perfil_usuario = PerfilUsuario.objects.get(id_usuario=usuario) #OBTENGO EL MODELO PERFILUSUARIO CON SU FK QUE COINCIDA CON EL USUARIO OBTENIDO ANTERIORMENTE
+    publicaciones = Publicacion.objects.filter(id_usuario=usuario)  # Utiliza filter en lugar de get si esperas múltiples publicaciones
+
+    publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
+
+    publicacion.delete()
+    messages.success(request,'Publicacion eliminada exitosamente...')
+
+    notificacion_pendiente = Notificacion.objects.filter(
+    Q(fk_id_usuario=request.user, fk_recibidor=perfil_usuario.id_usuario) |
+    Q(fk_id_usuario=perfil_usuario.id_usuario, fk_recibidor=request.user),
+    tipo=1
+    ).exists()
+
+
+
+    return redirect('perfiles', username = id_username)
+
 
 @login_required
 def modificargrupo(request,id_grupo):
@@ -1220,3 +1247,45 @@ def mensajeAdmin(request, id_usuario):
 
     messages.success(request, 'Notificacion enviada')
     return redirect('admin1')
+
+def get_messages(request, amigo_id):
+     # Obtener el usuario actual
+    usuario_actual = request.user
+
+    # Obtener el amigo utilizando el ID recibido
+    amigo = User.objects.get(id=amigo_id)
+
+    # Obtener el perfil del amigo
+    perfil_amigo = PerfilUsuario.objects.get(id_usuario=amigo)
+
+    # Obtener los mensajes entre el usuario actual y el amigo
+    mensajes = Mensaje.objects.filter(
+        (Q(remitente=usuario_actual) & Q(destinatario=amigo)) |
+        (Q(remitente=amigo) & Q(destinatario=usuario_actual))
+    ).order_by('fecha_envio')
+
+    messages_data = []  # Agrega esta línea para inicializar la lista
+
+    for mensaje in mensajes:
+        message_data = {
+            'remitente': mensaje.remitente.username,
+            'contenido': mensaje.contenido,
+        }
+        messages_data.append(message_data)
+
+    return JsonResponse({'messages': messages_data})
+
+def get_messages_grupo(request, sala_id):
+    # Obtener los mensajes de la sala específica utilizando el ID recibido
+    mensajes = MensajeGrupo.objects.filter(fk_id_sala=sala_id).order_by('fecha_envio')
+
+    messages_data = []
+
+    for mensaje in mensajes:
+        message_data = {
+            'remitente': mensaje.remitente.username,
+            'contenido': mensaje.contenido,
+        }
+        messages_data.append(message_data)
+
+    return JsonResponse({'messages': messages_data})

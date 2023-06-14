@@ -108,7 +108,7 @@
         <div class="info-container">
           <p class="nombre-usuario" style="font-weight: 600;">{{ amigo.username }}</p>
           <div class="botones">
-            <form method="post" action="{% url 'enviarMensaje' amigo.id_u %}">
+            <form method="post" action="{% url 'chat' amigo.id_u %}">
               {% csrf_token %}
               <button type="submit" class="btn colorBoton" style="color: aliceblue;">Enviar mensaje</button>
             </form>

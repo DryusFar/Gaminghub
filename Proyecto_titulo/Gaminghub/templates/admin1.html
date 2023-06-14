@@ -93,7 +93,7 @@
       <div class="col-md-2"></div>
       <div class="col-md-8">
         <div class="row">
-          <div class="col-4"><input type="text"  class="form-control barrabusqueda" placeholder="Filtrar por Nick"></div>
+          <div class="col-4"><input type="text" class="form-control barrabusqueda" id="filtroNick" placeholder="Filtrar por Nick"></div>
           <div class="col-4"></div>
           <div class="col-4"></div>
         </div>
@@ -116,9 +116,9 @@
             </thead>
             <tbody>
               {% for u in username %}
-              <tr>
-                <td>{{ u.username }}</td>
-                <td>{{ u.email }}</td>
+              <tr data-nick="{{ u.username }}">
+                <td><a href="{% url 'perfiles' u.username %}">{{ u.username }}</a></td>
+                <td><a href="{% url 'perfiles' u.username %}">{{ u.email }}</a></td>
                 {% if u.is_active == True %}
                 <td>Desbaneado</td>
                 {% elif u.is_active == False %}
@@ -143,6 +143,25 @@
   </div>
 
   
+<script>
+
+document.getElementById('filtroNick').addEventListener('keyup', function() {
+    var input = this.value.toLowerCase();
+    var rows = document.querySelectorAll('tbody tr');
+    
+    rows.forEach(function(row) {
+      var nick = row.getAttribute('data-nick').toLowerCase();
+      
+      if (nick.indexOf(input) > -1) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+
+</script>
+
 <!-- Footer -->
 <footer id="piedepag">
 <p>Chile, Santiago de Chile | Fono: 227369936 | Email: gaminghub@gmail.com</p>

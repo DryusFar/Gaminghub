@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
    // Obtener el botón de emojis
-	var emojiButton = document.getElementById("emoji-button");
 
     $(document).ready(function() {
         $("#textAreaExample3").emojioneArea({
@@ -37,3 +36,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 });
+

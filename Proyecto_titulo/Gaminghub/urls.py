@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import comentarios,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje,salas,chatSala, enviarMensajeGrupo, enviarNotificacionMensaje,mensajeAdmin # Se importa la vista de urls
+from .views import comentarios,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje,salas,chatSala, enviarMensajeGrupo, enviarNotificacionMensaje,mensajeAdmin, get_messages,get_messages_grupo, eliminar_publicacion_perfiles # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -68,8 +68,11 @@ urlpatterns = [
     path('botonOK/<id_notifi>',botonOK,name='botonOK'),
     path('amigos/', amigos, name='amigos'),
     path('eliminarAmigo/<id_enviador>', eliminarAmigo, name='eliminarAmigo'),
-    path('chat/<amigo_id>', chat, name='chat'),
+    path('chat/<amigo_id>/', chat, name='chat'),
     path('enviarMensaje/<int:amigo_id>/', enviarMensaje, name='enviarMensaje'),
+    path('get_messages/<int:amigo_id>/', get_messages, name='get_messages'),
+    path('get_messages_grupo/<int:sala_id>/', get_messages_grupo, name='get_messages_grupo'),
+    path('eliminar_publicacion_perfiles/<id_publicacion>/<id_username>/',eliminar_publicacion_perfiles, name='eliminar_publicacion_perfiles'),
 
 
     path('enviarMensajeGrupo/<int:sala_id>/', enviarMensajeGrupo, name='enviarMensajeGrupo'),

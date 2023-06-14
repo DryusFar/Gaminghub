@@ -89,7 +89,7 @@ class Mensaje(models.Model):
     id_mensaje = models.BigAutoField(primary_key=True)
     remitente = models.ForeignKey(User, on_delete=models.CASCADE , related_name='mensajes_enviados')
     destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensajes_recibidos')
-    contenido = models.CharField(null=True, max_length = 400)
+    contenido = models.TextField(null=True)
     estado = models.IntegerField(null = True)
     fecha_envio = models.DateTimeField(auto_now_add=True)
 
