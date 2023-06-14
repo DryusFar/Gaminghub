@@ -985,6 +985,11 @@ def registrarcomentario(request, id_publicacion):
         publicacion = Publicacion.objects.get(id_publicacion=id_publicacion)
         Comentario.objects.create(descripcion=descripcion_c, fk_id_usuario=user, fk_id_publicacion=publicacion)
 
+<<<<<<< HEAD
+        return redirect('comentarios', id_publicacion=id_publicacion)
+    
+    user = request.user
+=======
     if request.user.is_authenticated:
         username_id = request.user.id
     else:
@@ -993,6 +998,7 @@ def registrarcomentario(request, id_publicacion):
     chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
 
     user = User.objects.get(id=username_id)
+>>>>>>> 45bbf1a4a72940bd3741caa38428e4ae571a5704
     publicacion = Publicacion.objects.get(id_publicacion=id_publicacion)
     listadoc = Comentario.objects.filter(fk_id_publicacion=id_publicacion)
 

@@ -104,6 +104,7 @@ class Titulo(models.Model):
     id_titulo = models.BigAutoField(primary_key=True)
     nombre_titulo = models.CharField(null=True, max_length=100)
 
+
 class Puntaje(models.Model):
     id_puntaje = models.BigAutoField(primary_key=True)
     puntos = models.IntegerField(null=True)
