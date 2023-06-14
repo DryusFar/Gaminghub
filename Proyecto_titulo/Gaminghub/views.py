@@ -74,6 +74,8 @@ def perfil(request):
     listadopublicaciones = Publicacion.objects.all().filter(id_usuario_id = user)
     puntaje = Puntaje.objects.get(fk_id_usuario = user)
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
     except PerfilUsuario.DoesNotExist:
@@ -84,6 +86,7 @@ def perfil(request):
         'perfil': perfil,
         'listados':listadopublicaciones,
         'titulo':puntaje,
+        'chat':chat,
     }
 
 
@@ -93,10 +96,18 @@ def perfil(request):
 @user_passes_test(is_superuser)
 def admin1(request):
 
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     user = User.objects.all().filter(is_superuser = 0)
     
     context = {
         'username': user,
+        'chat':chat,
     }
 
     return render(request, 'admin1.html',context)
@@ -112,6 +123,8 @@ def grupos(request):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     user = User.objects.get(id=username_id)
     miembros = Miembro.objects.filter(fk_id_usuario=username_id).values_list('fk_id_grupo', flat=True)
     listadogrupos = Grupo.objects.all()
@@ -120,6 +133,7 @@ def grupos(request):
         'username': user,
         'listados': listadogrupos,
         'miembro':miembros,
+        'chat': chat,
     }
     return render(request, 'grupos.html',context)
 
@@ -196,6 +210,8 @@ def form_publicacion(request):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     user = User.objects.get(id=username_id)
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
@@ -204,7 +220,8 @@ def form_publicacion(request):
 
     context = {
         'username': user,
-        'perfil':perfil
+        'perfil':perfil,
+        'chat':chat,
     }
 
     return render(request, 'form_publicacion.html', context)
@@ -216,12 +233,15 @@ def form_modificarPublicacion(request, id_publicacion):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     user = User.objects.get(id=username_id)
     publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
 
     context = {
         'username': user,
         'publicacion':publicacion,
+        'chat':chat,
     }
 
     return render(request, 'form_modificarPublicacion.html', context)
@@ -234,10 +254,13 @@ def completar_perfil(request):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     user = User.objects.get(id=username_id)
 
     context = {
-        'username': user
+        'username': user,
+        'chat':chat,
     }
 
 
@@ -251,6 +274,8 @@ def modificar_perfil(request):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     
 
     user = User.objects.get(id=username_id)
@@ -262,7 +287,8 @@ def modificar_perfil(request):
 
     context = {
         'username': user,
-        'perfil': perfil
+        'perfil': perfil,
+        'chat': chat,
     }
 
 
@@ -507,13 +533,15 @@ def listadopublicaciones(request):
         username_id = request.user.id
     else:
         username_id = None
+
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
     user = User.objects.get(id=username_id)
 
     listadop = Publicacion.objects.all()
 
    
     contexto = {'username': user, 
-    "listados" : listadop}
+    "listados" : listadop, 'chat':chat,}
 
     return render(request , 'index.html',contexto)
 ##############publicacion##################
@@ -541,6 +569,8 @@ def csambiarC(request):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     user = User.objects.get(id=username_id)
 
     password_u = request.POST['password1']
@@ -553,7 +583,8 @@ def csambiarC(request):
 
     context = {
         'username': user,
-        'perfil': perfil
+        'perfil': perfil,
+        'chat':chat
     }
 
     messages.success(request,'Contraseña modificada exitosamente')
@@ -590,7 +621,17 @@ def cambiarC(request):
 
 @login_required
 def form_grupo(request):
-    return render(request, 'form_grupo.html')
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
+    context = {
+        'chat':chat
+    }
+    return render(request, 'form_grupo.html', context)
 
 @login_required
 def form_modificarGrupo(request, id_grupo):
@@ -757,6 +798,8 @@ def perfiles(request, username):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     notificacion_pendiente = Notificacion.objects.filter(
     Q(fk_id_usuario=request.user, fk_recibidor=perfil_usuario.id_usuario) |
     Q(fk_id_usuario=perfil_usuario.id_usuario, fk_recibidor=request.user),
@@ -765,7 +808,7 @@ def perfiles(request, username):
 
 
 
-    return render(request, 'perfiles.html',{'user':username_id, 'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente})
+    return render(request, 'perfiles.html',{'user':username_id, 'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente, 'chat':chat})
 
 def buscar_usuarios(request):
     if request.method == 'GET' and 'term' in request.GET:
@@ -944,6 +987,8 @@ def registrarcomentario(request,id_publicacion):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     user = User.objects.get(id=username_id)
     publicacion = Publicacion.objects.get(id_publicacion=id_publicacion)
     descripcion_c = request.POST['descripcion']
@@ -953,6 +998,7 @@ def registrarcomentario(request,id_publicacion):
         'username': user,
         'publicacion':publicacion,
         'listados': listadoc,
+        'chat':chat
     }
     Comentario.objects.create(descripcion = descripcion_c,fk_id_usuario = user,fk_id_publicacion = publicacion)   
 
@@ -1004,6 +1050,8 @@ def notificaciones(request):
     else:
         username_id = None
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     user = User.objects.get(id=username_id)  
 
     listadonotificaciones = Notificacion.objects.all().filter(fk_recibidor = user)
@@ -1011,6 +1059,7 @@ def notificaciones(request):
     context = {
         'username': user,
         'listados': listadonotificaciones,
+        'chat': chat
     }
 
     return render(request, 'notificaciones.html', context)
@@ -1077,6 +1126,13 @@ def amigos(request):
     # Obtener el usuario actual
     usuario_actual = request.user
 
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     # Obtener todas las amistades del usuario actual
     amistades = Amistad.objects.filter(persona=usuario_actual.id)
 
@@ -1098,7 +1154,7 @@ def amigos(request):
         })
 
     # Puedes pasar la lista de amigos al contexto de renderización
-    return render(request, 'amigos.html', {'amigos': amigos})
+    return render(request, 'amigos.html', {'amigos': amigos, 'chat':chat})
 
 def eliminarAmigo(request, id_enviador):
 

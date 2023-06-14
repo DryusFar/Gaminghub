@@ -27,7 +27,7 @@ class Publicacion(models.Model):
     id_publicacion = models.BigAutoField(primary_key=True)
     titulo = models.CharField(max_length=60)
     contenido = models.CharField(max_length = 200)
-    multimedia = models.ImageField()
+    multimedia = models.FileField(upload_to='multimedia/')
     #Para poner videos y fotos .FileField
     fecha_creacion = models.DateField()
     like = models.ManyToManyField(User, blank=True, related_name='like')
