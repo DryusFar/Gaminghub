@@ -161,7 +161,7 @@
         <form id="message-form" method="post" action="{% url 'enviarMensaje' amigo_id=amigo.id %}" data-amigo-id="{{ amigo.id }}">
             {% csrf_token %}
             <div class="input-group mb-3">
-                <textarea id="textAreaExample3" type="text" class="form-control" name="mensaje" placeholder="Escribe tu mensaje..." required></textarea>
+                <textarea id="textAreaExample3" type="text" class="form-control" name="mensaje" placeholder="Escribe tu mensaje..." required style="resize: none;"></textarea>
                 <button class="btn btn-primary" type="submit" style="background-color: #5000bf;">Enviar</button>
             </div>
         </form>

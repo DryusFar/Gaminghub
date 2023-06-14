@@ -31,7 +31,7 @@
         <!-- Aquí puedes agregar el formulario para enviar nuevos mensajes -->
         <form method="post" action="{% url 'enviarMensajeGrupo' sala_id=sala.id_sala %}" style="text-align: center;">
             {% csrf_token %}
-            <textarea id="textAreaExample3" type="text" class="form-control" name="mensaje" placeholder="Escribe tu mensaje..." cols="2" rows="2" required style="margin-right: 5px;"></textarea>
+            <textarea id="textAreaExample3" type="text" class="form-control" name="mensaje" placeholder="Escribe tu mensaje..." cols="2" rows="2" required style="margin-right: 5px; resize: none;"></textarea>
             <button class="btn btn-primary" type="submit" style="background-color: #5000bf;">Enviar</button>
         </form>
     </div>
