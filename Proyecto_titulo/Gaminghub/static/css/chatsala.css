@@ -1,0 +1,188 @@
+.chat-messages {
+  width: 100%;
+  max-height: 400px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.chat-messages p {
+  margin: 5px 0;
+}
+
+form {
+  display: flex;
+  margin-top: 10px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Estilos adicionales */
+body {
+    padding-top: 50px;
+    background-image: url(../img/chat.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  .container {
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .avatar-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .message {
+    display: flex !important;
+    align-items: flex-start !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .message-content {
+    flex: 1 !important;
+    max-width: 80% !important;
+    word-wrap: break-word !important; /* Agrega esta propiedad para permitir el ajuste de palabras largas */
+  } ;
+  
+  .message .sender {
+    font-weight: bold;
+  }
+  
+  .chat {
+    background-color: rgb(24 30 35 / 69%) !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+    max-height: 650px !important; /* Tamaño máximo deseado */
+    overflow-y: auto !important; /* Aparecerá el scroll vertical si se excede la altura */
+    overflow-x: hidden !important; /* Oculta el scroll horizontal */
+    /* Otros estilos que desees aplicar */
+  }
+  
+  /* Estilos del scrollbar para navegadores basados en WebKit, como Chrome y Safari */
+  .chat::-webkit-scrollbar {
+    width: 8px; /* Ancho del scrollbar */
+  }
+  
+  .chat::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color de fondo del track */
+  }
+  
+  .chat::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color del thumb */
+    border-radius: 4px; /* Borde del thumb */
+  }
+  
+  .chat::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color del thumb en estado hover */
+  }
+  
+  .chat::-webkit-scrollbar-thumb:active {
+    background-color: #333; /* Color del thumb en estado activo (click) */
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .header .avatar-container {
+    margin-right: 10px;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .fuente {
+    font-family: "Press Start 2P";
+    color: aliceblue;
+  }
+  
+  .message-sent {
+    align-self: flex-end !important;
+    background-color: #dcf8c6 !important;
+    margin-left: auto !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+  }
+  
+  .message-received {
+    align-self: flex-start !important;
+    background-color: #f5f5f5 !important;
+    margin-right: auto !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    background-color: rgb(24 30 35 / 69%) !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+    max-height: calc (
+      100% - 150px
+    ) ; /* Resta la altura de la cabecera y el formulario de enviar mensaje */
+    overflow-y: auto !important; /* Aparecerá el scroll vertical si se excede la altura */
+    overflow-x: hidden !important; /* Oculta el scroll horizontal */
+  }
+  
+  /* Estilos del scrollbar para navegadores basados en WebKit, como Chrome y Safari */
+  .chat-messages::-webkit-scrollbar {
+    width: 8px; /* Ancho del scrollbar */
+  }
+  
+  .chat-messages::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color de fondo del track */
+  }
+  
+  .chat-messages::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color del thumb */
+    border-radius: 4px; /* Borde del thumb */
+  }
+  
+  .chat-messages::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color del thumb en estado hover */
+  }
+  
+  .chat-messages::-webkit-scrollbar-thumb:active {
+    background-color: #333; /* Color del thumb en estado activo (click) */
+  }
+  
+  .form-group {
+    margin-bottom: 0; /* Evita el espacio adicional en el formulario */
+  }
+  
+  .input-group {
+    position: sticky;
+    bottom: 0;
+    padding-top: 10px;
+  }
+  
