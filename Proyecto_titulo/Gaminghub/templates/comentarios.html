@@ -119,17 +119,24 @@
         </form>
 
     </div>
+
 {% for l in listados %}
         <div class="container">
             <div class="task" draggable="true">
                 <div class="tags">
                 
                 <span class="tag">{{ l.fk_id_usuario }}</span>
-                
-                <button class="options">
+                {% if username.id == l.fk_id_usuario.id %}
+                <button class="options btn-abrir-modal2"  data-id-comentario="{{ l.id_comentario }}">
+                    
                     <svg xml:space="preserve" viewBox="0 0 41.915 41.916" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Capa_1" version="1.1" fill="#000000"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M11.214,20.956c0,3.091-2.509,5.589-5.607,5.589C2.51,26.544,0,24.046,0,20.956c0-3.082,2.511-5.585,5.607-5.585 C8.705,15.371,11.214,17.874,11.214,20.956z"></path> <path d="M26.564,20.956c0,3.091-2.509,5.589-5.606,5.589c-3.097,0-5.607-2.498-5.607-5.589c0-3.082,2.511-5.585,5.607-5.585 C24.056,15.371,26.564,17.874,26.564,20.956z"></path> <path d="M41.915,20.956c0,3.091-2.509,5.589-5.607,5.589c-3.097,0-5.606-2.498-5.606-5.589c0-3.082,2.511-5.585,5.606-5.585 C39.406,15.371,41.915,17.874,41.915,20.956z"></path> </g> </g> </g></svg>
                 </button>
-
+                {% elif username.is_superuser %}
+                <button class="options btn-abrir-modal2"  data-id-comentario="{{ l.id_comentario }}">
+                    
+                    <svg xml:space="preserve" viewBox="0 0 41.915 41.916" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Capa_1" version="1.1" fill="#000000"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M11.214,20.956c0,3.091-2.509,5.589-5.607,5.589C2.51,26.544,0,24.046,0,20.956c0-3.082,2.511-5.585,5.607-5.585 C8.705,15.371,11.214,17.874,11.214,20.956z"></path> <path d="M26.564,20.956c0,3.091-2.509,5.589-5.606,5.589c-3.097,0-5.607-2.498-5.607-5.589c0-3.082,2.511-5.585,5.607-5.585 C24.056,15.371,26.564,17.874,26.564,20.956z"></path> <path d="M41.915,20.956c0,3.091-2.509,5.589-5.607,5.589c-3.097,0-5.606-2.498-5.606-5.589c0-3.082,2.511-5.585,5.606-5.585 C39.406,15.371,41.915,17.874,41.915,20.956z"></path> </g> </g> </g></svg>
+                </button>
+                {% endif %}
                 </div>
                 <p style="font-family: 'Press Start 2P'; font-size: 11px;">{{ l.descripcion }}</p>
                 <div class="stats">
@@ -143,7 +150,38 @@
             </div>
         </div>
 {% endfor %}
+
+  <!-- MODAL PARA ELIMINAR GRUPO-->
+  <div id="myModal2" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Contenido de la modal -->
+        <div class="modal-header">
+          <h5 class="modal-title" style="color: black;">Comentario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="color: black; font-family: monospace;">Estas seguro de que quieres eliminar este comentario?</p>
+        </div>
+        <div class="modal-footer">
+          <span id="comentario-id"></span>
+          <button type="button" class="btn btn-secondary close" data-dismiss="modal" style="font-family: monospace;">Cerrar</button>
+          <a href="#" class="btn btn-danger" id="btn-eliminar" style="font-family: monospace;">Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="app.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-PZl+kB6TnldN1yCv5KJtl2jFdoCBs0IIw6G6Gj5tsTlKwKKgJPwPpATP5mnTfDkm" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+crossorigin="anonymous"></script>
 <script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/eliminar_comentario.js' %}"></script>
 </body>
 </html>

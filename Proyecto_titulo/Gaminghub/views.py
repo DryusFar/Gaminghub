@@ -172,8 +172,6 @@ def index(request):
     }
     return render(request, 'index.html',context)
 
-def comentarios(request):
-    return render(request, 'comentarios.html')
 
 @login_required
 def register(request):
@@ -857,27 +855,26 @@ def vista_miembros(request, grupo_id):
 ########################## COMENTARIOS ########################
 
 @login_required
-def registrarcomentario(request,id_publicacion):
+def registrarcomentario(request, id_publicacion):
+    if request.method == 'POST':
+        descripcion_c = request.POST.get('descripcion')
+        user = request.user
+        publicacion = Publicacion.objects.get(id_publicacion=id_publicacion)
+        Comentario.objects.create(descripcion=descripcion_c, fk_id_usuario=user, fk_id_publicacion=publicacion)
 
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)
+        return redirect('comentarios', id_publicacion=id_publicacion)
+    
+    user = request.user
     publicacion = Publicacion.objects.get(id_publicacion=id_publicacion)
-    descripcion_c = request.POST['descripcion']
     listadoc = Comentario.objects.filter(fk_id_publicacion=id_publicacion)
 
     context = {
         'username': user,
-        'publicacion':publicacion,
+        'publicacion': publicacion,
         'listados': listadoc,
     }
-    Comentario.objects.create(descripcion = descripcion_c,fk_id_usuario = user,fk_id_publicacion = publicacion)   
-
-    return render(request,'comentarios.html',context)
-
+    
+    return render(request, 'comentarios.html', context)
 
 def comentarios(request,id_publicacion):
     if request.user.is_authenticated:
@@ -896,6 +893,20 @@ def comentarios(request,id_publicacion):
         'listados': listadoc,
     }
     return render(request , 'comentarios.html',context)
+
+def eliminar_comentario(request, id_comentario):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    comentario_eliminar = Comentario.objects.get(id_comentario=id_comentario)
+    publicacion = comentario_eliminar.fk_id_publicacion
+    comentario_eliminar.delete()
+
+    messages.success(request, 'Comentario eliminado exitosamente...')
+    return redirect('comentarios', id_publicacion=publicacion.id_publicacion)
 
 ###SolicitudAmistad###
 
