@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{% static 'css/perfiles.css' %}" />
     <link rel="stylesheet" href="{% static 'css/menuflotante.css' %}" />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 
@@ -152,7 +153,41 @@
             <p class="description">{{ publicacion.contenido }}</p>
         </div>
         <div class="row row2 rowimg">
-            <img class="image" src="{{ publicacion.multimedia.url }}" alt="Imagen">
+          {% if publicacion.multimedia.url %}
+            {% if ".mp4" in publicacion.multimedia.url %}
+              <video controls>
+                <source src="{{ publicacion.multimedia.url }}" type="video/mp4">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+            {% elif ".avi" in publicacion.multimedia.url %}
+              <video controls>
+                <source src="{{ publicacion.multimedia.url }}" type="video/avi">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+            {% elif ".mkv" in publicacion.multimedia.url %}
+              <video controls>
+                <source src="{{ publicacion.multimedia.url }}" type="video/mkv">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+            {% elif ".mov" in publicacion.multimedia.url %}
+              <video controls>
+                <source src="{{ publicacion.multimedia.url }}" type="video/mov">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+            {% elif ".wmv" in publicacion.multimedia.url %}
+              <video controls>
+                <source src="{{ publicacion.multimedia.url }}" type="video/wmv">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+            {% elif ".flv" in publicacion.multimedia.url %}
+              <video controls>
+                <source src="{{ publicacion.multimedia.url }}" type="video/flv">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+            {% else %}
+              <img src="{{ publicacion.multimedia.url }}" class="image-preview image"/>
+            {% endif %}
+        {% endif %}
         </div>
         {% if user == 10 %}
         <div class="row row2" style="text-align: center;">

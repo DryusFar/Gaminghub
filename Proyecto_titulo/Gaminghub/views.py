@@ -256,9 +256,15 @@ def completar_perfil(request):
 
     user = User.objects.get(id=username_id)
 
+    try:
+        perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+    except PerfilUsuario.DoesNotExist:
+        perfil = None  # O utiliza un valor por defecto si lo deseas
+
     context = {
         'username': user,
         'chat':chat,
+        'perfil':perfil,
     }
 
 
@@ -337,6 +343,12 @@ def signup(request):
 
             # Guardar el objeto usuario en la base de datos
             user.save()
+
+            titulo = Titulo.objects.get(id_titulo = 1)
+
+            user1 = User.objects.get(id = user.id)
+
+            Puntaje.objects.create(puntos = 0, fk_id_titulo= titulo, fk_id_usuario = user1)
 
             # Autenticar al usuario y redirigir al usuario a la página de inicio
             raw_password = form.cleaned_data.get('password1')
@@ -804,9 +816,12 @@ def perfiles(request, username):
     tipo=1
     ).exists()
 
+    if username_id == usuario.id:
+        return redirect('perfil')
+    else:
+        return render(request, 'perfiles.html',{'user':username_id, 'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente, 'chat':chat})
 
-
-    return render(request, 'perfiles.html',{'user':username_id, 'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente, 'chat':chat})
+    
 
 def buscar_usuarios(request):
     if request.method == 'GET' and 'term' in request.GET:
@@ -1303,10 +1318,18 @@ def enviarMensajeGrupo(request, sala_id):
 
 def enviarNotificacionMensaje(request, id_usuario):
 
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
     usuario = User.objects.get(id=id_usuario)
 
+    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
+
     context = {
-        'usuario':usuario
+        'usuario':usuario,
+        'chat':chat,
     }
 
     return render(request, 'enviarNotificacionMensaje.html', context)
