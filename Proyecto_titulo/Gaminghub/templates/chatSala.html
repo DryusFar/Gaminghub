@@ -31,14 +31,15 @@
         <!-- Aquí puedes agregar el formulario para enviar nuevos mensajes -->
         <form method="post" action="{% url 'enviarMensajeGrupo' sala_id=sala.id_sala %}" style="text-align: center;">
             {% csrf_token %}
-            <input type="text" name="mensaje" placeholder="Escribe tu mensaje..." required style="display: block; margin: 0 auto;">
-            <button type="submit">Enviar</button>
+            <textarea id="textAreaExample3" type="text" class="form-control" name="mensaje" placeholder="Escribe tu mensaje..." cols="2" rows="2" required style="margin-right: 5px;"></textarea>
+            <button class="btn btn-primary" type="submit" style="background-color: #5000bf;">Enviar</button>
         </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-         $(window).on('load', function() {
+
+        $(window).on('load', function() {
         var chatContainer = $('.container.chat');
         var chatContainerPosition = chatContainer.offset().top;
 
@@ -86,50 +87,72 @@
             // Agregar un evento después de cargar nuevos mensajes
             chatMessages.on('DOMNodeInserted', checkScrollPosition);
             });
-        $(document).ready(function () {
-            function loadMessages() {
-                $.ajax({
-                    type: 'GET',
-                    url: '/get_messages_grupo/{{ sala.id_sala }}',
-                    success: function (response) {
-                        if (response && response.messages) {
-                            var messagesData = response.messages;
-                            var chatMessages = $('.chat-messages');
 
-                            // Limpiar el contenido actual del contenedor de mensajes
-                            chatMessages.empty();
+        function loadMessages() {
+        var amigoId = $('#message-form').data('amigo-id');
+        var url = '/get_messages_grupo/{{ sala.id_sala }}'; // Cambia esta línea con la URL correcta
 
-                            // Construir y agregar los mensajes dinámicamente
-                            messagesData.forEach(function (message) {
-                                var sender = message.remitente;
-                                var content = message.contenido;
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response) {
+            if (response && response.messages) {
+                var messagesData = response.messages;
 
-                                var messageElement = $('<div>');
-                                var senderParagraph = $('<p>').text(sender + ':');
-                                var contentParagraph = $('<p>').text(content);
+                // Limpiar el contenido actual del contenedor de mensajes
+                $('.chat-messages').empty();
 
-                                messageElement.append(senderParagraph, contentParagraph);
-                                chatMessages.append(messageElement);
-                            });
+                // Construir el HTML para cada mensaje
+                messagesData.forEach(function(message) {
+                var sender = message.remitente;
+                var content = message.contenido;
 
-                            // Hacer scroll hasta el final del contenedor de mensajes
-                            chatMessages.scrollTop(chatMessages[0].scrollHeight);
-                        } else {
-                            console.log('No se recibieron datos válidos en la respuesta AJAX');
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log('Error en la solicitud AJAX:', textStatus, errorThrown);
-                    }
+                // Construir el elemento HTML del mensaje
+                var messageElement = $('<div>').addClass('message');
+                var messageContent = $('<div>').addClass('message-content');
+                var senderParagraph = $('<p>').addClass('sender').text(sender + ':');
+                var contentParagraph = $('<p>').text(content);
+
+                // Aplicar los estilos a los elementos del mensaje
+                messageElement.css({
+                'align-self': 'flex-end',
+                'background-color': '#dcf8c6',
+                'margin-left': 'auto',
+                'border-radius': '10px',
+                'padding': '10px'
+                }).addClass('message-sent'); // Agregar la clase 'message-sent'
+
+                // Aplicar los estilos CSS al remitente
+                senderParagraph.css({
+                'font-weight': 'bold'
                 });
+
+                // Aplicar los estilos CSS al contenido
+                contentParagraph.css({
+                // Agrega los estilos que desees aplicar
+                });
+
+                // Agregar los elementos al contenedor del mensaje
+                messageContent.append(senderParagraph, contentParagraph);
+                messageElement.append(messageContent);
+                $('.chat-messages').append(messageElement);
+
+                // Agregar los elementos al contenedor del mensaje
+                messageContent.append(senderParagraph, contentParagraph);
+                messageElement.append(messageContent);
+                $('.chat-messages').append(messageElement);
+                });
+
+                console.log(messagesData); // Imprimir los datos de los mensajes en la consola
+            } else {
+                console.log('No se recibieron datos válidos en la respuesta AJAX');
             }
-
-            // Cargar los mensajes iniciales
-            loadMessages();
-
-            // Actualizar los mensajes cada 1 segundo
-            setInterval(loadMessages, 1000);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error en la solicitud AJAX:', textStatus, errorThrown);
+            }
         });
+        }
     </script>
 </body>
 
