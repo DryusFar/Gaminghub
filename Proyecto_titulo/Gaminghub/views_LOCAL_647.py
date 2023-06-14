@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
-from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion, Mensaje, Titulo, Puntaje, RegistroGrupo,Sala,MensajeGrupo
+from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion, Mensaje
 from django.db.models import Q
 from django.contrib import messages
 import datetime
@@ -12,8 +12,6 @@ from PIL import Image
 from django.conf import settings
 import os
 from urllib.parse import urlencode
-from django.http import Http404
-
 
 ##Import models cuando esten listos##
 
@@ -72,9 +70,6 @@ def perfil(request):
 
     user = User.objects.get(id=username_id)
     listadopublicaciones = Publicacion.objects.all().filter(id_usuario_id = user)
-    puntaje = Puntaje.objects.get(fk_id_usuario = user)
-
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
 
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
@@ -85,29 +80,17 @@ def perfil(request):
         'username': user,
         'perfil': perfil,
         'listados':listadopublicaciones,
-        'titulo':puntaje,
-        'chat':chat,
     }
-
-
     return render(request, 'perfil.html',context)
 
 @login_required
 @user_passes_test(is_superuser)
 def admin1(request):
 
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     user = User.objects.all().filter(is_superuser = 0)
     
     context = {
         'username': user,
-        'chat':chat,
     }
 
     return render(request, 'admin1.html',context)
@@ -123,8 +106,6 @@ def grupos(request):
     else:
         username_id = None
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     user = User.objects.get(id=username_id)
     miembros = Miembro.objects.filter(fk_id_usuario=username_id).values_list('fk_id_grupo', flat=True)
     listadogrupos = Grupo.objects.all()
@@ -133,7 +114,6 @@ def grupos(request):
         'username': user,
         'listados': listadogrupos,
         'miembro':miembros,
-        'chat': chat,
     }
     return render(request, 'grupos.html',context)
 
@@ -179,8 +159,6 @@ def index(request):
     listadoperfiles = PerfilUsuario.objects.all()
 
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
     except PerfilUsuario.DoesNotExist:
@@ -191,7 +169,6 @@ def index(request):
         'perfil': perfil,
         'listados': listadopublicaciones,
         'listadosp': listadoperfiles,
-        'chat': chat,
     }
     return render(request, 'index.html',context)
 
@@ -208,8 +185,6 @@ def form_publicacion(request):
     else:
         username_id = None
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     user = User.objects.get(id=username_id)
     try:
         perfil = PerfilUsuario.objects.get(id_usuario = username_id)
@@ -218,8 +193,7 @@ def form_publicacion(request):
 
     context = {
         'username': user,
-        'perfil':perfil,
-        'chat':chat,
+        'perfil':perfil
     }
 
     return render(request, 'form_publicacion.html', context)
@@ -231,15 +205,12 @@ def form_modificarPublicacion(request, id_publicacion):
     else:
         username_id = None
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     user = User.objects.get(id=username_id)
     publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
 
     context = {
         'username': user,
         'publicacion':publicacion,
-        'chat':chat,
     }
 
     return render(request, 'form_modificarPublicacion.html', context)
@@ -252,13 +223,10 @@ def completar_perfil(request):
     else:
         username_id = None
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     user = User.objects.get(id=username_id)
 
     context = {
-        'username': user,
-        'chat':chat,
+        'username': user
     }
 
 
@@ -272,8 +240,6 @@ def modificar_perfil(request):
     else:
         username_id = None
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     
 
     user = User.objects.get(id=username_id)
@@ -285,8 +251,7 @@ def modificar_perfil(request):
 
     context = {
         'username': user,
-        'perfil': perfil,
-        'chat': chat,
+        'perfil': perfil
     }
 
 
@@ -531,15 +496,13 @@ def listadopublicaciones(request):
         username_id = request.user.id
     else:
         username_id = None
-
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
     user = User.objects.get(id=username_id)
 
     listadop = Publicacion.objects.all()
 
    
     contexto = {'username': user, 
-    "listados" : listadop, 'chat':chat,}
+    "listados" : listadop}
 
     return render(request , 'index.html',contexto)
 ##############publicacion##################
@@ -567,8 +530,6 @@ def csambiarC(request):
     else:
         username_id = None
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     user = User.objects.get(id=username_id)
 
     password_u = request.POST['password1']
@@ -581,8 +542,7 @@ def csambiarC(request):
 
     context = {
         'username': user,
-        'perfil': perfil,
-        'chat':chat
+        'perfil': perfil
     }
 
     messages.success(request,'Contraseña modificada exitosamente')
@@ -619,17 +579,7 @@ def cambiarC(request):
 
 @login_required
 def form_grupo(request):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
-    context = {
-        'chat':chat
-    }
-    return render(request, 'form_grupo.html', context)
+    return render(request, 'form_grupo.html')
 
 @login_required
 def form_modificarGrupo(request, id_grupo):
@@ -700,54 +650,10 @@ def unirse_grupo(request,id_grupo):
 
     user = User.objects.get(id=username_id)
     grupo = Grupo.objects.get(id_grupo = id_grupo)
-    puntaje = Puntaje.objects.get(fk_id_usuario = user)
-    Miembro.objects.create(fk_id_usuario = user, fk_id_grupo = grupo)   
 
-    try:
-        registro = RegistroGrupo.objects.get(fk_id_grupo=grupo, fk_id_usuario=user)
-    except RegistroGrupo.DoesNotExist:
-        registro = None
-
-    if registro is not None:
-        puntaje_antiguo = puntaje.puntos
-        puntaje_final = puntaje.puntos
-
-    else:
-        puntaje_antiguo = puntaje.puntos
-        puntaje.puntos += 1000
-        puntaje.save()
-        RegistroGrupo.objects.create(fk_id_usuario = user, fk_id_grupo = grupo) 
-        puntaje_final = puntaje.puntos
-
-    cambiar_titulo(puntaje, puntaje_antiguo, puntaje_final)
-
+    Miembro.objects.create(fk_id_usuario = user, fk_id_grupo = grupo)    
+    messages.success(request,'Te has unido exitosamente...')
     return redirect('grupos')
-
-def cambiar_titulo(puntaje, puntaje_antiguo, puntaje_final):
-    ###Se verifica si se hubo algun cambio con el puntaje del usuario###
-    if(puntaje_antiguo != puntaje_final):
-        if(puntaje.puntos == 1000):
-            titulo = Titulo.objects.get(id_titulo=2)
-            puntaje.fk_id_titulo = titulo
-            puntaje.save()
-            pass
-
-        elif(puntaje.puntos == 3000):
-            titulo = Titulo.objects.get(id_titulo=3)
-            puntaje.fk_id_titulo = titulo
-            puntaje.save()
-            pass
-
-        elif(puntaje.puntos == 6000):
-            titulo = Titulo.objects.get(id_titulo=4)
-            puntaje.fk_id_titulo = titulo
-            puntaje.save()
-            pass
-        else:
-            pass
-    else:
-        pass
-    
 
 @login_required
 def salir_grupo(request, id_grupo):
@@ -796,8 +702,6 @@ def perfiles(request, username):
     else:
         username_id = None
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     notificacion_pendiente = Notificacion.objects.filter(
     Q(fk_id_usuario=request.user, fk_recibidor=perfil_usuario.id_usuario) |
     Q(fk_id_usuario=perfil_usuario.id_usuario, fk_recibidor=request.user),
@@ -806,7 +710,7 @@ def perfiles(request, username):
 
 
 
-    return render(request, 'perfiles.html',{'user':username_id, 'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente, 'chat':chat})
+    return render(request, 'perfiles.html',{'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente})
 
 def buscar_usuarios(request):
     if request.method == 'GET' and 'term' in request.GET:
@@ -900,33 +804,6 @@ def eliminar_publicacion(request,id_publicacion):
     messages.success(request,'Publicacion eliminada exitosamente...')
     return redirect('perfil')
 
-def eliminar_publicacion_perfiles(request,id_publicacion,id_username):
-
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    usuario = get_object_or_404(User, username=id_username)
-    perfil_usuario = PerfilUsuario.objects.get(id_usuario=usuario) #OBTENGO EL MODELO PERFILUSUARIO CON SU FK QUE COINCIDA CON EL USUARIO OBTENIDO ANTERIORMENTE
-    publicaciones = Publicacion.objects.filter(id_usuario=usuario)  # Utiliza filter en lugar de get si esperas múltiples publicaciones
-
-    publicacion = Publicacion.objects.get(id_publicacion = id_publicacion)
-
-    publicacion.delete()
-    messages.success(request,'Publicacion eliminada exitosamente...')
-
-    notificacion_pendiente = Notificacion.objects.filter(
-    Q(fk_id_usuario=request.user, fk_recibidor=perfil_usuario.id_usuario) |
-    Q(fk_id_usuario=perfil_usuario.id_usuario, fk_recibidor=request.user),
-    tipo=1
-    ).exists()
-
-
-
-    return redirect('perfiles', username = id_username)
-
-
 @login_required
 def modificargrupo(request,id_grupo):
 
@@ -985,14 +862,9 @@ def registrarcomentario(request, id_publicacion):
         publicacion = Publicacion.objects.get(id_publicacion=id_publicacion)
         Comentario.objects.create(descripcion=descripcion_c, fk_id_usuario=user, fk_id_publicacion=publicacion)
 
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
-    user = User.objects.get(id=username_id)
+        return redirect('comentarios', id_publicacion=id_publicacion)
+    
+    user = request.user
     publicacion = Publicacion.objects.get(id_publicacion=id_publicacion)
     listadoc = Comentario.objects.filter(fk_id_publicacion=id_publicacion)
 
@@ -1000,7 +872,6 @@ def registrarcomentario(request, id_publicacion):
         'username': user,
         'publicacion': publicacion,
         'listados': listadoc,
-        'chat':chat
     }
     
     return render(request, 'comentarios.html', context)
@@ -1064,8 +935,6 @@ def notificaciones(request):
     else:
         username_id = None
 
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     user = User.objects.get(id=username_id)  
 
     listadonotificaciones = Notificacion.objects.all().filter(fk_recibidor = user)
@@ -1073,7 +942,6 @@ def notificaciones(request):
     context = {
         'username': user,
         'listados': listadonotificaciones,
-        'chat': chat
     }
 
     return render(request, 'notificaciones.html', context)
@@ -1140,13 +1008,6 @@ def amigos(request):
     # Obtener el usuario actual
     usuario_actual = request.user
 
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
-
     # Obtener todas las amistades del usuario actual
     amistades = Amistad.objects.filter(persona=usuario_actual.id)
 
@@ -1168,7 +1029,7 @@ def amigos(request):
         })
 
     # Puedes pasar la lista de amigos al contexto de renderización
-    return render(request, 'amigos.html', {'amigos': amigos, 'chat':chat})
+    return render(request, 'amigos.html', {'amigos': amigos})
 
 def eliminarAmigo(request, id_enviador):
 
@@ -1189,22 +1050,13 @@ def chat(request, amigo_id):
     # Obtener el amigo utilizando el ID recibido
     amigo = User.objects.get(id=amigo_id)
 
-    # Obtener el perfil del amigo
-    perfil_amigo = PerfilUsuario.objects.get(id_usuario=amigo)
-
     # Obtener los mensajes entre el usuario actual y el amigo
     mensajes = Mensaje.objects.filter(
         (Q(remitente=usuario_actual) & Q(destinatario=amigo)) |
         (Q(remitente=amigo) & Q(destinatario=usuario_actual))
     ).order_by('fecha_envio')
 
-    mensajes2 = Mensaje.objects.filter(Q(remitente=amigo) & Q(destinatario=usuario_actual))
-
-    for mensaje in mensajes2:
-        mensaje.estado = 2
-        mensaje.save()
-
-    return render(request, 'chat.html', {'amigo': amigo, 'mensajes': mensajes, 'perfil_amigo': perfil_amigo})
+    return render(request, 'chat.html', {'amigo': amigo, 'mensajes': mensajes})
 
 def enviarMensaje(request, amigo_id):
     if request.method == 'POST':
@@ -1218,7 +1070,7 @@ def enviarMensaje(request, amigo_id):
         contenido = request.POST.get('mensaje')
 
         # Crear un nuevo objeto de Mensaje
-        mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido, estado = 1)
+        mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido)
 
         # Redireccionar a la vista de chat con el amigo
         return redirect('chat', amigo_id=amigo_id)
@@ -1228,134 +1080,3 @@ def enviarMensaje(request, amigo_id):
 
     # Agrega un retorno de respuesta adecuado aquí
     return HttpResponse("Solo se permite enviar mensajes a través de POST")
-
-def error_404(request, exception):
-    return render(request, '404.html', status=404)
-
-def salas(request, grupo_id):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)  
-
-    grupo = Grupo.objects.get(id_grupo = grupo_id)
-
-    
-    salas = Sala.objects.filter(fk_id_grupo = grupo)
-    
-    context = {
-        'user':user,
-        'grupo':grupo,
-        'salas':salas
-    }
-
-    return render(request, 'salas.html',context)
-
-def chatSala(request, sala_id):
-    if request.user.is_authenticated:
-        username_id = request.user.id
-    else:
-        username_id = None
-
-    user = User.objects.get(id=username_id)  
-
-    sala = Sala.objects.get(id_sala = sala_id)
-
-    chatSala = MensajeGrupo.objects.filter(fk_id_sala = sala)
-    
-    context = {
-        'user':user,
-        'chat':chatSala,
-        'sala':sala
-    }
-
-    return render(request, 'chatSala.html',context)
-
-def enviarMensajeGrupo(request, sala_id):
-    if request.method == 'POST':
-        # Obtener el usuario actual
-        usuario_actual = request.user
-
-        sala = Sala.objects.get(id_sala = sala_id)
-
-        # Obtener el contenido del mensaje desde el formulario
-        contenido = request.POST.get('mensaje')
-
-        # Crear un nuevo objeto de Mensaje
-        MensajeGrupo.objects.create(remitente=usuario_actual, contenido=contenido, fk_id_sala = sala)
-
-        # Redireccionar a la vista de chat con el amigo
-        return redirect('chatSala',sala.id_sala)
-
-    # Si no se envió un formulario POST, puedes manejarlo según tus necesidades
-    # Por ejemplo, mostrar un error o redireccionar a otra página
-
-    # Agrega un retorno de respuesta adecuado aquí
-    return HttpResponse("Solo se permite enviar mensajes a través de POST")
-
-def enviarNotificacionMensaje(request, id_usuario):
-
-    usuario = User.objects.get(id=id_usuario)
-
-    context = {
-        'usuario':usuario
-    }
-
-    return render(request, 'enviarNotificacionMensaje.html', context)
-
-def mensajeAdmin(request, id_usuario):
-
-    usuario_actual = request.user
-
-    usuario_recibidor = User.objects.get(id=id_usuario)
-
-    mensaje = request.POST['mensaje']
-
-    Notificacion.objects.create(info = mensaje, tipo = 4, fk_id_usuario = usuario_actual, fk_recibidor = usuario_recibidor)
-
-    messages.success(request, 'Notificacion enviada')
-    return redirect('admin1')
-
-def get_messages(request, amigo_id):
-     # Obtener el usuario actual
-    usuario_actual = request.user
-
-    # Obtener el amigo utilizando el ID recibido
-    amigo = User.objects.get(id=amigo_id)
-
-    # Obtener el perfil del amigo
-    perfil_amigo = PerfilUsuario.objects.get(id_usuario=amigo)
-
-    # Obtener los mensajes entre el usuario actual y el amigo
-    mensajes = Mensaje.objects.filter(
-        (Q(remitente=usuario_actual) & Q(destinatario=amigo)) |
-        (Q(remitente=amigo) & Q(destinatario=usuario_actual))
-    ).order_by('fecha_envio')
-
-    messages_data = []  # Agrega esta línea para inicializar la lista
-
-    for mensaje in mensajes:
-        message_data = {
-            'remitente': mensaje.remitente.username,
-            'contenido': mensaje.contenido,
-        }
-        messages_data.append(message_data)
-
-    return JsonResponse({'messages': messages_data})
-
-def get_messages_grupo(request, sala_id):
-    # Obtener los mensajes de la sala específica utilizando el ID recibido
-    mensajes = MensajeGrupo.objects.filter(fk_id_sala=sala_id).order_by('fecha_envio')
-
-    messages_data = []
-
-    for mensaje in mensajes:
-        message_data = {
-            'remitente': mensaje.remitente.username,
-            'contenido': mensaje.contenido,
-        }
-        messages_data.append(message_data)
-
-    return JsonResponse({'messages': messages_data})
