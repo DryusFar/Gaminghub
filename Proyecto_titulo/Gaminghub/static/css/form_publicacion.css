@@ -393,10 +393,13 @@ img{
 }
 
 form{
-  margin-top: 20px;
+  margin-top: 12.4vh;
   font-family: monospace;
 }
 
+.bajar{
+  margin-top: 40px;
+}
 /* ---- ----- ----- FOOTER ----- ----- ----- */
 footer {
 background-color: #09101d;

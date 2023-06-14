@@ -1007,15 +1007,11 @@ def registrarcomentario(request, id_publicacion):
     if request.user.is_authenticated:
         username_id = request.user.id
     else:
-        username_id = None
+            username_id = None
 
     chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
 
-    
-
-
-
-
+    user = User.objects.get(id=username_id)
 
 
     user = request.user
@@ -1028,7 +1024,7 @@ def registrarcomentario(request, id_publicacion):
         'listados': listadoc,
         'chat':chat
     }
-    
+            
     return render(request, 'comentarios.html', context)
 
 def comentarios(request,id_publicacion):
