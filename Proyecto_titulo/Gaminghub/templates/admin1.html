@@ -60,7 +60,7 @@
                     </svg>
                   <span id="title">Notificaciones</span>
               </a>
-              <a href="{% url 'chat' %}" class="bi bi-chat-dots-fill">
+              <a href="" class="bi bi-chat-dots-fill">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
                       <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                     </svg>
@@ -93,7 +93,7 @@
       <div class="col-md-2"></div>
       <div class="col-md-8">
         <div class="row">
-          <div class="col-4"><input type="text"  class="form-control barrabusqueda" placeholder="Filtrar por Nick"></div>
+          <div class="col-4"><input type="text" class="form-control barrabusqueda" id="filtroNick" placeholder="Filtrar por Nick"></div>
           <div class="col-4"></div>
           <div class="col-4"></div>
         </div>
@@ -116,15 +116,15 @@
             </thead>
             <tbody>
               {% for u in username %}
-              <tr>
-                <td>{{ u.username }}</td>
-                <td>{{ u.email }}</td>
+              <tr data-nick="{{ u.username }}">
+                <td><a href="{% url 'perfiles' u.username %}">{{ u.username }}</a></td>
+                <td><a href="{% url 'perfiles' u.username %}">{{ u.email }}</a></td>
                 {% if u.is_active == True %}
                 <td>Desbaneado</td>
                 {% elif u.is_active == False %}
                 <td>Baneado</td>
                 {% endif %}
-                <td><a href="" class="btn btn-info">Mensaje</a></td>
+                <td><a href="{% url 'enviarNotificacionMensaje' u.id %}" class="btn btn-info">Mensaje</a></td>
                 {% if u.is_active == 1 %}
                   <td><a href="{% url 'banearUsuario' u.id %}" class="btn btn-danger">Banear</a></td>
                 {% elif u.is_active == 0 %}
@@ -143,6 +143,25 @@
   </div>
 
   
+<script>
+
+document.getElementById('filtroNick').addEventListener('keyup', function() {
+    var input = this.value.toLowerCase();
+    var rows = document.querySelectorAll('tbody tr');
+    
+    rows.forEach(function(row) {
+      var nick = row.getAttribute('data-nick').toLowerCase();
+      
+      if (nick.indexOf(input) > -1) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+
+</script>
+
 <!-- Footer -->
 <footer id="piedepag">
 <p>Chile, Santiago de Chile | Fono: 227369936 | Email: gaminghub@gmail.com</p>

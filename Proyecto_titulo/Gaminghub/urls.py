@@ -40,6 +40,11 @@ urlpatterns = [
     path('salir_grupo/<id_grupo>', salir_grupo, name='salir_grupo'),
     path('eliminar_grupo/<id_grupo>', eliminar_grupo, name='eliminar_grupo'),
     path('modificargrupo/<id_grupo>', modificargrupo, name='modificargrupo'),
+    path('salas/<grupo_id>', salas, name='salas'),
+    path('chatSala/<sala_id>', chatSala, name='chatSala'),
+    path('enviarNotificacionMensaje/<id_usuario>',enviarNotificacionMensaje, name='enviarNotificacionMensaje'),
+
+
 
     path('perfiles/<str:username>/', perfiles, name='perfiles'),
     path('buscar_usuarios/', buscar_usuarios, name='buscar_usuarios'),
@@ -63,6 +68,14 @@ urlpatterns = [
     path('botonOK/<id_notifi>',botonOK,name='botonOK'),
     path('amigos/', amigos, name='amigos'),
     path('eliminarAmigo/<id_enviador>', eliminarAmigo, name='eliminarAmigo'),
-    path('chat/<amigo_id>', chat, name='chat'),
+    path('chat/<amigo_id>/', chat, name='chat'),
     path('enviarMensaje/<int:amigo_id>/', enviarMensaje, name='enviarMensaje'),
-]    
+    path('get_messages/<int:amigo_id>/', get_messages, name='get_messages'),
+    path('get_messages_grupo/<int:sala_id>/', get_messages_grupo, name='get_messages_grupo'),
+    path('eliminar_publicacion_perfiles/<id_publicacion>/<id_username>/',eliminar_publicacion_perfiles, name='eliminar_publicacion_perfiles'),
+
+
+    path('enviarMensajeGrupo/<int:sala_id>/', enviarMensajeGrupo, name='enviarMensajeGrupo'),
+    path('mensajeAdmin/<id_usuario>', mensajeAdmin, name='mensajeAdmin')
+]
+

@@ -83,6 +83,24 @@ body {
   margin-top: 1%;
 }
 
+.colorBoton{
+  background-color: #6200d1;
+  border-color: #000000;
+  font-weight: 600;
+}
+
+.colorBoton:hover {
+  background-color: #734f9a;
+  border-color: #1d1a2f;
+}
+
+.colorBoton2{
+  background-color: #00b94e;
+  border-color: #000000;
+  font-weight: 600;
+}
+
+
 .divperfil {
   background-color: #282828db;
   border-bottom: solid black;
