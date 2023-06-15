@@ -104,27 +104,3 @@
     }
 }
 
-@media (max-width: 2000px) {
-    .card-id567 {
-        display: none;
-        /* Ocultar la tarjeta cuando el ancho de la ventana sea menor o igual a 2000px */
-    }
-}
-
-@media (max-width: 480px) {
-    .card-id567 {
-        /* Estilos para pantallas con un ancho máximo de 480px, como dispositivos móviles en orientación vertical */
-    }
-}
-
-@media (min-width: 481px) and (max-width: 2000px) {
-    .card-id567 {
-        /* Estilos para pantallas con un ancho mínimo de 481px y máximo de 768px, como dispositivos móviles en orientación horizontal */
-    }
-}
-
-@media (min-width: 769px) {
-    .card-id567 {
-        /* Estilos para pantallas con un ancho mínimo de 769px, como tablets y pantallas más grandes */
-    }
-}

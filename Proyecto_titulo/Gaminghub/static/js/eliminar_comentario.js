@@ -3,6 +3,10 @@ $(document).ready(function() {
       // Mostrar la modal correspondiente al botón de eliminar comentario
       $("#myModal2").modal("show");
 });
+$(".close").click(function() {
+    // Mostrar la modal correspondiente al botón de eliminar comentario
+    $("#myModal2").modal("hide");
+});
 });
 
 $(document).ready(function() {
