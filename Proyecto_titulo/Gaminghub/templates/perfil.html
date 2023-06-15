@@ -305,6 +305,8 @@
               <h5 class="card-title">{{ l.titulo }}</h5>
               <p class="card-text">{{ l.contenido }}</p>
               <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small></p>
+              <p class="card-text"><small class="text-muted">Me gusta: {{ l.like.all.count }}</small></p>
+              <p class="card-text"><small class="text-muted">No me gusta: {{ l.dislike.all.count }}</small></p>
             </div>
             <div class="row">
               

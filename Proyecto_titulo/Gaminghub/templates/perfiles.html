@@ -220,30 +220,38 @@
         </div>
         {% else %}
         <div class="row row2" style="text-align: center;">
-            <div class="col"><button type="button" class="btn btn-outline-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-heart-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                    </svg>
-                    Me Gusta
-                </button></div>
-            <div class="col"><button type="button" class="btn btn-outline-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-heartbreak-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M8.931.586 7 3l1.5 4-2 3L8 15C22.534 5.396 13.757-2.21 8.931.586ZM7.358.77 5.5 3 7 7l-1.5 3 1.815 4.537C-6.533 4.96 2.685-2.467 7.358.77Z" />
-                    </svg>
-                    No me Gusta
-                </button></div>
-            <div class="col"><button type="button" class="btn btn-outline-info">
+            <div class="col"><form method="POST" action="{% url 'like' publicacion.id_publicacion %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit" class="btn btn-outline-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-heart-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                </svg>
+                {{ publicacion.like.all.count }} Me Gusta
+            </button>
+            </form></div>
+            <div class="col"><form method="POST" action="{% url 'dislike' publicacion.id_publicacion %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit" class="btn btn-outline-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-heartbreak-fill" viewBox="0 0 16 16">
+                <path
+                    d="M8.931.586 7 3l1.5 4-2 3L8 15C22.534 5.396 13.757-2.21 8.931.586ZM7.358.77 5.5 3 7 7l-1.5 3 1.815 4.537C-6.533 4.96 2.685-2.467 7.358.77Z" />
+                  </svg>
+                {{ publicacion.dislike.all.count }} No me Gusta
+            </button>
+            </form></div>
+            <div class="col"><a href="{% url 'comentarios' publicacion.id_publicacion %}"><i class='fas fa-comment' style='font-size:24px'></i><button type="button" class="btn btn-outline-info"> 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-chat-right-fill" viewBox="0 0 16 16">
                         <path
                             d="M14 0a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
                     </svg>
                     Comentar 
-                </button></div>
+                </button></a></div>
                 
         </div>
         {% endif %}
