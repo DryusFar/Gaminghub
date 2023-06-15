@@ -1,61 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
-    <!-- Incluir los enlaces a jQuery y jQuery UI -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+  <!-- Incluir los enlaces a jQuery y jQuery UI -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap"
     rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link href="{% static 'css/footer.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/qr.css' %}" type="text/css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    
-    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
-    <script>
-$(document).ready(function() {
-    $('#search_input').autocomplete({
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="{% static 'css/footer.css' %}" type="text/css" rel="stylesheet">
+  <link href="{% static 'css/qr.css' %}" type="text/css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      $('#search_input').autocomplete({
         source: '/buscar_usuarios/',  // La URL de la vista de búsqueda
         minLength: 2,  // Mínimo número de caracteres para comenzar la búsqueda
-        response: function(event, ui) {
-            mostrarResultados(ui.content);
+        response: function (event, ui) {
+          mostrarResultados(ui.content);
         }
-    });
+      });
 
-    function mostrarResultados(resultados) {
+      function mostrarResultados(resultados) {
         var $acordeon = $('#acordeon');
         $acordeon.empty();
 
         for (var i = 0; i < resultados.length; i++) {
-            var usuario = resultados[i];
-            var $titulo = $('<h3>').text(usuario.username);
-            var $contenido = $('<div>').addClass('contenido');
-            $acordeon.append($titulo).append($contenido);
+          var usuario = resultados[i];
+          var $titulo = $('<h3>').text(usuario.username);
+          var $contenido = $('<div>').addClass('contenido');
+          $acordeon.append($titulo).append($contenido);
 
-            // Agregar evento de clic para redireccionar al perfil del usuario
-            $titulo.on('click', {username: usuario.username}, function(event) {
-                var username = event.data.username;
-                window.location.href = '/perfiles/' + username + '/';
-            });
+          // Agregar evento de clic para redireccionar al perfil del usuario
+          $titulo.on('click', { username: usuario.username }, function (event) {
+            var username = event.data.username;
+            window.location.href = '/perfiles/' + username + '/';
+          });
         }
 
         $acordeon.accordion({
-            collapsible: true,
-            heightStyle: 'content'
+          collapsible: true,
+          heightStyle: 'content'
         });
-    }
-});
+      }
+    });
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         // El usuario está viendo desde un dispositivo móvil
@@ -67,129 +69,143 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
   </script>
 </head>
+
 <body>
-{% if perfil %}
-    <div class="container-bar" style="font-family: 'Press Start 2P';">
-        <input type="checkbox" id="btn-social">
-        <label for="btn-social" class="fa fa-play"></label>
-            <div class="icon-social">
-                <a href="{% url 'index' %}" class="bi bi-house-door-fill">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
-                      </svg>
-                    <span id="title">Menu</span>
-                </a>
-                <a href="{% url 'notificaciones' %}" class="bi bi-bell-fill">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                      </svg>
-                    <span id="title">Notificaciones</span>
-                </a>
-                <a href="{% url 'perfil' %}" class="bi bi-person-circle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                      </svg>
-                    <span id="title">Perfil</span>
-                </a>
-                
-                {% if chat|length == 0 %}
-                  <a href="{% url 'amigos' %}" class="bi bi-people-fill">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                          <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                        </svg>
-                      <span id="title">Amigos</span>
-                  </a>
-                {% else %}
-                  <a href="{% url 'amigos' %}" class="bi bi-people-fill">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                      </svg>
-                    <span id="title">Amigos<i class="material-icons">&#xe7f7;</i></span>
-                  </a>
-                {% endif %}
-                <a href="{% url 'form_publicacion' %}" class="bi bi-chat-left-text">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                    <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                  </svg>
-                  <span id="title">Publicar</span>
-                </a>
-                <a href="{% url 'grupos' %}" class="bi bi-chat-left-text">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wechat" viewBox="0 0 16 16">
-                    <path d="M11.176 14.429c-2.665 0-4.826-1.8-4.826-4.018 0-2.22 2.159-4.02 4.824-4.02S16 8.191 16 10.411c0 1.21-.65 2.301-1.666 3.036a.324.324 0 0 0-.12.366l.218.81a.616.616 0 0 1 .029.117.166.166 0 0 1-.162.162.177.177 0 0 1-.092-.03l-1.057-.61a.519.519 0 0 0-.256-.074.509.509 0 0 0-.142.021 5.668 5.668 0 0 1-1.576.22ZM9.064 9.542a.647.647 0 1 0 .557-1 .645.645 0 0 0-.646.647.615.615 0 0 0 .09.353Zm3.232.001a.646.646 0 1 0 .546-1 .645.645 0 0 0-.644.644.627.627 0 0 0 .098.356Z"/>
-                    <path d="M0 6.826c0 1.455.781 2.765 2.001 3.656a.385.385 0 0 1 .143.439l-.161.6-.1.373a.499.499 0 0 0-.032.14.192.192 0 0 0 .193.193c.039 0 .077-.01.111-.029l1.268-.733a.622.622 0 0 1 .308-.088c.058 0 .116.009.171.025a6.83 6.83 0 0 0 1.625.26 4.45 4.45 0 0 1-.177-1.251c0-2.936 2.785-5.02 5.824-5.02.05 0 .1 0 .15.002C10.587 3.429 8.392 2 5.796 2 2.596 2 0 4.16 0 6.826Zm4.632-1.555a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0Zm3.875 0a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0Z"/>
-                  </svg>
-                  <span id="title">Grupos</span>
-                </a>
-                {% if username.is_superuser %}
-                <a href="{% url 'admin1' %}" class="bi bi-chat-left-text">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/>
-                  </svg>
-                  <span id="title">Admin</span>
-                </a>
-                {% endif %}
-            </div>
-        </div>
+  {% if perfil %}
+  <div class="container-bar" style="font-family: 'Press Start 2P';">
+    <input type="checkbox" id="btn-social">
+    <label for="btn-social" class="fa fa-play"></label>
+    <div class="icon-social">
+      <a href="{% url 'index' %}" class="bi bi-house-door-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z" />
+        </svg>
+        <span id="title">Menu</span>
+      </a>
+      <a href="{% url 'notificaciones' %}" class="bi bi-bell-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
+        <span id="title">Notificaciones</span>
+      </a>
+      <a href="{% url 'perfil' %}" class="bi bi-person-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle"
+          viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+          <path fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </svg>
+        <span id="title">Perfil</span>
+      </a>
+
+      {% if chat|length == 0 %}
+      <a href="{% url 'amigos' %}" class="bi bi-people-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+        </svg>
+        <span id="title">Amigos</span>
+      </a>
+      {% else %}
+      <a href="{% url 'amigos' %}" class="bi bi-people-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+        </svg>
+        <span id="title">Amigos<i class="material-icons">&#xe7f7;</i></span>
+      </a>
+      {% endif %}
+      <a href="{% url 'form_publicacion' %}" class="bi bi-chat-left-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text"
+          viewBox="0 0 16 16">
+          <path
+            d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+          <path
+            d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+        </svg>
+        <span id="title">Publicar</span>
+      </a>
+      <a href="{% url 'grupos' %}" class="bi bi-chat-left-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wechat"
+          viewBox="0 0 16 16">
+          <path
+            d="M11.176 14.429c-2.665 0-4.826-1.8-4.826-4.018 0-2.22 2.159-4.02 4.824-4.02S16 8.191 16 10.411c0 1.21-.65 2.301-1.666 3.036a.324.324 0 0 0-.12.366l.218.81a.616.616 0 0 1 .029.117.166.166 0 0 1-.162.162.177.177 0 0 1-.092-.03l-1.057-.61a.519.519 0 0 0-.256-.074.509.509 0 0 0-.142.021 5.668 5.668 0 0 1-1.576.22ZM9.064 9.542a.647.647 0 1 0 .557-1 .645.645 0 0 0-.646.647.615.615 0 0 0 .09.353Zm3.232.001a.646.646 0 1 0 .546-1 .645.645 0 0 0-.644.644.627.627 0 0 0 .098.356Z" />
+          <path
+            d="M0 6.826c0 1.455.781 2.765 2.001 3.656a.385.385 0 0 1 .143.439l-.161.6-.1.373a.499.499 0 0 0-.032.14.192.192 0 0 0 .193.193c.039 0 .077-.01.111-.029l1.268-.733a.622.622 0 0 1 .308-.088c.058 0 .116.009.171.025a6.83 6.83 0 0 0 1.625.26 4.45 4.45 0 0 1-.177-1.251c0-2.936 2.785-5.02 5.824-5.02.05 0 .1 0 .15.002C10.587 3.429 8.392 2 5.796 2 2.596 2 0 4.16 0 6.826Zm4.632-1.555a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0Zm3.875 0a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0Z" />
+        </svg>
+        <span id="title">Grupos</span>
+      </a>
+      {% if username.is_superuser %}
+      <a href="{% url 'admin1' %}" class="bi bi-chat-left-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3"
+          viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z" />
+        </svg>
+        <span id="title">Admin</span>
+      </a>
+      {% endif %}
+    </div>
+  </div>
 
 
-    {% if username %}    
-    <div class="navbar-container" style="font-family: 'Press Start 2P';">
-      <ul>
-          <li class="nav-link ">
-              <a href="#">Home
-              </a>
-              <div class="underline"></div>
-          </li>
-          <li class="nav-link">
-              <a href="#">About Us</a>
-              <div class="underline"></div>
-          </li>
-          <li class="nav-link">
-              <a href="#">Testimonials</a>
-              <div class="underline"></div>
-          </li>
-          <li class="nav-link">
-              <a href="#">Contact</a>
-              <div class="underline"></div>
-          </li>
-          <li class="nav-link">
-            <a href="/logout">Cerrar Sesión</a>
-            <div class="underline"></div>
-        </li>
-      </ul>
+
+  <div class="navbar-container" style="font-family: 'Press Start 2P';">
+    <ul>
+      <li class="nav-link ">
+        <a href="#">Home
+        </a>
+        <div class="underline"></div>
+      </li>
+      <li class="nav-link">
+        <a href="#">About Us</a>
+        <div class="underline"></div>
+      </li>
+      <li class="nav-link">
+        <a href="#">Contact</a>
+        <div class="underline"></div>
+      </li>
+      <li class="nav-link">
+        <a href="/logout">Cerrar Sesión <span style="color: #00ffbb; background-color: #000000; padding: 10px; border-radius: 10px;"> {{ username }} </span> </a>
+        <div class="underline"></div>
+      </li>
+    </ul>
   </div>
 
 
     {% endif %}
-<div id="contenido-desktop" style="display: none;">
+<div>
     <div class="card-id567" style="font-size: 15px;">
       <img src="../static/img/playlist.png" alt="Imagen" />
-      
+
       <div class="prompt-id567">
         <div class="token-container">
-    
-        <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18V18ZM10 5.05L14.95 10L10 14.95L5.05 10L10 5.05V5.05ZM10 7.879L7.879 10L10 12.121L12.121 10L10 7.879V7.879Z" fill="url(#paint0_linear_713_51)"></path>
-          <defs>
-          <linearGradient id="paint0_linear_713_51" x1="0" y1="0" x2="16.4204" y2="22.6007" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#AF40FF"></stop>
-          <stop offset="0.5" stop-color="#5B42F3"></stop>
-          <stop offset="1" stop-color="#00DDEB"></stop>
-          </linearGradient>
-          </defs>
-        </svg>
+
+          <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18V18ZM10 5.05L14.95 10L10 14.95L5.05 10L10 5.05V5.05ZM10 7.879L7.879 10L10 12.121L12.121 10L10 7.879V7.879Z"
+              fill="url(#paint0_linear_713_51)"></path>
+            <defs>
+              <linearGradient id="paint0_linear_713_51" x1="0" y1="0" x2="16.4204" y2="22.6007"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#AF40FF"></stop>
+                <stop offset="0.5" stop-color="#5B42F3"></stop>
+                <stop offset="1" stop-color="#00DDEB"></stop>
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
         <div class="blurry-splash"></div>
         <p>GAMING HUB<br><span class="bold-567">Hechale un vistazo a nuestra Playlist en Spotify</span> </p>
         <p class="really-small-text">Coloca la flecha por encima</p>
       </div>
     </div>
-</div>
-<div id="contenido-movil" style="display: none;">
-  <!-- Contenido para dispositivos móviles -->
-  <p>Contenido para dispositivos móviles</p>
 </div>
     <div class="container2" style="margin-top: 20px;">
       <input type="text" id="search_input" name="search_input" class="input" placeholder="Buscar en Gaming Hub...">
@@ -210,195 +226,215 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     {% endif %}
 {% if username %}
 
-    <div class="container">
-      <div class="post-card-container" >
-        {% for l in listados %}
-          
-          <div class="post-card" > <!--Poner luces a las publicaciones-->
-            
-            
-          <div class="row">
-           
-              
-              <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;"><a href="{% url 'perfiles' l.id_usuario %}">{{ l.id_usuario }}</a></div>
-              
-              
-          </div>
-          <a class="title" href="">{{ l.titulo }}</a>
-          <h6> {{ l.contenido }}</h6>
-          <span class="datetime">{{ l.fecha_creacion|date:"d-m-Y" }}</span>
-          {% if l.multimedia.url %}
-              {% if ".mp4" in l.multimedia.url %}
-                <video controls>
-                  <source src="{{ l.multimedia.url }}" type="video/mp4">
-                  <!-- Aquí puedes agregar otros formatos de video compatibles -->
-                </video>
-              {% elif ".avi" in l.multimedia.url %}
-                <video controls>
-                  <source src="{{ l.multimedia.url }}" type="video/avi">
-                  <!-- Aquí puedes agregar otros formatos de video compatibles -->
-                </video>
-              {% elif ".mkv" in l.multimedia.url %}
-                <video controls>
-                  <source src="{{ l.multimedia.url }}" type="video/mkv">
-                  <!-- Aquí puedes agregar otros formatos de video compatibles -->
-                </video>
-              {% elif ".mov" in l.multimedia.url %}
-                <video controls>
-                  <source src="{{ l.multimedia.url }}" type="video/mov">
-                  <!-- Aquí puedes agregar otros formatos de video compatibles -->
-                </video>
-              {% elif ".wmv" in l.multimedia.url %}
-                <video controls>
-                  <source src="{{ l.multimedia.url }}" type="video/wmv">
-                  <!-- Aquí puedes agregar otros formatos de video compatibles -->
-                </video>
-              {% elif ".flv" in l.multimedia.url %}
-                <video controls>
-                  <source src="{{ l.multimedia.url }}" type="video/flv">
-                  <!-- Aquí puedes agregar otros formatos de video compatibles -->
-                </video>
-              {% else %}
-                <img src="{{ l.multimedia.url }}" class="image-preview image"/>
-              {% endif %}
-          {% endif %}
-          <div class="comment-like">
-            <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px' > {{ l.like.all.count }}</i></span>
-            <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count }}</i></span>
-            
-            <a href="{% url 'comentarios' l.id_publicacion %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
-            <span>
-              <form method="POST" action="{% url 'like' l.id_publicacion %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{request.path}}">
-                <button type="submit">
-                  Me gusta
-                </button>
-              </form>
-            </span>
-            <span>
-              <form method="POST" action="{% url 'dislike' l.id_publicacion %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{request.path}}">
-                <button type="submit">
-                  No me gusta
-                </button>
-              </form>
-            </span>
-          
-          </div>
-        
-        
-          </div>
-          
-        {% endfor %}
+  <div class="container">
+    <div class="post-card-container">
+      {% for l in listados %}
+
+      <div class="post-card"> <!--Poner luces a las publicaciones-->
+
+
+        <div class="row">
+
+
+          <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;"><a
+              href="{% url 'perfiles' l.id_usuario %}">{{ l.id_usuario }}</a></div>
+
+
+        </div>
+        <a class="title" href="">{{ l.titulo }}</a>
+        <h6> {{ l.contenido }}</h6>
+        <span class="datetime">{{ l.fecha_creacion|date:"d-m-Y" }}</span>
+        {% if l.multimedia.url %}
+        {% if ".mp4" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mp4">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".avi" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/avi">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".mkv" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mkv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".mov" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mov">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".wmv" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/wmv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".flv" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/flv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% else %}
+        <img src="{{ l.multimedia.url }}" class="image-preview image" />
+        {% endif %}
+        {% endif %}
+        <div class="comment-like">
+          <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px'> {{ l.like.all.count }}</i></span>
+          <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count
+              }}</i></span>
+
+          <a href="{% url 'comentarios' l.id_publicacion %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
+          <span>
+            <form method="POST" action="{% url 'like' l.id_publicacion %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit">
+                Me gusta
+              </button>
+            </form>
+          </span>
+          <span>
+            <form method="POST" action="{% url 'dislike' l.id_publicacion %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit">
+                No me gusta
+              </button>
+            </form>
+          </span>
+
+        </div>
+
+
       </div>
 
+      {% endfor %}
     </div>
 
-  {% endif %}
-{% else %}
+  </div>
 
-<div class="container-bar" style="font-family: 'Press Start 2P';">
-  <input type="checkbox" id="btn-social">
-  <label for="btn-social" class="fa fa-play"></label>
-      <div class="icon-social">
-          <a href="{% url 'index' %}" class="bi bi-house-door-fill">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-                  <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
-                </svg>
-              <span id="title">Menu</span>
-          </a>
-          <a href="{% url 'completar_perfil' %}" class="bi bi-bell-fill">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                </svg>
-              <span id="title">Notificaciones</span>
-          </a>
-          <a href="{% url 'completar_perfil' %}" class="bi bi-person-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                </svg>
-              <span id="title">Perfil</span>
-          </a>
-          
-          {% if chat|length == 0 %}
-            <a href="{% url 'completar_perfil' %}" class="bi bi-people-fill">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                  </svg>
-                <span id="title">Amigos</span>
-            </a>
-          {% else %}
-            <a href="{% url 'completar_perfil' %}" class="bi bi-people-fill">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                  <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                </svg>
-              <span id="title">Amigos<i class="material-icons">&#xe7f7;</i></span>
-            </a>
-          {% endif %}
-          <a href="{% url 'completar_perfil' %}" class="bi bi-chat-left-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
-              <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-              <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-            </svg>
-            <span id="title">Publicar</span>
-          </a>
-          <a href="{% url 'completar_perfil' %}" class="bi bi-chat-left-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wechat" viewBox="0 0 16 16">
-              <path d="M11.176 14.429c-2.665 0-4.826-1.8-4.826-4.018 0-2.22 2.159-4.02 4.824-4.02S16 8.191 16 10.411c0 1.21-.65 2.301-1.666 3.036a.324.324 0 0 0-.12.366l.218.81a.616.616 0 0 1 .029.117.166.166 0 0 1-.162.162.177.177 0 0 1-.092-.03l-1.057-.61a.519.519 0 0 0-.256-.074.509.509 0 0 0-.142.021 5.668 5.668 0 0 1-1.576.22ZM9.064 9.542a.647.647 0 1 0 .557-1 .645.645 0 0 0-.646.647.615.615 0 0 0 .09.353Zm3.232.001a.646.646 0 1 0 .546-1 .645.645 0 0 0-.644.644.627.627 0 0 0 .098.356Z"/>
-              <path d="M0 6.826c0 1.455.781 2.765 2.001 3.656a.385.385 0 0 1 .143.439l-.161.6-.1.373a.499.499 0 0 0-.032.14.192.192 0 0 0 .193.193c.039 0 .077-.01.111-.029l1.268-.733a.622.622 0 0 1 .308-.088c.058 0 .116.009.171.025a6.83 6.83 0 0 0 1.625.26 4.45 4.45 0 0 1-.177-1.251c0-2.936 2.785-5.02 5.824-5.02.05 0 .1 0 .15.002C10.587 3.429 8.392 2 5.796 2 2.596 2 0 4.16 0 6.826Zm4.632-1.555a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0Zm3.875 0a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0Z"/>
-            </svg>
-            <span id="title">Grupos</span>
-          </a>
-          {% if username.is_superuser %}
-          <a href="{% url 'admin1' %}" class="bi bi-chat-left-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/>
-            </svg>
-            <span id="title">Admin</span>
-          </a>
-          {% endif %}
-      </div>
+  {% endif %}
+  {% else %}
+
+  <div class="container-bar" style="font-family: 'Press Start 2P';">
+    <input type="checkbox" id="btn-social">
+    <label for="btn-social" class="fa fa-play"></label>
+    <div class="icon-social">
+      <a href="{% url 'index' %}" class="bi bi-house-door-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z" />
+        </svg>
+        <span id="title">Menu</span>
+      </a>
+      <a href="{% url 'completar_perfil' %}" class="bi bi-bell-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
+        <span id="title">Notificaciones</span>
+      </a>
+      <a href="{% url 'completar_perfil' %}" class="bi bi-person-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle"
+          viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+          <path fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </svg>
+        <span id="title">Perfil</span>
+      </a>
+
+      {% if chat|length == 0 %}
+      <a href="{% url 'completar_perfil' %}" class="bi bi-people-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+        </svg>
+        <span id="title">Amigos</span>
+      </a>
+      {% else %}
+      <a href="{% url 'completar_perfil' %}" class="bi bi-people-fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+        </svg>
+        <span id="title">Amigos<i class="material-icons">&#xe7f7;</i></span>
+      </a>
+      {% endif %}
+      <a href="{% url 'completar_perfil' %}" class="bi bi-chat-left-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text"
+          viewBox="0 0 16 16">
+          <path
+            d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+          <path
+            d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+        </svg>
+        <span id="title">Publicar</span>
+      </a>
+      <a href="{% url 'completar_perfil' %}" class="bi bi-chat-left-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wechat"
+          viewBox="0 0 16 16">
+          <path
+            d="M11.176 14.429c-2.665 0-4.826-1.8-4.826-4.018 0-2.22 2.159-4.02 4.824-4.02S16 8.191 16 10.411c0 1.21-.65 2.301-1.666 3.036a.324.324 0 0 0-.12.366l.218.81a.616.616 0 0 1 .029.117.166.166 0 0 1-.162.162.177.177 0 0 1-.092-.03l-1.057-.61a.519.519 0 0 0-.256-.074.509.509 0 0 0-.142.021 5.668 5.668 0 0 1-1.576.22ZM9.064 9.542a.647.647 0 1 0 .557-1 .645.645 0 0 0-.646.647.615.615 0 0 0 .09.353Zm3.232.001a.646.646 0 1 0 .546-1 .645.645 0 0 0-.644.644.627.627 0 0 0 .098.356Z" />
+          <path
+            d="M0 6.826c0 1.455.781 2.765 2.001 3.656a.385.385 0 0 1 .143.439l-.161.6-.1.373a.499.499 0 0 0-.032.14.192.192 0 0 0 .193.193c.039 0 .077-.01.111-.029l1.268-.733a.622.622 0 0 1 .308-.088c.058 0 .116.009.171.025a6.83 6.83 0 0 0 1.625.26 4.45 4.45 0 0 1-.177-1.251c0-2.936 2.785-5.02 5.824-5.02.05 0 .1 0 .15.002C10.587 3.429 8.392 2 5.796 2 2.596 2 0 4.16 0 6.826Zm4.632-1.555a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0Zm3.875 0a.77.77 0 1 1-1.54 0 .77.77 0 0 1 1.54 0Z" />
+        </svg>
+        <span id="title">Grupos</span>
+      </a>
+      {% if username.is_superuser %}
+      <a href="{% url 'admin1' %}" class="bi bi-chat-left-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3"
+          viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z" />
+        </svg>
+        <span id="title">Admin</span>
+      </a>
+      {% endif %}
+    </div>
   </div>
 
 
-{% if username %}    
-<div class="navbar-container" style="font-family: 'Press Start 2P';">
-<ul>
-    <li class="nav-link ">
+  {% if username %}
+  <div class="navbar-container" style="font-family: 'Press Start 2P';">
+    <ul>
+      <li class="nav-link ">
         <a href="#">Home
         </a>
         <div class="underline"></div>
-    </li>
-    <li class="nav-link">
+      </li>
+      <li class="nav-link">
         <a href="#">About Us</a>
         <div class="underline"></div>
-    </li>
-    <li class="nav-link">
+      </li>
+      <li class="nav-link">
         <a href="#">Testimonials</a>
         <div class="underline"></div>
-    </li>
-    <li class="nav-link">
+      </li>
+      <li class="nav-link">
         <a href="#">Contact</a>
         <div class="underline"></div>
-    </li>
-    <li class="nav-link">
-      <a href="/logout">Cerrar Sesión</a>
-      <div class="underline"></div>
-  </li>
-</ul>
-</div>
+      </li>
+      <li class="nav-link">
+        <a href="/logout">Cerrar Sesión</a>
+        <div class="underline"></div>
+      </li>
+    </ul>
+  </div>
 
 
-{% endif %}
-<div>
-<div class="card-id567" style="font-size: 15px;">
-<img src="../static/img/playlist.png" alt="Imagen" />
+  {% endif %}
+  <div>
+    <div class="card-id567" style="font-size: 15px;">
+      <img src="../static/img/playlist.png" alt="Imagen" />
 
-<div class="prompt-id567">
-  <div class="token-container">
+      <div class="prompt-id567">
+        <div class="token-container">
 
   <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18V18ZM10 5.05L14.95 10L10 14.95L5.05 10L10 5.05V5.05ZM10 7.879L7.879 10L10 12.121L12.121 10L10 7.879V7.879Z" fill="url(#paint0_linear_713_51)"></path>
@@ -417,10 +453,6 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 </div>
 </div>
 </div>
-<div id="contenido-movil" style="display: none;">
-  <!-- Contenido para dispositivos móviles -->
-
-</div>
 <div class="container2" style="margin-top: 20px;">
 <input type="text" id="search_input" name="search_input" class="input" placeholder="Buscar en Gaming Hub...">
 <button class="search__btn">
@@ -432,122 +464,127 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 </div> 
 
 
-{% if username %}
+  {% if username %}
 
-<div class="container">
-<div class="post-card-container" >
-  {% for l in listados %}
-    
-    <div class="post-card" > <!--Poner luces a las publicaciones-->
-      
-      
-    <div class="row">
-     
-        
-        <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;">{{ l.id_usuario }}</div>
-        
-        
-    </div>
-    <a class="title" href="">{{ l.titulo }}</a>
-    <h6> {{ l.contenido }}</h6>
-    <span class="datetime">{{ l.fecha_creacion|date:"d-m-Y" }}</span>
-    {% if l.multimedia.url %}
+  <div class="container">
+    <div class="post-card-container">
+      {% for l in listados %}
+
+      <div class="post-card"> <!--Poner luces a las publicaciones-->
+
+
+        <div class="row">
+
+
+          <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;">{{ l.id_usuario
+            }}</div>
+
+
+        </div>
+        <a class="title" href="">{{ l.titulo }}</a>
+        <h6> {{ l.contenido }}</h6>
+        <span class="datetime">{{ l.fecha_creacion|date:"d-m-Y" }}</span>
+        {% if l.multimedia.url %}
         {% if ".mp4" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/mp4">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mp4">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
         {% elif ".avi" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/avi">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/avi">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
         {% elif ".mkv" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/mkv">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mkv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
         {% elif ".mov" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/mov">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mov">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
         {% elif ".wmv" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/wmv">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/wmv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
         {% elif ".flv" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/flv">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/flv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
         {% else %}
-          <img src="{{ l.multimedia.url }}" class="image-preview image"/>
+        <img src="{{ l.multimedia.url }}" class="image-preview image" />
         {% endif %}
-    {% endif %}
-    <div class="comment-like">
-      <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px' > {{ l.like.all.count }}</i></span>
-      <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count }}</i></span>
-      
-      <a href="{% url 'completar_perfil' %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
-      <span>
-        <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
-          {% csrf_token %}
-          <input type="hidden" name="next" value="{{request.path}}">
-          <button type="submit">
-            Me gusta
-          </button>
-        </form>
-      </span>
-      <span>
-        <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
-          {% csrf_token %}
-          <input type="hidden" name="next" value="{{request.path}}">
-          <button type="submit">
-            No me gusta
-          </button>
-        </form>
-      </span>
-    
-    </div>
-  
-  
-    </div>
-    
-  {% endfor %}
-</div>
+        {% endif %}
+        <div class="comment-like">
+          <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px'> {{ l.like.all.count }}</i></span>
+          <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count
+              }}</i></span>
 
-</div>
+          <a href="{% url 'completar_perfil' %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
+          <span>
+            <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit">
+                Me gusta
+              </button>
+            </form>
+          </span>
+          <span>
+            <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit">
+                No me gusta
+              </button>
+            </form>
+          </span>
+
+        </div>
+
+
+      </div>
+
+      {% endfor %}
+    </div>
+
+  </div>
 
   {% endif %}
-{% endif %}
+  {% endif %}
 
 
 
 
-<!-- Footer 
+  <!-- Footer 
 <footer id="piedepag">
 <p>Chile, Santiago de Chile | Fono: 227369936 | Email: gaminghub@gmail.com</p>
 <p>Copyright 2023  <span style="color: #a970ff;">Gaming Hub</span></p>
 </footer>
 -->
-<script>
-  // Almacenar la posición actual antes de recargar la página
-  window.onbeforeunload = function() {
-    var scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-    sessionStorage.setItem('scrollPosition', scrollPos);
-  };
+  <script>
+    // Almacenar la posición actual antes de recargar la página
+    window.onbeforeunload = function () {
+      var scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      sessionStorage.setItem('scrollPosition', scrollPos);
+    };
 
-  // Restaurar la posición después de recargar la página
-  window.onload = function() {
-    var scrollPos = sessionStorage.getItem('scrollPosition');
-    window.scrollTo(0, scrollPos);
-    sessionStorage.removeItem('scrollPosition');
-  };
-</script>   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="{% static 'js/index.js' %}"></script>
+    // Restaurar la posición después de recargar la página
+    window.onload = function () {
+      var scrollPos = sessionStorage.getItem('scrollPosition');
+      window.scrollTo(0, scrollPos);
+      sessionStorage.removeItem('scrollPosition');
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="{% static 'js/index.js' %}"></script>
 
 </body>
+
 </html>
