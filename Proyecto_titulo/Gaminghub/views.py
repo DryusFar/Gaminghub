@@ -193,7 +193,7 @@ def index(request):
         'listadosp': listadoperfiles,
         'chat': chat,
     }
-    return render(request, 'index.html',context)
+    return render(request, 'index.html',context, )
 
 
 @login_required
@@ -501,7 +501,7 @@ def registrarpublicacion(request):
     publicacion = Publicacion.objects.create(titulo = titulo_p, contenido = contenido_p, multimedia = multimedia_p ,fecha_creacion = fecha_p ,id_usuario = user)    
     publicacion.like.set([])
     publicacion.dislike.set([])
-    messages.success(request,'Datos completados exitosamente')
+    messages.success(request,'---Publicacion creada exitosamente---')
     return redirect('index')
 
 @login_required
@@ -774,7 +774,6 @@ def salir_grupo(request, id_grupo):
 
     if miembro is not None:  # Verificar si el objeto miembro existe
         miembro.delete()
-        messages.success(request, 'Te has salido exitosamente...')
     else:
         messages.error(request, 'No eres miembro de este grupo.')
 
@@ -792,11 +791,29 @@ def eliminar_grupo(request, id_grupo):
 
     if grupo is not None:  # Verificar si el objeto miembro existe
         grupo.delete()
-        messages.success(request, 'Se ha eliminado el grupo exitosamente...')
     else:
         messages.error(request, 'El grupo no existe de este grupo.')
 
     return redirect('grupos')
+
+def eliminar_sala(request, sala_id):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)
+    sala = Sala.objects.get(id_sala=sala_id)
+
+    grupo = Grupo.objects.get(id_grupo = sala.fk_id_grupo.id_grupo)
+
+    if sala is not None:  # Verificar si el objeto miembro existe
+        sala.delete()
+        messages.success(request, 'Se ha eliminado la sala exitosamente...')
+    else:
+        messages.error(request, 'La sala no existe en este grupo.')
+
+    return redirect('salas', grupo_id = grupo.id_grupo)
 
 def perfiles(request, username):
     usuario = get_object_or_404(User, username=username) #OBTENGO TODOS LOS MODELOS DE User COMPLETOS COMPARANDO EL USERNAME CON EL INGRESADO EN LA URL
@@ -1003,8 +1020,9 @@ def registrarcomentario(request, id_publicacion):
         return redirect('comentarios', id_publicacion=id_publicacion)
     
     
+
     if request.user.is_authenticated:
-            username_id = request.user.id
+        username_id = request.user.id
     else:
             username_id = None
 
@@ -1253,6 +1271,41 @@ def enviarMensaje(request, amigo_id):
 def error_404(request, exception):
     return render(request, '404.html', status=404)
 
+def crearsala(request, grupo_id):
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    user = User.objects.get(id=username_id)  
+
+    grupo = Grupo.objects.get(id_grupo = grupo_id)
+
+    context = {
+        'user':user,
+        'grupo':grupo
+    }
+
+    return render(request, 'crearsala.html',context)
+
+def salaC(request, grupo_id):
+
+    if request.user.is_authenticated:
+        username_id = request.user.id
+    else:
+        username_id = None
+
+    titulo = request.POST['titulo']
+
+    user = User.objects.get(id=username_id) 
+
+    grupo = Grupo.objects.get(id_grupo = grupo_id) 
+
+    Sala.objects.create(nombre_sala=titulo, fk_id_grupo = grupo)
+
+    return redirect('salas', grupo_id=grupo.id_grupo)
+
+
 def salas(request, grupo_id):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -1388,3 +1441,24 @@ def get_messages_grupo(request, sala_id):
         messages_data.append(message_data)
 
     return JsonResponse({'messages': messages_data})
+
+def form_modificarSala(request, sala_id):
+    sala = Sala.objects.get(id_sala = sala_id)
+
+    context = {
+        'sala':sala,
+    }
+
+    return render(request, 'form_modificarSala.html', context)
+
+def modificarSala(request,sala_id):
+    sala = Sala.objects.get(id_sala = sala_id)
+
+    grupo = Grupo.objects.get(id_grupo = sala.fk_id_grupo.id_grupo)
+
+    titulo = request.POST['titulo']
+
+    sala.nombre_sala = titulo
+    sala.save()
+
+    return redirect('salas', grupo_id = grupo.id_grupo)

@@ -1,9 +1,9 @@
 from django.urls import path
 <<<<<<< HEAD
-from .views import comentarios, eliminar_comentario,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje # Se importa la vista de urls
+from .views import comentarios, eliminar_comentario,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje, salas, chatSala, enviarNotificacionMensaje, get_messages,get_messages_grupo, eliminar_publicacion_perfiles, enviarMensajeGrupo, mensajeAdmin # Se importa la vista de urls
 =======
-from .views import comentarios,listadopublicaciones, loginView, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje,salas,chatSala, enviarMensajeGrupo, enviarNotificacionMensaje,mensajeAdmin, get_messages,get_messages_grupo, eliminar_publicacion_perfiles # Se importa la vista de urls
->>>>>>> 45bbf1a4a72940bd3741caa38428e4ae571a5704
+from .views import chatSala, comentarios, eliminar_comentario, eliminar_publicacion_perfiles, enviarMensajeGrupo, enviarNotificacionMensaje, get_messages, get_messages_grupo,listadopublicaciones, loginView, mensajeAdmin, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion, salas,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje # Se importa la vista de urls
+>>>>>>> origin/develop
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -74,9 +74,6 @@ urlpatterns = [
     path('eliminarAmigo/<id_enviador>', eliminarAmigo, name='eliminarAmigo'),
     path('chat/<amigo_id>/', chat, name='chat'),
     path('enviarMensaje/<int:amigo_id>/', enviarMensaje, name='enviarMensaje'),
-<<<<<<< HEAD
-]    
-=======
     path('get_messages/<int:amigo_id>/', get_messages, name='get_messages'),
     path('get_messages_grupo/<int:sala_id>/', get_messages_grupo, name='get_messages_grupo'),
     path('eliminar_publicacion_perfiles/<id_publicacion>/<id_username>/',eliminar_publicacion_perfiles, name='eliminar_publicacion_perfiles'),
@@ -86,4 +83,3 @@ urlpatterns = [
     path('mensajeAdmin/<id_usuario>', mensajeAdmin, name='mensajeAdmin')
 ]
 
->>>>>>> 45bbf1a4a72940bd3741caa38428e4ae571a5704

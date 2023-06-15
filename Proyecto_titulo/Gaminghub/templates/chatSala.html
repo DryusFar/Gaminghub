@@ -196,16 +196,18 @@
             <h1 class="fuente">{{ sala.nombre_sala }}</h1>
         </div>
         
+        {% if chat %}
+        {% else %}
+              <p style="color: beige; font-size: 20px;">No hay mensajes por ahora...</p>
+        {% endif %}
         <div class="chat-messages">
-            {% for chat in chat %}
-            {% if chat.contenido %}
-            
-                <div class="message-content">
-                    <p class="sender">{{ chat.remitente.username }}</p>
-                    <p>{{ chat.contenido }}</p>
-                </div>
-            {% endif %}
-            {% endfor %}
+              {% for mensaje in chat %}
+                  <div class="message-content">
+                      <p class="sender">{{ mensaje.remitente.username }}</p>
+                      <p>{{ mensaje.contenido }}</p>
+                  </div>
+              {% endfor %}
+
         </div>
 
         <form id="message-form" method="post" action="{% url 'enviarMensajeGrupo' sala_id=sala.id_sala %}" data-sala-id="{{ sala.id_sala }}">

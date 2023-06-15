@@ -45,7 +45,7 @@
 </div>
 
 
-<div class="container-bar" style="font-family: 'Press Start 2P';">
+<div class="container-bar" style="font-family: 'Press Start 2P'; z-index: 100;">
   <input type="checkbox" id="btn-social">
   <label for="btn-social" class="fa fa-play"></label>
       <div class="icon-social">
@@ -265,8 +265,42 @@
         {% for l in listados %}
         
         <div class="col-6">
-            <div class="card d-flex">
-            <img src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;">
+            <div class="card d-flex" style="width: 520px; height: 550px; z-index: 1;">
+            {% if l.multimedia.url %}
+                {% if ".mp4" in l.multimedia.url %}
+                  <video controls>
+                    <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;" type="video/mp4">
+                    <!-- Aquí puedes agregar otros formatos de video compatibles -->
+                  </video>
+                {% elif ".avi" in l.multimedia.url %}
+                  <video controls>
+                    <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;" type="video/avi">
+                    <!-- Aquí puedes agregar otros formatos de video compatibles -->
+                  </video>
+                {% elif ".mkv" in l.multimedia.url %}
+                  <video controls>
+                    <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;" type="video/mkv">
+                    <!-- Aquí puedes agregar otros formatos de video compatibles -->
+                  </video>
+                {% elif ".mov" in l.multimedia.url %}
+                  <video controls>
+                    <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;" type="video/mov">
+                    <!-- Aquí puedes agregar otros formatos de video compatibles -->
+                  </video>
+                {% elif ".wmv" in l.multimedia.url %}
+                  <video controls>
+                    <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;" type="video/wmv">
+                    <!-- Aquí puedes agregar otros formatos de video compatibles -->
+                  </video>
+                {% elif ".flv" in l.multimedia.url %}
+                  <video controls>
+                    <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;" type="video/flv">
+                    <!-- Aquí puedes agregar otros formatos de video compatibles -->
+                  </video>
+                {% else %}
+                  <img src="{{ l.multimedia.url }}" class="image-preview card-img-top image" style="width: 500px; height: auto;"/>
+                {% endif %}
+            {% endif %}
             <div class="card-body">
               <h5 class="card-title">{{ l.titulo }}</h5>
               <p class="card-text">{{ l.contenido }}</p>
@@ -391,17 +425,16 @@
       <div class="modal-content">
         <!-- Contenido de la modal -->
         <div class="modal-header">
-          <h5 class="modal-title">Modal</h5>
+          <h5 class="modal-title" style="color: black;">Publicacion</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true" class="close">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Estas seguro de que quieres eliminar de esta publicacion?</p>
+          <p style="color: black;font-family: monospace; ">Estas seguro de que quieres eliminar de esta publicacion?</p>
         </div>
         <div class="modal-footer">
-          <span id="publicacion-id"></span>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-secondary close" data-dismiss="modal">Cerrar</button>
           <a class="btn btn-danger" id="btn-eliminar">Eliminar</a>
         </div>
       </div>

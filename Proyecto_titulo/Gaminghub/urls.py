@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import chatSala, comentarios, eliminar_comentario, eliminar_publicacion_perfiles, enviarMensajeGrupo, enviarNotificacionMensaje, get_messages, get_messages_grupo,listadopublicaciones, loginView, mensajeAdmin, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion, salas,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje # Se importa la vista de urls
+from .views import chatSala, comentarios, eliminar_comentario, eliminar_publicacion_perfiles, enviarMensajeGrupo, enviarNotificacionMensaje, get_messages, get_messages_grupo,listadopublicaciones, loginView, mensajeAdmin, perfil,index,register,admin1, chat2, menu_principal, completar_perfil,form_publicacion, registrarcomentario,registrarpublicacion, salas,signup,signout, signin,perfilC,modificar_perfil,perfilM,banearUsuario, cambiar_clave,cambiarC,grupos,form_grupo, registrargrupo,unirse_grupo,salir_grupo,eliminar_grupo,form_modificarPublicacion, perfiles ,Darlikes ,buscar_usuarios,Dardislikes,modificarPublicacion,eliminar_publicacion, form_modificarGrupo,modificargrupo, vista_miembros,solicitudAmistad, notificaciones,agregarAmigo,declinarSolicitud, botonOK, amigos, eliminarAmigo, chat, enviarMensaje, crearsala, salaC, eliminar_sala, form_modificarSala, modificarSala # Se importa la vista de urls
 
 urlpatterns = [
     path('accounts/login/', loginView, name='loginView'),
@@ -76,6 +76,11 @@ urlpatterns = [
 
 
     path('enviarMensajeGrupo/<int:sala_id>/', enviarMensajeGrupo, name='enviarMensajeGrupo'),
-    path('mensajeAdmin/<id_usuario>', mensajeAdmin, name='mensajeAdmin')
+    path('mensajeAdmin/<id_usuario>', mensajeAdmin, name='mensajeAdmin'),
+    path('crearsala/<grupo_id>/', crearsala, name='crearsala'),
+    path('salaC/<grupo_id>/', salaC, name='salaC'),
+    path('eliminar_sala/<sala_id>/', eliminar_sala, name='eliminar_sala'),
+    path('form_modificarSala/<sala_id>/', form_modificarSala, name='form_modificarSala'),
+    path('modificarSala/<sala_id>/', modificarSala, name='modificarSala'),
 ]
 

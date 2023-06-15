@@ -40,6 +40,7 @@ class Publicacion(models.Model):
 class Comentario(models.Model):
     id_comentario = models.BigAutoField(primary_key=True)
     descripcion = models.TextField(max_length=200)
+    fecha_creacion = models.DateField(null=True, auto_now_add=True)
     fk_id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fk_id_publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
 
