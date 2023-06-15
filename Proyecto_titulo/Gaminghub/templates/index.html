@@ -59,12 +59,12 @@
       }
     });
 
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      // El usuario está viendo desde un dispositivo móvil
-      document.getElementById("contenido-movil").style.display = "block";
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // El usuario está viendo desde un dispositivo móvil
+        document.getElementById("contenido-movil").style.display = "block";
     } else {
-      // El usuario está viendo desde una computadora
-      document.getElementById("contenido-desktop").style.display = "block";
+        // El usuario está viendo desde una computadora
+        document.getElementById("contenido-desktop").style.display = "block";
     }
 
   </script>
@@ -72,6 +72,7 @@
 
 <body>
 {% if perfil %}
+
   <div class="container-bar" style="font-family: 'Press Start 2P';">
     <input type="checkbox" id="btn-social">
     <label for="btn-social" class="fa fa-play"></label>
@@ -172,64 +173,59 @@
         <div class="underline"></div>
       </li>
       <li class="nav-link">
-        <a href="/logout">Cerrar Sesión <span
-            style="color: #00ffbb; background-color: #000000; padding: 10px; border-radius: 10px;"> {{ username }}
-          </span> </a>
+        <a href="/logout">Cerrar Sesión <span style="color: #00ffbb; background-color: #000000; padding: 10px; border-radius: 10px;"> {{ username }} </span> </a>
         <div class="underline"></div>
       </li>
     </ul>
   </div>
 
 
-  {% endif %}
-{% else %}
-  <div>
-    <div class="card-id567" style="font-size: 15px;">
-      <img src="../static/img/playlist.png" alt="Imagen" />
+    
+    <div>
+        <div class="card-id567" style="font-size: 15px;">
+          <img src="../static/img/playlist.png" alt="Imagen" />
 
-      <div class="prompt-id567">
-        <div class="token-container">
+          <div class="prompt-id567">
+            <div class="token-container">
 
-          <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18V18ZM10 5.05L14.95 10L10 14.95L5.05 10L10 5.05V5.05ZM10 7.879L7.879 10L10 12.121L12.121 10L10 7.879V7.879Z"
-              fill="url(#paint0_linear_713_51)"></path>
-            <defs>
-              <linearGradient id="paint0_linear_713_51" x1="0" y1="0" x2="16.4204" y2="22.6007"
-                gradientUnits="userSpaceOnUse">
-                <stop stop-color="#AF40FF"></stop>
-                <stop offset="0.5" stop-color="#5B42F3"></stop>
-                <stop offset="1" stop-color="#00DDEB"></stop>
-              </linearGradient>
-            </defs>
-          </svg>
+              <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18V18ZM10 5.05L14.95 10L10 14.95L5.05 10L10 5.05V5.05ZM10 7.879L7.879 10L10 12.121L12.121 10L10 7.879V7.879Z"
+                  fill="url(#paint0_linear_713_51)"></path>
+                <defs>
+                  <linearGradient id="paint0_linear_713_51" x1="0" y1="0" x2="16.4204" y2="22.6007"
+                    gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#AF40FF"></stop>
+                    <stop offset="0.5" stop-color="#5B42F3"></stop>
+                    <stop offset="1" stop-color="#00DDEB"></stop>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="blurry-splash"></div>
+            <p>GAMING HUB<br><span class="bold-567">Hechale un vistazo a nuestra Playlist en Spotify</span> </p>
+            <p class="really-small-text">Coloca la flecha por encima</p>
+          </div>
         </div>
-        <div class="blurry-splash"></div>
-        <p>GAMING HUB<br><span class="bold-567">Hechale un vistazo a nuestra Playlist en Spotify</span> </p>
-        <p class="really-small-text">Coloca la flecha por encima</p>
-      </div>
     </div>
-  </div>
-  <div class="container2" style="margin-top: 20px;">
-    <input type="text" id="search_input" name="search_input" class="input" placeholder="Buscar en Gaming Hub...">
-    <button class="search__btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
-        <path
-          d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"
-          fill="#efeff1"></path>
-      </svg>
-    </button>
-    <div id="acordeon"></div>
-  </div>
+    <div class="container2" style="margin-top: 20px;">
+      <input type="text" id="search_input" name="search_input" class="input" placeholder="Buscar en Gaming Hub...">
+      <button class="search__btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+          <path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z" fill="#efeff1"></path>
+        </svg>
+      </button>
+      <div id="acordeon"></div>
+    </div> 
 
-  {% if messages %}
-  <ul class="messages" style="text-align: center; align-items: center; font-size: 20px; margin-top: 20px;">
-    {% for message in messages %}
-    <li class="text-danger">{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% if username %}
+    {% if messages %}
+      <ul class="messages" style="text-align: center; align-items: center; font-size: 20px; margin-top: 20px;">
+          {% for message in messages %}
+          <li class="text-danger">{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+
 
   <div class="container">
     <div class="post-card-container">
@@ -286,8 +282,7 @@
         {% endif %}
         <div class="comment-like">
           <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px'> {{ l.like.all.count }}</i></span>
-          <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count
-              }}</i></span>
+          <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count }}</i></span>
 
           <a href="{% url 'comentarios' l.id_publicacion %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
           <span>
@@ -319,7 +314,8 @@
 
   </div>
 
-  {% endif %}
+  
+{% else %}
 
   <div class="container-bar" style="font-family: 'Press Start 2P';">
     <input type="checkbox" id="btn-social">
@@ -432,7 +428,7 @@
   </div>
 
 
-
+  {% endif %}
   <div>
     <div class="card-id567" style="font-size: 15px;">
       <img src="../static/img/playlist.png" alt="Imagen" />
@@ -440,119 +436,112 @@
       <div class="prompt-id567">
         <div class="token-container">
 
-          <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18V18ZM10 5.05L14.95 10L10 14.95L5.05 10L10 5.05V5.05ZM10 7.879L7.879 10L10 12.121L12.121 10L10 7.879V7.879Z"
-              fill="url(#paint0_linear_713_51)"></path>
-            <defs>
-              <linearGradient id="paint0_linear_713_51" x1="0" y1="0" x2="16.4204" y2="22.6007"
-                gradientUnits="userSpaceOnUse">
-                <stop stop-color="#AF40FF"></stop>
-                <stop offset="0.5" stop-color="#5B42F3"></stop>
-                <stop offset="1" stop-color="#00DDEB"></stop>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <div class="blurry-splash"></div>
-        <p>GAMING HUB<br><span class="bold-567">Hechale un vistazo a nuestra Playlist en Spotify</span> </p>
-        <p class="really-small-text">Coloca la flecha por encima</p>
-      </div>
-    </div>
+  <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18V18ZM10 5.05L14.95 10L10 14.95L5.05 10L10 5.05V5.05ZM10 7.879L7.879 10L10 12.121L12.121 10L10 7.879V7.879Z" fill="url(#paint0_linear_713_51)"></path>
+    <defs>
+    <linearGradient id="paint0_linear_713_51" x1="0" y1="0" x2="16.4204" y2="22.6007" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#AF40FF"></stop>
+    <stop offset="0.5" stop-color="#5B42F3"></stop>
+    <stop offset="1" stop-color="#00DDEB"></stop>
+    </linearGradient>
+    </defs>
+  </svg>
+  </div>
+  <div class="blurry-splash"></div>
+  <p>GAMING HUB<br><span class="bold-567">Hechale un vistazo a nuestra Playlist en Spotify</span> </p>
+  <p class="really-small-text">Coloca la flecha por encima</p>
+  </div>
+  </div>
   </div>
   <div class="container2" style="margin-top: 20px;">
-    <input type="text" id="search_input" name="search_input" class="input" placeholder="Buscar en Gaming Hub...">
-    <button class="search__btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
-        <path
-          d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"
-          fill="#efeff1"></path>
-      </svg>
-    </button>
-    <div id="acordeon"></div>
-  </div>
+  <input type="text" id="search_input" name="search_input" class="input" placeholder="Buscar en Gaming Hub...">
+  <button class="search__btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+      <path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z" fill="#efeff1"></path>
+    </svg>
+  </button>
+  <div id="acordeon"></div>
+  </div> 
 
 
+  {% if username %}
 
-{% if username %}
+  <div class="container">
+    <div class="post-card-container">
+      {% for l in listados %}
 
-    <div class="container">
-      <div class="post-card-container">
-        {% for l in listados %}
-
-        <div class="post-card"> <!--Poner luces a las publicaciones-->
-
-
-          <div class="row">
+      <div class="post-card"> <!--Poner luces a las publicaciones-->
 
 
-            <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;">{{ l.id_usuario
-              }}</div>
+        <div class="row">
 
 
-          </div>
-          <a class="title" href="">{{ l.titulo }}</a>
-          <h6> {{ l.contenido }}</h6>
-          <span class="datetime">{{ l.fecha_creacion|date:"d-m-Y" }}</span>
-          {% if l.multimedia.url %}
-          {% if ".mp4" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/mp4">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
-          {% elif ".avi" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/avi">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
-          {% elif ".mkv" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/mkv">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
-          {% elif ".mov" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/mov">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
-          {% elif ".wmv" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/wmv">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
-          {% elif ".flv" in l.multimedia.url %}
-          <video controls>
-            <source src="{{ l.multimedia.url }}" type="video/flv">
-            <!-- Aquí puedes agregar otros formatos de video compatibles -->
-          </video>
-          {% else %}
-          <img src="{{ l.multimedia.url }}" class="image-preview image" />
-          {% endif %}
-          {% endif %}
-          <div class="comment-like">
-            <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px'> {{ l.like.all.count }}</i></span>
-            <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count
-                }}</i></span>
+          <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;">{{ l.id_usuario
+            }}</div>
 
-            <a href="{% url 'completar_perfil' %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
-            <span>
-              <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{request.path}}">
-                <button type="submit">
-                  Me gusta
-                </button>
-              </form>
-            </span>
-            <span>
-              <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{request.path}}">
-                <button type="submit">
-                  No me gusta
-                </button>
-              </form>
-            </span>
+
+        </div>
+        <a class="title" href="">{{ l.titulo }}</a>
+        <h6> {{ l.contenido }}</h6>
+        <span class="datetime">{{ l.fecha_creacion|date:"d-m-Y" }}</span>
+        {% if l.multimedia.url %}
+        {% if ".mp4" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mp4">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".avi" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/avi">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".mkv" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mkv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".mov" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/mov">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".wmv" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/wmv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% elif ".flv" in l.multimedia.url %}
+        <video controls>
+          <source src="{{ l.multimedia.url }}" type="video/flv">
+          <!-- Aquí puedes agregar otros formatos de video compatibles -->
+        </video>
+        {% else %}
+        <img src="{{ l.multimedia.url }}" class="image-preview image" />
+        {% endif %}
+        {% endif %}
+        <div class="comment-like">
+          <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px'> {{ l.like.all.count }}</i></span>
+          <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count }}</i></span>
+
+          <a href="{% url 'completar_perfil' %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
+          <span>
+            <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit">
+                Me gusta
+              </button>
+            </form>
+          </span>
+          <span>
+            <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit">
+                No me gusta
+              </button>
+            </form>
+          </span>
 
           </div>
 
@@ -565,7 +554,9 @@
     </div>
 
   {% endif %}
+
 {% endif %}
+
 
 
 
