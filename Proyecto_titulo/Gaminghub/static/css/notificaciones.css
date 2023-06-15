@@ -317,6 +317,7 @@
   
   /*card*/
   
+  
   .card {
     background-color: #222;
     color: #fff;
@@ -395,5 +396,4 @@
     border-radius: 50%; /* Mantiene la forma circular de la imagen */
   
   }
-  
   
