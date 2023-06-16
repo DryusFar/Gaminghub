@@ -104,3 +104,9 @@
     }
 }
 
+@media (max-width: 1360px) {
+    /* Ocultar el elemento QR cuando el ancho de la pantalla sea menor o igual a 767px */
+    .card-id567 {
+      display: none;
+    }
+  }
