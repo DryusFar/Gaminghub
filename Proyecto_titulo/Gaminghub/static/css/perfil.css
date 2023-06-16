@@ -414,3 +414,38 @@ footer {
 
 }
 
+.colorBoton3{
+  color: #ffffff;
+  background-color: #c99e10;
+  border-color: #000000;
+  font-weight: 600;
+}
+
+.colorBoton3:hover {
+  background-color: 	#a07c04;
+  border-color: #1d1a2f;
+}
+
+
+.colorBoton4 {
+  background-color: #00b94e;
+  border-color: #000000;
+  font-weight: 600;
+}
+
+.colorBoton4:hover {
+  background-color: #3f6d4e;
+  border-color: #1d1a2f;
+}
+
+.colorBoton5{
+  background-color: #6200d1;
+  border-color: #000000;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.colorBoton5:hover {
+  background-color: #734f9a;
+  border-color: #1d1a2f;
+}
