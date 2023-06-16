@@ -97,6 +97,8 @@
   }
   
   /* ---- ----- ----- CARD PERFIL ----- ----- ----- */
+  
+
   .colorBoton2:hover {
     background-color: 	#3f6d4e;
     border-color: #1d1a2f;
@@ -148,6 +150,9 @@
   
   /*css register*/
   
+  
+
+
   .colorBoton2 {
     background-color: #00b94e;
     border-color: #000000;
@@ -430,4 +435,27 @@
     box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #8800ff, 0 0 35px #8800ff, 0 0 40px #8800ff, 0 0 50px #8800ff, 0 0 75px #8800ff;"
   }
   
-  
+
+  .colorBoton3{
+    color: #ffffff;
+    background-color: #c99e10;
+    border-color: #000000;
+    font-weight: 600;
+  }
+
+  .colorBoton3:hover {
+    background-color: 	#a07c04;
+    border-color: #1d1a2f;
+  }
+
+  .colorBoton4{
+    color: #ffffff;
+    background-color: #33312a;
+    border-color: #000000;
+    font-weight: 600;
+  }
+
+  .colorBoton4:hover {
+    background-color: 	#1d1c1a;
+    border-color: #1d1a2f;
+  }
