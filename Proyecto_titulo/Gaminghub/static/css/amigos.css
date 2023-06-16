@@ -4,6 +4,8 @@ body {
     background-size: cover;
     background-attachment: fixed;
     display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
     margin: 0;
     padding: 20px;
@@ -17,7 +19,6 @@ body {
     border-radius: 10px;
     margin: 0 auto; /* Centra el contenedor horizontalmente */
     box-sizing: border-box; /* Incluye el padding en el ancho total del contenedor */
-    margin-top: 30vh;
   }
 
 h1 {
@@ -123,16 +124,4 @@ h1 {
   width: auto; /* Quitamos la propiedad width: 100% para que los botones ocupen su tamaño natural */
 }
 
-footer {
-  background-color: #09101d;
-  color: white;
-  padding-top: 1.2rem;
-  padding-bottom: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  font-size: 10px;
-  margin-top: 43.1vh;
-  font-family: 'Press Start 2P';
-  position: sticky bottom;
-  }
+
