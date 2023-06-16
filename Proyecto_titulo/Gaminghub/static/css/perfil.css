@@ -386,6 +386,7 @@ footer {
  
   flex: 1 0 300px; /* Anchura mínima de 300px */
   margin: 10px; /* Espacio entre las tarjetas */
+
 }
 
 .avatar {
@@ -403,14 +404,10 @@ footer {
 }
 
 .avatar img {
-  width: 100%; /* Asegura que la imagen ocupe todo el contenedor */
-  height: 100%;
-  object-fit: cover; /* Ajusta la imagen para que cubra todo el contenedor */
-  position: absolute; /* Establece el posicionamiento absoluto para la imagen */
-  top: 50%; /* Centra verticalmente la imagen */
-  left: 50%; /* Centra horizontalmente la imagen */
-  transform: translate(-50%, -50%); /* Ajusta la posición de la imagen al centro */
-  border-radius: 50%; /* Mantiene la forma circular de la imagen */
+  width: 150px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
 }
 

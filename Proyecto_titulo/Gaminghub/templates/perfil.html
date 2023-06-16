@@ -133,7 +133,7 @@
 
                 {% else %}
                 <div class="avatar">
-                  <img src="{{ perfil.avatar.url }}" class="rounded-circle img-fluid" style="width: 150px" alt="Avatar" />
+                  <img src="{{ perfil.avatar.url }}" class="rounded-circle img-fluid" alt="Avatar" />
                 </div>
                 {% endif %}
               </div>
@@ -268,7 +268,7 @@
         {% for l in listados %}
         
         <div class="col-xxl-6 col-xl-6 col-lg-12 col-sm-12 col-12" >
-            <div class="card d-flex" style="width: 520px; height: 550px; z-index: 1;">
+            <div class="card d-flex" style="z-index: 1; height: 100%;">
             {% if l.multimedia.url %}
                 {% if ".mp4" in l.multimedia.url %}
                   <video controls>
@@ -301,10 +301,10 @@
                     <!-- Aquí puedes agregar otros formatos de video compatibles -->
                   </video>
                 {% else %}
-                  <img src="{{ l.multimedia.url }}" class="image-preview card-img-top image" style="width: 500px; height: auto;"/>
+                  <img src="{{ l.multimedia.url }}" class="image-preview card-img-top image" style="max-width: 100%; max-height: 300px;"/>
                 {% endif %}
             {% endif %}
-            <div class="card-body">
+            <div class="card-body"> 
               <h5 class="card-title">{{ l.titulo }}</h5>
               <p class="card-text">{{ l.contenido }}</p>
               <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small></p>
