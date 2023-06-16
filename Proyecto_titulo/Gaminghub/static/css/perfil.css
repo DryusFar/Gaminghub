@@ -325,6 +325,25 @@ footer {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+/* Estilos generales para las tarjetas */
+.card {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin: 10px;
+}
+
+/* Estilos para las imágenes y videos dentro de las tarjetas */
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+/* Estilos para los botones de Modificar y Eliminar */
+.col-6 {
+  width: 50%;
+}
+
 .card img {
   width: 100%;
   border-radius: 5px;
@@ -369,19 +388,18 @@ footer {
   margin: 10px; /* Espacio entre las tarjetas */
 }
 
-/* Media query para ajustar el diseño de las tarjetas cuando el ancho de la ventana es menor a 768px */
-@media (max-width: 768px) {
-  .card {
-    flex-basis: 100%; /* Tarjetas de anchura completa */
-  }
-}
-
 .avatar {
   width: 100px; /* Ajusta el tamaño del contenedor del avatar según tus necesidades */
   height: 100px;
   border-radius: 50%; /* Hace que el contenedor tenga forma de círculo */
   overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del círculo */
   position: relative; /* Establece el posicionamiento relativo para el contenedor */
+}
+
+.col-lg-12 , .col-sm-12{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .avatar img {

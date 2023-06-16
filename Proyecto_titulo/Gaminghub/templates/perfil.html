@@ -15,6 +15,7 @@
   <link rel="stylesheet" type="text/css" href="../static/css/perfil.css" />
   <link rel="stylesheet" type="text/css" href="{% static 'css/menuflotante.css' %}" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body id="fondo1">
@@ -261,10 +262,12 @@
     <H4 style="text-align: center; margin-top: 35px; margin-bottom: 25px;">😎Publicaciones😎</H4>
     <div class="card-group">
       
-      <div class="row">
+      <div class="row" style="display: flex;
+      justify-content: center;
+      align-items: center;">
         {% for l in listados %}
         
-        <div class="col-6">
+        <div class="col-xxl-6 col-xl-6 col-lg-12 col-sm-12 col-12" >
             <div class="card d-flex" style="width: 520px; height: 550px; z-index: 1;">
             {% if l.multimedia.url %}
                 {% if ".mp4" in l.multimedia.url %}
@@ -322,100 +325,6 @@
       </div>
     </div>
 
-    <H4 style="text-align: center; margin-top: 35px; margin-bottom: 25px;">🎮Grupos asociados🎮</H4>
-
-    <div class="card-deck">
-      <div class="row">
-        <div class="col-4">
-          <div class="card">
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col-4">
-                <div class="avatar">
-                  <img src="{% static 'img/chad.jpg' %}" class="mx-auto" style="text-align: center; z-index: 1;" alt="Avatar">
-                </div>
-              </div>
-              <div class="col-4"></div>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Los pepillos</h5>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Ultima conexion: 10/05/2023</small>
-            </div>
-            <div class="card-footer">
-              <div class="row">
-                <div class="col-6">
-                  <button class="form-control btn btn-primary colorBoton" style="font-family: monospace;">Entrar</button>
-                </div>
-                <div class="col-6">
-                  <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">Salir</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card">
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col-4">
-                <div class="avatar">
-                  <img src="{% static 'img/payasito.jpg' %}" class="mx-auto" style="text-align: center;" alt="Avatar">
-                </div>
-              </div>
-              <div class="col-4"></div>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Los Insanos wazaaaa</h5>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Ultima conexion: 10/05/2023</small>
-            </div>
-            <div class="card-footer">
-              <div class="row">
-                <div class="col-6">
-                  <button class="form-control btn btn-primary colorBoton" style="font-family: monospace;">Entrar</button>
-                </div>
-                <div class="col-6">
-                  <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">Salir</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card">
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col-4">
-                <div class="avatar">
-                  <img src="{% static 'img/legion_holk.jpg' %}" class="mx-auto" style="text-align: center;" alt="Avatar">
-                </div>
-              </div>
-              <div class="col-4"></div>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Los Grasosos</h5>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Ultima conexion: 10/05/2023</small>
-            </div>
-            <div class="card-footer">
-              <div class="row">
-                <div class="col-6">
-                  <button class="form-control btn btn-primary colorBoton" style="font-family: monospace;">Entrar</button>
-                </div>
-                <div class="col-6">
-                  <button class="form-control btn btn-primary colorBoton2" style="font-family: monospace;">Salir</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-    </div>
 
   </div>
 
