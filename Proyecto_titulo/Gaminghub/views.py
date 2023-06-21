@@ -833,10 +833,15 @@ def perfiles(request, username):
     tipo=1
     ).exists()
 
+    # Consulta para obtener la cantidad de amigos
+    cantidad_amigos = Amistad.objects.filter(persona=perfil_usuario.id_usuario.id).count()
+    
+
+
     if username_id == usuario.id:
         return redirect('perfil')
     else:
-        return render(request, 'perfiles.html',{'user':username_id, 'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente, 'chat':chat})
+        return render(request, 'perfiles.html',{'user':username_id, 'usuario': usuario, 'avatar_url': perfil_usuario.avatar.url, 'publicaciones' : publicaciones,'notificacion_pendiente':notificacion_pendiente, 'chat':chat, 'cantidad_amigos':cantidad_amigos})
 
     
 
@@ -1227,6 +1232,16 @@ def chat(request, amigo_id):
 
     # Obtener el amigo utilizando el ID recibido
     amigo = User.objects.get(id=amigo_id)
+
+    # Verificar si son amigos
+    son_amigos = Amistad.objects.filter(
+        (Q(persona=usuario_actual.id) & Q(amigo=amigo.id)) |
+        (Q(persona=amigo.id) & Q(amigo=usuario_actual.id))
+    ).exists()
+
+    if not son_amigos:
+        return redirect('index')
+
 
     # Obtener el perfil del amigo
     perfil_amigo = PerfilUsuario.objects.get(id_usuario=amigo)
