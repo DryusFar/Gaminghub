@@ -10,6 +10,13 @@
   margin: 5px 0;
 }
 
+.invalid-file {
+  font-weight: bold;
+  border: 1px solid red;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 form {
   display: flex;
   margin-top: 10px;

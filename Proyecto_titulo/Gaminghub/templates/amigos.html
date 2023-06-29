@@ -89,6 +89,12 @@
       {% if amigos %}
       {% for amigo in amigos %}
       <div class="amigo-item">
+        <div class="alerta">
+          {% if amigo.mensaje|length == 0 %}
+          {% else %}
+          <p style="text-align: center; margin-right: 10px; margin-top: 15px;">🔴</p>
+          {% endif %}
+        </div>
         <div class="avatar-container">
           <img class="avatar" src="{{ amigo.avatar }}" alt="{{ amigo.username }}'s Avatar">
         </div>

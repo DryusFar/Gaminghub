@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
 from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion, Mensaje, Titulo, Puntaje, RegistroGrupo,Sala,MensajeGrupo
-from django.db.models import Q
+from django.db.models import Q , Case, When
 from django.contrib import messages
 import datetime
 from PIL import Image
@@ -1107,7 +1107,7 @@ def notificaciones(request):
 
     user = User.objects.get(id=username_id)  
 
-    listadonotificaciones = Notificacion.objects.all().filter(fk_recibidor = user)
+    listadonotificaciones = Notificacion.objects.all().filter(fk_recibidor = user).order_by('tipo')
 
     context = {
         'username': user,
@@ -1200,10 +1200,12 @@ def amigos(request):
         # Obtener el perfil del amigo utilizando la relación id_usuario en PerfilUsuario
         amigo_perfil = PerfilUsuario.objects.get(id_usuario=amigo_id)
         # Agregar el amigo y su avatar a la lista
+        mensaje_amigo = Mensaje.objects.filter(remitente = amigo_id , destinatario = usuario_actual.id, estado = 1)
         amigos.append({
             'username': amigo.username,
             'id_u' : amigo.id,
-            'avatar': amigo_perfil.avatar.url if amigo_perfil else None
+            'avatar': amigo_perfil.avatar.url if amigo_perfil else None,
+            'mensaje': mensaje_amigo
         })
 
     # Puedes pasar la lista de amigos al contexto de renderización
@@ -1256,8 +1258,16 @@ def enviarMensaje(request, amigo_id):
         # Obtener el contenido del mensaje desde el formulario
         contenido = request.POST.get('mensaje')
 
-        # Crear un nuevo objeto de Mensaje
-        mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido, estado = 1)
+        if request.FILES.get('multimedia'):
+            archivo = request.FILES['multimedia']
+        else:
+            archivo = None
+
+        if archivo:
+            mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo,multimedia=archivo, contenido=contenido, estado = 1)
+        else:
+            # Crear un nuevo objeto de Mensaje
+            mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido, estado = 1)
 
         # Redireccionar a la vista de chat con el amigo
         return redirect('chat', amigo_id=amigo_id)
@@ -1357,8 +1367,19 @@ def enviarMensajeGrupo(request, sala_id):
         # Obtener el contenido del mensaje desde el formulario
         contenido = request.POST.get('mensaje')
 
-        # Crear un nuevo objeto de Mensaje
-        MensajeGrupo.objects.create(remitente=usuario_actual, contenido=contenido, fk_id_sala = sala)
+        # Obtener el archivo adjunto desde el formulario
+        if request.FILES.get('multimedia'):
+            archivo = request.FILES['multimedia']
+        else:
+            archivo = None
+
+        print(archivo)
+
+        if archivo:
+            MensajeGrupo.objects.create(remitente=usuario_actual, contenido=contenido, multimedia=archivo, fk_id_sala = sala)
+        else:
+            # Crear un nuevo objeto de Mensaje
+            MensajeGrupo.objects.create(remitente=usuario_actual, contenido=contenido, fk_id_sala = sala)
 
         # Redireccionar a la vista de chat con el amigo
         return redirect('chatSala',sala.id_sala)
@@ -1419,9 +1440,28 @@ def get_messages(request, amigo_id):
     messages_data = []  # Agrega esta línea para inicializar la lista
 
     for mensaje in mensajes:
+
+        multimedia = None  # Valor por defecto si no hay archivo multimedia
+
+    # Verificar si hay un archivo multimedia en el mensaje
+        if mensaje.multimedia:
+            filename, extension = os.path.splitext(mensaje.multimedia.name)
+
+            if extension.lower() in ['.jpg', '.jpeg', '.png', '.gif']:
+                multimedia = {
+                    'type': 'image',
+                    'url': mensaje.multimedia.url
+                }
+            elif extension.lower() in ['.mp4', '.avi', '.mov', '.wmv']:
+                multimedia = {
+                    'type': 'video',
+                    'url': mensaje.multimedia.url
+                }
+
         message_data = {
             'remitente': mensaje.remitente.username,
             'contenido': mensaje.contenido,
+            'multimedia': multimedia
         }
         messages_data.append(message_data)
 
@@ -1434,9 +1474,33 @@ def get_messages_grupo(request, sala_id):
     messages_data = []
 
     for mensaje in mensajes:
+
+        multimedia = None  # Valor por defecto si no hay archivo multimedia
+
+    # Verificar si hay un archivo multimedia en el mensaje
+        if mensaje.multimedia:
+            filename, extension = os.path.splitext(mensaje.multimedia.name)
+
+            if extension.lower() in ['.jpg', '.jpeg', '.png', '.gif']:
+                multimedia = {
+                    'type': 'image',
+                    'url': mensaje.multimedia.url
+                }
+            elif extension.lower() in ['.mp4', '.avi', '.mov', '.wmv']:
+                multimedia = {
+                    'type': 'video',
+                    'url': mensaje.multimedia.url
+                }
+            elif extension.lower() in ['.mp3', '.wav', '.ogg']:
+                multimedia = {
+                    'type': 'audio',
+                    'url': mensaje.multimedia.url
+                }
+
         message_data = {
             'remitente': mensaje.remitente.username,
             'contenido': mensaje.contenido,
+            'multimedia': multimedia,
         }
         messages_data.append(message_data)
 

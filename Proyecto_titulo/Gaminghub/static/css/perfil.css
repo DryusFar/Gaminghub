@@ -375,12 +375,6 @@ footer {
   color: #ff0000;
 }
 
-.card-group {
-  /* Estilos del grupo de tarjetas */
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .card {
   /* Estilos de cada tarjeta */
  

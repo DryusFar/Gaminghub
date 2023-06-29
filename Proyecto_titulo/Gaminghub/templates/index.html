@@ -41,7 +41,7 @@
 
         for (var i = 0; i < resultados.length; i++) {
           var usuario = resultados[i];
-          var $titulo = $('<p>').text(usuario.username);
+          var $titulo = $('<h3>').text(usuario.username);
           var $contenido = $('<div>').addClass('contenido');
           $acordeon.append($titulo).append($contenido);
 
@@ -237,12 +237,13 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
         <div class="row">
 
 
-          <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;"><a
-              href="{% url 'perfiles' l.id_usuario %}">{{ l.id_usuario }}</a></div>
+          <div class="col-11 fuenteretro" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;"><a
+              href="{% url 'perfiles' l.id_usuario %}" style="text-decoration: none;">{{ l.id_usuario }}</a></div>
 
 
         </div>
-        <a class="title" href="">{{ l.titulo }}</a>
+        
+        <h4 class="tittle" style="color: aliceblue;">{{ l.titulo }}</h4>
         <h6> {{ l.contenido }}</h6>
         <span class="datetime">{{ l.fecha_creacion|date:"d-m-Y" }}</span>
         {% if l.multimedia.url %}
@@ -276,8 +277,15 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
           <source src="{{ l.multimedia.url }}" type="video/flv">
           <!-- Aquí puedes agregar otros formatos de video compatibles -->
         </video>
-        {% else %}
+        {% elif ".mp3" in l.multimedia.url or ".wav" in l.multimedia.url or ".ogg" in l.multimedia.url %}
+        <audio controls>
+          <source src="{{ l.multimedia.url }}" type="audio/mpeg">
+          <!-- Aquí puedes agregar otros formatos de audio compatibles -->
+        </audio>
+        {% elif ".jpg" in l.multimedia.url or ".jpeg" in l.multimedia.url or ".png" in l.multimedia.url or ".gif" in l.multimedia.url %}
         <img src="{{ l.multimedia.url }}" class="image-preview image" />
+        {% else %}
+        <p class="formatoinvalido">Formato de archivo invalido...</p>
         {% endif %}
         {% endif %}
         <div class="comment-like">

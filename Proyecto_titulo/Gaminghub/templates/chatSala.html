@@ -16,7 +16,12 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script>
+                $(window).on('load', function() {
+                  var chatContainer = $('.container.chat');
+                  var chatContainerPosition = chatContainer.offset().top;
 
+                  $('html, body').scrollTop(chatContainerPosition);
+                });
         
 
                 $(document).ready(function() {
@@ -30,7 +35,6 @@
                     // Función para ajustar el scroll al final del contenedor
                     function scrollToBottom() {
                         chatMessages.scrollTop(chatMessages[0].scrollHeight);
-                        
                     }
 
                     // Actualizar los mensajes cada 5 segundos
@@ -86,6 +90,26 @@
                         var messageContent = $('<div>').addClass('message-content');
                         var senderParagraph = $('<p>').addClass('sender').text(sender + ':');
                         var contentParagraph = $('<p>').text(content);
+                        var mediaElement = null;
+                        // Verificar si hay multimedia en el mensaje
+                        if (message.multimedia) {
+                            if (message.multimedia.type === 'image') {
+                                // Crear el elemento de imagen y establecer su fuente (URL)
+                                mediaElement = $('<img>').addClass('message-media').attr('src', message.multimedia.url);
+                            } else{
+                                // Crear el elemento de video y establecer su fuente (URL)
+                                
+                                mediaElement = $('<p>').addClass('invalid-file').text('Tipo de archivo no permitido...');
+                                    // Agregar atributos adicionales al elemento de video según sea necesario (por ejemplo, controles, autoplay, etc.)
+                                
+                            } 
+
+                            mediaElement.css({
+                            'max-width': '100%',
+                            'max-height': '100%',
+                            'object-fit': 'contain',
+                            })
+                        }
 
                         // Aplicar los estilos a los elementos del mensaje
                         messageElement.css({
@@ -108,6 +132,11 @@
 
                         // Agregar los elementos al contenedor del mensaje
                         messageContent.append(senderParagraph, contentParagraph);
+
+                        if (mediaElement) {
+                            messageContent.append(mediaElement);
+                        }
+
                         messageElement.append(messageContent);
                         $('.chat-messages').append(messageElement);
 
@@ -222,8 +251,12 @@
 
         </div>
 
-        <form id="message-form" method="post" action="{% url 'enviarMensajeGrupo' sala_id=sala.id_sala %}" data-sala-id="{{ sala.id_sala }}">
+        <form id="message-form" method="post" enctype="multipart/form-data" action="{% url 'enviarMensajeGrupo' sala_id=sala.id_sala %}" data-sala-id="{{ sala.id_sala }}">
             {% csrf_token %}
+            <div>
+                <label for="" style="color: aliceblue;">Consejo: Solo se pueden enviar imagenes a traves del chat...</label>
+                <input id="multimedia" name="multimedia" type="file" class="form-control" style="margin-top: 10px;">
+            </div>
             <div class="input-group mb-3">
                 <textarea id="textAreaExample3" type="text" class="form-control" name="mensaje" placeholder="Escribe tu mensaje..." required style="resize: none;"></textarea>
                 <button class="btn btn-primary" type="submit" style="background-color: #5000bf;">Enviar</button>
