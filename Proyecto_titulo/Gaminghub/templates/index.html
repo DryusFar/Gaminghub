@@ -288,17 +288,15 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
         <p class="formatoinvalido">Formato de archivo invalido...</p>
         {% endif %}
         {% endif %}
-        <div class="comment-like">
-          <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px'> {{ l.like.all.count }}</i></span>
-          <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count }}</i></span>
+        <div class="comment-like" style="margin-top: 10px;">
 
           <a href="{% url 'comentarios' l.id_publicacion %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
           <span>
             <form method="POST" action="{% url 'like' l.id_publicacion %}" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{request.path}}">
-              <button type="submit">
-                Me gusta
+              <button type="submit" style="background-color: rgb(24 27 32);">
+                <span><i class='fas fa-heart' style='font-size:20px; color: #fff'> {{ l.like.all.count }}</i></span>
               </button>
             </form>
           </span>
@@ -306,8 +304,8 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
             <form method="POST" action="{% url 'dislike' l.id_publicacion %}" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{request.path}}">
-              <button type="submit">
-                No me gusta
+              <button type="submit" style="background-color: rgb(24 27 32);">
+                <span><i class='fas fa-heart-broken' style='font-size:20px; color: #fff'> {{ l.dislike.all.count }}</i></span>
               </button>
             </form>
           </span>
@@ -527,17 +525,17 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
         <img src="{{ l.multimedia.url }}" class="image-preview image" />
         {% endif %}
         {% endif %}
-        <div class="comment-like">
-          <span class="tamanonum"><i class='fas fa-heart' style='font-size:20px'> {{ l.like.all.count }}</i></span>
-          <span class="tamanonum"><i class='fas fa-heart-broken' style='font-size:20px'> {{ l.dislike.all.count }}</i></span>
+        <div class="comment-like" style="margin-top: 10px;">
+          
+          
 
           <a href="{% url 'completar_perfil' %}"><i class='fas fa-comment' style='font-size:24px'></i></a>
           <span>
             <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{request.path}}">
-              <button type="submit">
-                Me gusta
+              <button type="submit" style="background-color: rgb(24 27 32);">
+                <span><i class='fas fa-heart' style='font-size:20px; color: #fff;'> {{ l.like.all.count }}</i></span>
               </button>
             </form>
           </span>
@@ -545,8 +543,8 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
             <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{request.path}}">
-              <button type="submit">
-                No me gusta
+              <button type="submit" style="background-color: rgb(24 27 32);">
+                <span><i class='fas fa-heart-broken' style='font-size:20px;  color: #fff;'> {{ l.dislike.all.count }}</i></span>
               </button>
             </form>
           </span>
