@@ -295,7 +295,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
             <form method="POST" action="{% url 'like' l.id_publicacion %}" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{request.path}}">
-              <button type="submit" style="background-color: rgb(24 27 32);">
+              <button type="submit" style="background-color: rgb(24 27 32); box-shadow: 0px 0px 0px 0px rgb(24 27 32);">
                 <span><i class='fas fa-heart' style='font-size:20px; color: #fff'> {{ l.like.all.count }}</i></span>
               </button>
             </form>
@@ -304,7 +304,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
             <form method="POST" action="{% url 'dislike' l.id_publicacion %}" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{request.path}}">
-              <button type="submit" style="background-color: rgb(24 27 32);">
+              <button type="submit" style="background-color: rgb(24 27 32);  box-shadow: 0px 0px 0px 0px rgb(24 27 32);">
                 <span><i class='fas fa-heart-broken' style='font-size:20px; color: #fff'> {{ l.dislike.all.count }}</i></span>
               </button>
             </form>
@@ -482,8 +482,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
         <div class="row">
 
 
-          <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;">{{ l.id_usuario
-            }}</div>
+          <div class="col-11" style="float: left; line-height: 35px; font-size: 25px; color: aliceblue;">{{ l.id_usuario }}</div>
 
 
         </div>
@@ -534,7 +533,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
             <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{request.path}}">
-              <button type="submit" style="background-color: rgb(24 27 32);">
+              <button type="submit" style="background-color: rgb(24 27 32);  box-shadow: 0px 0px 0px 0px rgb(24 27 32);">
                 <span><i class='fas fa-heart' style='font-size:20px; color: #fff;'> {{ l.like.all.count }}</i></span>
               </button>
             </form>
@@ -543,7 +542,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
             <form method="POST" action="{% url 'completar_perfil' %}" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="hidden" name="next" value="{{request.path}}">
-              <button type="submit" style="background-color: rgb(24 27 32);">
+              <button type="submit" style="background-color: rgb(24 27 32);  box-shadow: 0px 0px 0px 0px rgb(24 27 32);">
                 <span><i class='fas fa-heart-broken' style='font-size:20px;  color: #fff;'> {{ l.dislike.all.count }}</i></span>
               </button>
             </form>
