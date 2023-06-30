@@ -282,12 +282,15 @@
         <form id="message-form" method="post" enctype="multipart/form-data" action="{% url 'enviarMensaje' amigo_id=amigo.id %}" data-amigo-id="{{ amigo.id }}">
             {% csrf_token %}
             <div>
-                <label for="">Consejo: Solo se pueden enviar imagenes a traves del chat...</label>
+                <label for="" style="color: aliceblue;">Consejo: Solo se pueden enviar imagenes a traves del chat...</label>
                 <input id="multimedia" name="multimedia" type="file" class="form-control" style="margin-top: 10px;">
             </div>
             <div class="input-group mb-3">
                 <textarea id="textAreaExample3" type="text" class="form-control" name="mensaje" placeholder="Escribe tu mensaje..." required style="resize: none;"></textarea>
                 <button class="btn btn-primary" type="submit" style="background-color: #5000bf;">Enviar</button>
+            </div>
+            <div class="center">
+                <p class="warnings" id="warnings" style="font-size: 15px; color: rgb(255, 0, 0); font-family: monospace;"></p></div>
             </div>
         </form>
     </div>
@@ -297,6 +300,7 @@
     <p>Copyright 2023  <span style="color: #a970ff;">Gaming Hub</span></p>
     </footer>
 
+    <script src="{% static '../static/js/chats.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
