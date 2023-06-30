@@ -414,6 +414,8 @@ def perfilC(request):
     else:
         username_id = None
 
+    perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+
     user = User.objects.get(id=username_id)
 
     fecha_u = request.POST['fecha_nac']
@@ -425,10 +427,24 @@ def perfilC(request):
 
     if request.FILES.get('foto'):
         avatar_u = request.FILES['foto']
+
+        perfil.fecha_nacimiento = fecha_u
+        perfil.edad = edad_u
+        perfil.genero = genero_u
+        perfil.descripcion = descripcion_u
+        perfil.avatar = avatar_u
+
+        perfil.save()
     else:
         avatar_u = None
 
-    PerfilUsuario.objects.create(fecha_nacimiento = fecha_u,avatar = avatar_u,edad = edad_u, genero = genero_u, descripcion = descripcion_u, id_usuario = user)    
+        perfil.fecha_nacimiento = fecha_u
+        perfil.edad = edad_u
+        perfil.genero = genero_u
+        perfil.descripcion = descripcion_u
+
+        perfil.save()
+        
     messages.success(request,'Datos completados exitosamente')
     return redirect('perfil')
 

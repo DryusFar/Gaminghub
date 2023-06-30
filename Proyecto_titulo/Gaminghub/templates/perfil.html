@@ -197,7 +197,7 @@
             <li class="text-danger" style="font-size: 20px">{{ message }}</li>
             {% endfor %}
           </ul>
-          {% endif %} {% if perfil != None %}
+          {% endif %} {% if perfil.edad != None %}
           <div class="row" style="margin-top: 15px">
             <div class="col-md-6 mb-3">
               <label for="" style="font-size: 20px">Edad:</label>
@@ -258,7 +258,7 @@
           {% endif %}
 
           <div class="row">
-            {% if perfil.id_perfil == null %}
+            {% if perfil.edad == NONE %}
             <div class="col-6">
               <a type="submit" class="btn btn-primary colorBoton form-control" href="{% url 'cambiar_clave' %}">Cambiar
                 contraseña</a>
@@ -285,80 +285,84 @@
     <H4 style="text-align: center; margin-top: 35px; margin-bottom: 25px;">😎Publicaciones😎</H4>
 
 
-    <div class="">
-      <div class="row d-flex align-items-center justify-content-center
-      ">
-        {% for l in listados %}
-        <div class="col-xxl-6 col-xl-6 col-lg-12 col-sm-12 col-12 d-flex align-items-center justify-content-center
+    {% if listados %}
+      <div class="">
+        <div class="row d-flex align-items-center justify-content-center
         ">
-          <div class="card d-flex" style="z-index: 1; height: 100%;">
-            {% if l.multimedia.url %}
-            {% if ".mp4" in l.multimedia.url %}
-            <video controls>
-              <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
-                type="video/mp4">
-              <!-- Aquí puedes agregar otros formatos de video compatibles -->
-            </video>
-            {% elif ".avi" in l.multimedia.url %}
-            <video controls>
-              <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
-                type="video/avi">
-              <!-- Aquí puedes agregar otros formatos de video compatibles -->
-            </video>
-            {% elif ".mkv" in l.multimedia.url %}
-            <video controls>
-              <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
-                type="video/mkv">
-              <!-- Aquí puedes agregar otros formatos de video compatibles -->
-            </video>
-            {% elif ".mov" in l.multimedia.url %}
-            <video controls>
-              <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
-                type="video/mov">
-              <!-- Aquí puedes agregar otros formatos de video compatibles -->
-            </video>
-            {% elif ".wmv" in l.multimedia.url %}
-            <video controls>
-              <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
-                type="video/wmv">
-              <!-- Aquí puedes agregar otros formatos de video compatibles -->
-            </video>
-            {% elif ".flv" in l.multimedia.url %}
-            <video controls>
-              <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
-                type="video/flv">
-              <!-- Aquí puedes agregar otros formatos de video compatibles -->
-            </video>
-            {% else %}
-            <img src="{{ l.multimedia.url }}" class="image-preview card-img-top image"
-              style="max-width: 100%; max-height: 300px;" />
-            {% endif %}
-            {% endif %}
-            <div class="card-body">
-              <h5 class="card-title">{{ l.titulo }}</h5>
-              <p class="card-text">{{ l.contenido }}</p>
-              <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small>
-              </p>
-              <p class="card-text"><small class="text-muted">Me gusta: {{ l.like.all.count }}</small></p>
-              <p class="card-text"><small class="text-muted">No me gusta: {{ l.dislike.all.count }}</small></p>
-            </div>
-            <div class="row">
-
-              <div class="col-6">
-                <a href="{% url 'form_modificarPublicacion' l.id_publicacion %}"><button
-                    class="btn btn-primary colorBoton form-control"
-                    style="font-family: monospace;">Modificar</button></a>
+          {% for l in listados %}
+          <div class="col-xxl-6 col-xl-6 col-lg-12 col-sm-12 col-12 d-flex align-items-center justify-content-center
+          ">
+            <div class="card d-flex" style="z-index: 1; height: 100%;">
+              {% if l.multimedia.url %}
+              {% if ".mp4" in l.multimedia.url %}
+              <video controls>
+                <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
+                  type="video/mp4">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+              {% elif ".avi" in l.multimedia.url %}
+              <video controls>
+                <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
+                  type="video/avi">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+              {% elif ".mkv" in l.multimedia.url %}
+              <video controls>
+                <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
+                  type="video/mkv">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+              {% elif ".mov" in l.multimedia.url %}
+              <video controls>
+                <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
+                  type="video/mov">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+              {% elif ".wmv" in l.multimedia.url %}
+              <video controls>
+                <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
+                  type="video/wmv">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+              {% elif ".flv" in l.multimedia.url %}
+              <video controls>
+                <source src="{{ l.multimedia.url }}" class="card-img-top" alt="..." style="width: 500px; height: auto;"
+                  type="video/flv">
+                <!-- Aquí puedes agregar otros formatos de video compatibles -->
+              </video>
+              {% else %}
+              <img src="{{ l.multimedia.url }}" class="image-preview card-img-top image"
+                style="max-width: 100%; max-height: 300px;" />
+              {% endif %}
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ l.titulo }}</h5>
+                <p class="card-text">{{ l.contenido }}</p>
+                <p class="card-text"><small class="text-muted">Publicado en: {{ l.fecha_creacion|date:"d-m-Y" }}</small>
+                </p>
+                <p class="card-text"><small class="text-muted">Me gusta: {{ l.like.all.count }}</small></p>
+                <p class="card-text"><small class="text-muted">No me gusta: {{ l.dislike.all.count }}</small></p>
               </div>
-              <div class="col-6">
-                <button class="form-control btn colorBoton2 btn-abrir-modal2" style="font-family: monospace;"
-                  data-id-publicacion="{{ l.id_publicacion }}">Eliminar</button>
+              <div class="row">
+
+                <div class="col-6">
+                  <a href="{% url 'form_modificarPublicacion' l.id_publicacion %}"><button
+                      class="btn btn-primary colorBoton form-control"
+                      style="font-family: monospace;">Modificar</button></a>
+                </div>
+                <div class="col-6">
+                  <button class="form-control btn colorBoton2 btn-abrir-modal2" style="font-family: monospace;"
+                    data-id-publicacion="{{ l.id_publicacion }}">Eliminar</button>
+                </div>
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
-    </div>
+    {% else %}
+    <p style="text-align: center; color: rgb(0, 204, 255); border: 10px; background-color:#09101d; padding-top: 10px; padding-bottom: 10px;">No has publicado nada aun...</p>
+    {% endif %}
 
     
   </div>
