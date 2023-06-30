@@ -15,9 +15,9 @@ class RolUsuario(models.Model):
 class PerfilUsuario(models.Model):
     id_perfil = models.BigAutoField(primary_key=True)
     fecha_nacimiento = models.DateField(null = True, blank = True)
-    edad = models.IntegerField()
-    genero = models.CharField(max_length=20)
-    descripcion = models.CharField(max_length = 200)
+    edad = models.IntegerField(null = True)
+    genero = models.CharField(max_length=20,null = True)
+    descripcion = models.CharField(max_length = 200,null = True)
     avatar = models.ImageField()
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE,)
 

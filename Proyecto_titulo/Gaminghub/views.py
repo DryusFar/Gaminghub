@@ -13,6 +13,7 @@ from django.conf import settings
 import os
 from urllib.parse import urlencode
 from django.http import Http404
+from django.core.files import File
 
 
 ##Import models cuando esten listos##
@@ -344,6 +345,15 @@ def signup(request):
             # Guardar el objeto usuario en la base de datos
             user.save()
 
+             # Asignar imagen por defecto al avatar del perfil del usuario
+            default_avatar_path = os.path.join('static', 'img', 'Logo.png')
+            perfil_usuario = PerfilUsuario.objects.create(
+                id_usuario=user,
+                avatar=File(open(default_avatar_path, 'rb')),
+
+            )
+
+
             titulo = Titulo.objects.get(id_titulo = 1)
 
             user1 = User.objects.get(id = user.id)
@@ -357,6 +367,9 @@ def signup(request):
             return redirect('index')
     else:
         form = CustomUserCreationForm()
+
+
+
     return render(request, 'signup.html', {'form': form})
 
 
@@ -494,7 +507,6 @@ def registrarpublicacion(request):
     else:
         multimedia_p = None
 
-        
 
     
     
