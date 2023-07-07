@@ -1569,3 +1569,7 @@ def modificarSala(request,sala_id):
     sala.save()
 
     return redirect('salas', grupo_id = grupo.id_grupo)
+
+
+def newperfil(request):
+    return render(request, 'newperfil.html')
