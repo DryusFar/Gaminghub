@@ -702,7 +702,6 @@ def registrargrupo(request):
     
 
     Grupo.objects.create(titulo = titulo_g, descripcion = descripcion_g, multimedia = multimedia_g , fk_id_usuario = user, privacidad = privacidad_g)    
-    messages.success(request,'Grupo creado exitosamente')
     return redirect('grupos')
 
 @login_required
@@ -727,7 +726,6 @@ def registrargrupo(request):
     
 
     Grupo.objects.create(titulo = titulo_g, descripcion = descripcion_g, multimedia = multimedia_g , fk_id_usuario = user, privacidad = privacidad_g)    
-    messages.success(request,'Grupo creado exitosamente')
     return redirect('grupos')
 
 @login_required
@@ -764,24 +762,29 @@ def unirse_grupo(request,id_grupo):
     return redirect('grupos')
 
 def cambiar_titulo(puntaje, puntaje_antiguo, puntaje_final):
+    user = User.objects.get(id = puntaje.fk_id_usuario.id)
+    
     ###Se verifica si se hubo algun cambio con el puntaje del usuario###
     if(puntaje_antiguo != puntaje_final):
         if(puntaje.puntos == 1000):
             titulo = Titulo.objects.get(id_titulo=2)
             puntaje.fk_id_titulo = titulo
             puntaje.save()
+            Notificacion.objects.create(fk_recibidor=user, tipo=5, fk_id_usuario=user)
             pass
 
         elif(puntaje.puntos == 3000):
             titulo = Titulo.objects.get(id_titulo=3)
             puntaje.fk_id_titulo = titulo
             puntaje.save()
+            Notificacion.objects.create(fk_recibidor=user, tipo=5, fk_id_usuario=user)
             pass
 
         elif(puntaje.puntos == 6000):
             titulo = Titulo.objects.get(id_titulo=4)
             puntaje.fk_id_titulo = titulo
             puntaje.save()
+            Notificacion.objects.create(fk_recibidor=user, tipo=5, fk_id_usuario=user)
             pass
         else:
             pass

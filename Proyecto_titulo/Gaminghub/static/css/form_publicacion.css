@@ -296,6 +296,21 @@ footer {
   font-family: 'Press Start 2P';
 }
 
+#btn-social{
+  display: none;
+  }
+.fa-play{
+  cursor: pointer;
+  transition: all 0.4s;
+  font-size: 12px;
+  margin-bottom: 5px;
+  display: inline-block;
+  transform: rotate(180deg);
+  color: #49b0e6;
+}
+#btn-social:checked ~ .fa-play{
+  transform: rotate(0deg);
+}
 
 
 /* ---- ----- ----- NAVBAR ----- ----- ----- */

@@ -228,6 +228,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
 
   <div class="container">
+    {% if listados %}
     <div class="post-card-container">
       {% for l in listados %}
 
@@ -317,7 +318,9 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
       {% endfor %}
     </div>
-
+  {% else %}
+    <p style="font-size: 15px; color: #fff; font-family: 'Press Start 2P'; text-align: center;">No hay publicaciones por ahora...</p>
+  {% endif %}
   </div>
 
   
