@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views import View
 from .models import Comentario, RolUsuario,PerfilUsuario,Publicacion,Grupo,Miembro,Solicitud, Amistad, Notificacion, Mensaje, Titulo, Puntaje, RegistroGrupo,Sala,MensajeGrupo
-from django.db.models import Q
+from django.db.models import Q , Case, When
 from django.contrib import messages
 import datetime
 from PIL import Image
@@ -13,6 +13,7 @@ from django.conf import settings
 import os
 from urllib.parse import urlencode
 from django.http import Http404
+from django.core.files import File
 
 
 ##Import models cuando esten listos##
@@ -90,8 +91,7 @@ def perfil(request):
     }
 
 
-    return render(request, 'perfil.html',context)
-
+    return render(request, 'newperfil.html',context)
 @login_required
 @user_passes_test(is_superuser)
 def admin1(request):
@@ -344,6 +344,15 @@ def signup(request):
             # Guardar el objeto usuario en la base de datos
             user.save()
 
+             # Asignar imagen por defecto al avatar del perfil del usuario
+            default_avatar_path = os.path.join('static', 'img', 'Logo.png')
+            perfil_usuario = PerfilUsuario.objects.create(
+                id_usuario=user,
+                avatar=File(open(default_avatar_path, 'rb')),
+
+            )
+
+
             titulo = Titulo.objects.get(id_titulo = 1)
 
             user1 = User.objects.get(id = user.id)
@@ -357,6 +366,9 @@ def signup(request):
             return redirect('index')
     else:
         form = CustomUserCreationForm()
+
+
+
     return render(request, 'signup.html', {'form': form})
 
 
@@ -401,6 +413,8 @@ def perfilC(request):
     else:
         username_id = None
 
+    perfil = PerfilUsuario.objects.get(id_usuario = username_id)
+
     user = User.objects.get(id=username_id)
 
     fecha_u = request.POST['fecha_nac']
@@ -412,10 +426,24 @@ def perfilC(request):
 
     if request.FILES.get('foto'):
         avatar_u = request.FILES['foto']
+
+        perfil.fecha_nacimiento = fecha_u
+        perfil.edad = edad_u
+        perfil.genero = genero_u
+        perfil.descripcion = descripcion_u
+        perfil.avatar = avatar_u
+
+        perfil.save()
     else:
         avatar_u = None
 
-    PerfilUsuario.objects.create(fecha_nacimiento = fecha_u,avatar = avatar_u,edad = edad_u, genero = genero_u, descripcion = descripcion_u, id_usuario = user)    
+        perfil.fecha_nacimiento = fecha_u
+        perfil.edad = edad_u
+        perfil.genero = genero_u
+        perfil.descripcion = descripcion_u
+
+        perfil.save()
+        
     messages.success(request,'Datos completados exitosamente')
     return redirect('perfil')
 
@@ -494,7 +522,6 @@ def registrarpublicacion(request):
     else:
         multimedia_p = None
 
-        
 
     
     
@@ -674,7 +701,6 @@ def registrargrupo(request):
     
 
     Grupo.objects.create(titulo = titulo_g, descripcion = descripcion_g, multimedia = multimedia_g , fk_id_usuario = user, privacidad = privacidad_g)    
-    messages.success(request,'Grupo creado exitosamente')
     return redirect('grupos')
 
 @login_required
@@ -699,7 +725,6 @@ def registrargrupo(request):
     
 
     Grupo.objects.create(titulo = titulo_g, descripcion = descripcion_g, multimedia = multimedia_g , fk_id_usuario = user, privacidad = privacidad_g)    
-    messages.success(request,'Grupo creado exitosamente')
     return redirect('grupos')
 
 @login_required
@@ -736,24 +761,29 @@ def unirse_grupo(request,id_grupo):
     return redirect('grupos')
 
 def cambiar_titulo(puntaje, puntaje_antiguo, puntaje_final):
+    user = User.objects.get(id = puntaje.fk_id_usuario.id)
+    
     ###Se verifica si se hubo algun cambio con el puntaje del usuario###
     if(puntaje_antiguo != puntaje_final):
         if(puntaje.puntos == 1000):
             titulo = Titulo.objects.get(id_titulo=2)
             puntaje.fk_id_titulo = titulo
             puntaje.save()
+            Notificacion.objects.create(fk_recibidor=user, tipo=5, fk_id_usuario=user)
             pass
 
         elif(puntaje.puntos == 3000):
             titulo = Titulo.objects.get(id_titulo=3)
             puntaje.fk_id_titulo = titulo
             puntaje.save()
+            Notificacion.objects.create(fk_recibidor=user, tipo=5, fk_id_usuario=user)
             pass
 
         elif(puntaje.puntos == 6000):
             titulo = Titulo.objects.get(id_titulo=4)
             puntaje.fk_id_titulo = titulo
             puntaje.save()
+            Notificacion.objects.create(fk_recibidor=user, tipo=5, fk_id_usuario=user)
             pass
         else:
             pass
@@ -1112,7 +1142,7 @@ def notificaciones(request):
 
     user = User.objects.get(id=username_id)  
 
-    listadonotificaciones = Notificacion.objects.all().filter(fk_recibidor = user)
+    listadonotificaciones = Notificacion.objects.all().filter(fk_recibidor = user).order_by('tipo')
 
     context = {
         'username': user,
@@ -1189,6 +1219,8 @@ def amigos(request):
     else:
         username_id = None
 
+    user = User.objects.get(id = usuario_actual.id)
+
     chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
 
     # Obtener todas las amistades del usuario actual
@@ -1205,14 +1237,16 @@ def amigos(request):
         # Obtener el perfil del amigo utilizando la relación id_usuario en PerfilUsuario
         amigo_perfil = PerfilUsuario.objects.get(id_usuario=amigo_id)
         # Agregar el amigo y su avatar a la lista
+        mensaje_amigo = Mensaje.objects.filter(remitente = amigo_id , destinatario = usuario_actual.id, estado = 1)
         amigos.append({
             'username': amigo.username,
             'id_u' : amigo.id,
-            'avatar': amigo_perfil.avatar.url if amigo_perfil else None
+            'avatar': amigo_perfil.avatar.url if amigo_perfil else None,
+            'mensaje': mensaje_amigo
         })
 
     # Puedes pasar la lista de amigos al contexto de renderización
-    return render(request, 'amigos.html', {'amigos': amigos, 'chat':chat})
+    return render(request, 'amigos.html', {'amigos': amigos, 'chat':chat, 'user':user})
 
 def eliminarAmigo(request, id_enviador):
 
@@ -1271,8 +1305,16 @@ def enviarMensaje(request, amigo_id):
         # Obtener el contenido del mensaje desde el formulario
         contenido = request.POST.get('mensaje')
 
-        # Crear un nuevo objeto de Mensaje
-        mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido, estado = 1)
+        if request.FILES.get('multimedia'):
+            archivo = request.FILES['multimedia']
+        else:
+            archivo = None
+
+        if archivo:
+            mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo,multimedia=archivo, contenido=contenido, estado = 1)
+        else:
+            # Crear un nuevo objeto de Mensaje
+            mensaje = Mensaje.objects.create(remitente=usuario_actual, destinatario=amigo, contenido=contenido, estado = 1)
 
         # Redireccionar a la vista de chat con el amigo
         return redirect('chat', amigo_id=amigo_id)
@@ -1372,8 +1414,19 @@ def enviarMensajeGrupo(request, sala_id):
         # Obtener el contenido del mensaje desde el formulario
         contenido = request.POST.get('mensaje')
 
-        # Crear un nuevo objeto de Mensaje
-        MensajeGrupo.objects.create(remitente=usuario_actual, contenido=contenido, fk_id_sala = sala)
+        # Obtener el archivo adjunto desde el formulario
+        if request.FILES.get('multimedia'):
+            archivo = request.FILES['multimedia']
+        else:
+            archivo = None
+
+        print(archivo)
+
+        if archivo:
+            MensajeGrupo.objects.create(remitente=usuario_actual, contenido=contenido, multimedia=archivo, fk_id_sala = sala)
+        else:
+            # Crear un nuevo objeto de Mensaje
+            MensajeGrupo.objects.create(remitente=usuario_actual, contenido=contenido, fk_id_sala = sala)
 
         # Redireccionar a la vista de chat con el amigo
         return redirect('chatSala',sala.id_sala)
@@ -1434,9 +1487,28 @@ def get_messages(request, amigo_id):
     messages_data = []  # Agrega esta línea para inicializar la lista
 
     for mensaje in mensajes:
+
+        multimedia = None  # Valor por defecto si no hay archivo multimedia
+
+    # Verificar si hay un archivo multimedia en el mensaje
+        if mensaje.multimedia:
+            filename, extension = os.path.splitext(mensaje.multimedia.name)
+
+            if extension.lower() in ['.jpg', '.jpeg', '.png', '.gif']:
+                multimedia = {
+                    'type': 'image',
+                    'url': mensaje.multimedia.url
+                }
+            elif extension.lower() in ['.mp4', '.avi', '.mov', '.wmv']:
+                multimedia = {
+                    'type': 'video',
+                    'url': mensaje.multimedia.url
+                }
+
         message_data = {
             'remitente': mensaje.remitente.username,
             'contenido': mensaje.contenido,
+            'multimedia': multimedia
         }
         messages_data.append(message_data)
 
@@ -1449,9 +1521,33 @@ def get_messages_grupo(request, sala_id):
     messages_data = []
 
     for mensaje in mensajes:
+
+        multimedia = None  # Valor por defecto si no hay archivo multimedia
+
+    # Verificar si hay un archivo multimedia en el mensaje
+        if mensaje.multimedia:
+            filename, extension = os.path.splitext(mensaje.multimedia.name)
+
+            if extension.lower() in ['.jpg', '.jpeg', '.png', '.gif']:
+                multimedia = {
+                    'type': 'image',
+                    'url': mensaje.multimedia.url
+                }
+            elif extension.lower() in ['.mp4', '.avi', '.mov', '.wmv']:
+                multimedia = {
+                    'type': 'video',
+                    'url': mensaje.multimedia.url
+                }
+            elif extension.lower() in ['.mp3', '.wav', '.ogg']:
+                multimedia = {
+                    'type': 'audio',
+                    'url': mensaje.multimedia.url
+                }
+
         message_data = {
             'remitente': mensaje.remitente.username,
             'contenido': mensaje.contenido,
+            'multimedia': multimedia,
         }
         messages_data.append(message_data)
 
@@ -1477,3 +1573,7 @@ def modificarSala(request,sala_id):
     sala.save()
 
     return redirect('salas', grupo_id = grupo.id_grupo)
+
+
+def newperfil(request):
+    return render(request, 'newperfil.html')

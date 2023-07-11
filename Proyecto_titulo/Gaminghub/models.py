@@ -15,9 +15,9 @@ class RolUsuario(models.Model):
 class PerfilUsuario(models.Model):
     id_perfil = models.BigAutoField(primary_key=True)
     fecha_nacimiento = models.DateField(null = True, blank = True)
-    edad = models.IntegerField()
-    genero = models.CharField(max_length=20)
-    descripcion = models.CharField(max_length = 200)
+    edad = models.IntegerField(null = True)
+    genero = models.CharField(max_length=20,null = True)
+    descripcion = models.CharField(max_length = 200,null = True)
     avatar = models.ImageField()
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE,)
 
@@ -91,6 +91,7 @@ class Mensaje(models.Model):
     remitente = models.ForeignKey(User, on_delete=models.CASCADE , related_name='mensajes_enviados')
     destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensajes_recibidos')
     contenido = models.TextField(null=True)
+    multimedia = models.FileField(upload_to='multimedia/', null = True)
     estado = models.IntegerField(null = True)
     fecha_envio = models.DateTimeField(auto_now_add=True)
 
@@ -98,6 +99,7 @@ class MensajeGrupo(models.Model):
     id_mensajeGrupo = models.BigAutoField(primary_key=True)
     remitente = models.ForeignKey(User, on_delete=models.CASCADE)
     contenido = models.CharField(null=True, max_length = 400)
+    multimedia = models.FileField(upload_to='multimedia/', null = True)
     fecha_envio = models.DateTimeField(auto_now_add=True)
     fk_id_sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
 

@@ -86,12 +86,11 @@
 }
 
 body {
-  font-family: 'Press Start 2P';
   background-image: url('../../static/img/fondo03.gif');
   background-repeat: no-repeat;
-background-size: cover;
-background-attachment: fixed;
-color: #fff;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff;
 }
 
 /* ---- ----- ----- CARD PERFIL ----- ----- ----- */
@@ -373,12 +372,6 @@ footer {
 
 .card .likes-comments .comments {
   color: #ff0000;
-}
-
-.card-group {
-  /* Estilos del grupo de tarjetas */
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .card {

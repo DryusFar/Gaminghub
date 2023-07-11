@@ -165,6 +165,11 @@
             <p>{{ l.info }}</p>
             <a href="{% url 'botonOK' l.id_notificacion %}"><button class="btn-ok">Ok</button></a>
           </div>
+        {% elif l.tipo == 5 %}
+          <div class="notificacion amistad-confirmada-notificacion">
+            <p>Enhorabuena! subiste de nivel!!! Revisa tu perfil para ver que titulo tienes ahora</p>
+            <a href="{% url 'botonOK' l.id_notificacion %}"><button class="btn-ok">Ok</button></a>
+          </div>  
         {% else %}
           <div class="notificacion aviso-notificacion">
             <p>Aviso</p>

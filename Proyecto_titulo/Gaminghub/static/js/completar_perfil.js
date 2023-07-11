@@ -13,11 +13,6 @@ form.addEventListener("submit", e => {
 
     entrar = false;
 
-    if(avatar.value == ""){
-        mensajesMostrar += 'Debes ingresar una imagen de perfil...<br>'
-        entrar = true
-    }
-
     if(fecha_nac.value > "2019/12/12"){
         mensajesMostrar += 'Fecha de nacimiento invalida...<br>'
         entrar = true

@@ -1,0 +1,430 @@
+/* ---- ----- ----- Comentarios ----- ----- ----- */
+.task {
+    position: relative;
+    color: #2e2e2f;
+    cursor: move;
+    background-color: #09101d;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+    margin-bottom: 1rem;
+    border: 3px dashed transparent;
+    width: 400px;
+    height: 180px;
+  }
+  
+  .task:hover {
+    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 0px;
+    border-color: rgba(162, 179, 207, 0.2) !important;
+  }
+  
+  .task p {
+    font-size: 15px;
+    margin: 1.2rem 0;
+    color: #fff;
+  }
+  
+  .tag {
+    border-radius: 100px;
+    padding: 4px 13px;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #1389eb;
+  }
+  
+  .tags {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Press Start 2P';
+  }
+  
+  .options {
+    background: transparent;
+    border: 0;
+    color: #c4cad3;
+    font-size: 17px;
+  }
+  
+  .options svg {
+    fill: #9fa4aa;
+    width: 20px;
+  }
+  
+  .stats {
+    position: relative;
+    width: 100%;
+    color: #9fa4aa;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .stats div {
+    margin-right: 1rem;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .stats svg {
+    margin-right: 5px;
+    height: 100%;
+    stroke: #9fa4aa;
+  }
+  
+  .viewer span {
+    height: 30px;
+    width: 30px;
+    background-color: rgb(28, 117, 219);
+    margin-right: -10px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    display: grid;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    padding: 2px;
+  }
+  
+  .viewer span svg {
+    stroke: #fff;
+  }
+  
+  .card {
+    width: 450px;
+    height: fit-content;
+    background-color: white;
+    box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 17px 17px 27px 27px;
+  }
+  
+  .title {
+    width: 100%;
+    height: 50px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    border-bottom: 1px solid #f1f1f1;
+    font-weight: 700;
+    font-size: 13px;
+    color: #47484b;
+  }
+  
+  .title::after {
+    content: '';
+    width: 8ch;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    background-color: #47484b;
+  }
+  
+  .comments {
+    display: grid;
+    grid-template-columns: 35px 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .comment-react {
+    width: 35px;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: auto;
+    margin: 0;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+  }
+  
+  .comment-react button {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+  }
+  
+  .comment-react button:after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: -2.5px;
+    top: -2.5px;
+    background-color: #f5356e;
+    border-radius: 50%;
+    z-index: 0;
+    transform: scale(0);
+  }
+  
+  .comment-react button svg {
+    position: relative;
+    z-index: 9;
+  }
+  
+  .comment-react button:hover:after {
+    animation: ripple 0.6s ease-in-out forwards;
+  }
+  
+  .comment-react button:hover svg {
+    fill: #f5356e;
+  }
+  
+  .comment-react button:hover svg path {
+    stroke: #f5356e;
+    fill: #f5356e;
+  }
+  
+  .comment-react hr {
+    width: 80%;
+    height: 1px;
+    background-color: #dfe1e6;
+    margin: auto;
+    border: 0;
+  }
+  
+  .comment-react span {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: #707277;
+  }
+  
+  .comment-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .comment-container .user {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 10px;
+  }
+  
+  .comment-container .user .user-pic {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+  }
+  
+  .comment-container .user .user-pic:after {
+    content: '';
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    border-radius: 50%;
+    background-color: #0fc45a;
+    border: 2px solid #ffffff;
+  }
+  
+  .comment-container .user .user-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3px;
+  }
+  
+  .comment-container .user .user-info span {
+    font-weight: 700;
+    font-size: 12px;
+    color: #47484b;
+  }
+  
+  .comment-container .user .user-info p {
+    font-weight: 600;
+    font-size: 10px;
+    color: #acaeb4;
+  }
+  
+  .comment-container .comment-content {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    color: #5f6064;
+  }
+  
+  .text-box {
+    width: 100%;
+    height: fit-content;
+    background-color: #f1f1f1;
+    padding: 8px;
+  }
+  
+  .text-box .box-container {
+    background-color: #ffffff;
+    border-radius: 8px 8px 21px 21px;
+    padding: 8px;
+  }
+  
+  .text-box textarea {
+    width: 100%;
+    height: 40px;
+    resize: none;
+    border: 0;
+    border-radius: 6px;
+    padding: 12px 12px 10px 12px;
+    font-size: 13px;
+    outline: none;
+    caret-color: #0a84ff;
+  }
+  
+  .text-box .formatting {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto 1fr;
+  }
+  
+  .text-box .formatting button {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 0;
+    outline: none;
+  }
+  
+  .text-box .formatting button:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .text-box .formatting .send {
+    width: 30px;
+    height: 30px;
+    background-color: #0a84ff;
+    margin: 0 0 0 auto;
+  }
+  
+  .text-box .formatting .send:hover {
+    background-color: #026eda;
+  }
+  
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 0.6;
+    }
+  
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+
+/* ---- ----- ----- TEXT AREA COMENTARIO ----- ----- ----- */
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  
+  .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .emoji {
+      font-size: 30px;
+      position: relative;
+      cursor: pointer;
+      margin-left: 10px;
+  }
+  
+  .emoji > span {
+      padding: 10px;
+      border: 1px solid transparent;
+      transition: 100ms linear;
+  }
+  
+  .emoji > span:hover {
+      background-color: #fff;
+      border-radius: 4px;
+      border: 1px solid #e7e7e7;
+      box-shadow: 0 7px 14px 0 rgb(0 0 0 / 12%);
+  }
+  
+  #emoji-picker {
+      padding: 6px;
+      font-size: 20px;
+      z-index: 1;
+      position: absolute;
+      display: none;
+      width: 189px;
+      border-radius: 4px;
+      top: 53px;
+      right: 0;
+      background: #fff;
+      border: 1px solid #e7e7e7;
+      box-shadow: 0 7px 14px 0 rgb(0 0 0 / 12%);
+  }
+  
+  .my-emoji {
+      cursor: pointer;
+      width: 35px;
+      height: 35px;
+      display: inline-block;
+      text-align: center;
+      padding-top: 4px;
+  }
+  
+  .my-emoji:hover {
+      background-color: #e7e7e7;
+      border-radius: 4px;
+  }
+  
+  .emoji-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      top: 0;
+      right: 18px;
+      box-sizing: border-box;
+      border-color: transparent transparent #fff #fff;
+      border-style: solid;
+      border-width: 4px;
+      transform-origin: 0 0 0;
+      transform: rotate(135deg);
+  }
+  
+  #text-area {
+      font-family: monospace;
+      font-size: 20px;
+      min-height: 70px;
+      min-width: 500px;
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid #c1c1c1;
+      background-color: #09101d;
+      color: #fff;
+  }

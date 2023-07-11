@@ -100,7 +100,7 @@
                                 <label class="label">
                                   <input type="file" name="foto"  onchange="showSelectedImage(event)" id="myImage">
                                   <figure class="personal-figure">
-                                    <img src="{% static 'img/fotoperfil.jpeg' %}" class="personal-avatar" id="selectedImage" alt="avatar">
+                                    <img src="{{ perfil.avatar.url }}" class="personal-avatar" id="selectedImage" alt="avatar">
                                     <figcaption class="personal-figcaption">
                                       <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
                                     </figcaption>
@@ -108,7 +108,7 @@
                                 </label>
                               </div>
                         </div>
-                        <p style="text-align: center; font-family: monospace; font-size: 20px;">Completa tu perfil para que puedas acceder a todas las funciones de la pagina!!!</p>
+                        <p style="text-align: center; font-family: monospace; font-size: 20px;">Avatar</p>
                         <div class="col-md-4"></div>
                     </div>
                     

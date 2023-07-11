@@ -1,0 +1,399 @@
+.colorBoton{
+    background-color: #6200d1;
+    border-color: #000000;
+    font-weight: 600;
+  }
+  
+  .colorBoton:hover {
+    background-color: #734f9a;
+    border-color: #1d1a2f;
+  }
+  
+  .colorBoton2{
+    background-color: #00b94e;
+    border-color: #000000;
+    font-weight: 600;
+  }
+  
+  .fondo1{
+    font-family: monospace;
+  }
+  
+  /* ---- ----- ----- NAVBAR ----- ----- ----- */
+  .navbar-container {
+      text-align: center;
+      background-color: #19003100;
+      box-shadow: 0px -20px 5px 20px #333333;
+      padding: 10px;
+      font-size: 0;
+    
+  }
+  
+  .navbar-container ul {
+      margin: 0;
+      padding: 0;
+      text-align: right;
+      display: inline-block;
+      vertical-align: middle;
+    
+  }
+  
+  .navbar-container ul li {
+      display: inline-block;
+      font-size: 16px;
+  }
+  
+  .navbar-container ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-block;	
+      padding: 10px;
+      transition: color 0.5s;
+  }
+  
+  .navbar-container ul li .underline {
+      height: 3px;
+      background-color: transparent;
+      width: 0%;
+      transition: width 0.2s, background-color 0.5s;
+      margin: 0 auto;
+  }
+  
+  .navbar-container ul li.active-link .underline {
+      width: 100%;
+      background-color: white;
+  
+  }
+  
+  
+  
+  .navbar-container ul li:hover .underline {
+      background-color: white;
+      width: 100%;
+  }
+  
+  .navbar-container ul li:hover a {
+  }
+  
+  .navbar-container ul li:active a {
+      transition: none;
+      color: rgba(255,255,255,0.76);
+  }
+  
+  .navbar-container ul li:active .underline {
+      transition: none;
+      background-color: rgba(255,255,255,0.76);
+  }
+  
+  body {
+    font-family: 'Press Start 2P';
+    background-image: url('../../static/img/fondo03.gif');
+    background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff;
+  }
+  
+  /* ---- ----- ----- CARD PERFIL ----- ----- ----- */
+  .colorBoton2:hover {
+    background-color: 	#3f6d4e;
+    border-color: #1d1a2f;
+  }
+  .personal-image {
+    text-align: center;
+  }
+  .personal-image input[type="file"] {
+    display: none;
+  }
+  .personal-figure {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  .personal-avatar {
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    box-sizing: border-box;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    transition: all ease-in-out .3s;
+  }
+  .personal-avatar:hover {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+  }
+  .personal-figcaption {
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    width: inherit;
+    height: inherit;
+    border-radius: 100%;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all ease-in-out .3s;
+  }
+  .personal-figcaption:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, .5);
+  }
+  .personal-figcaption > img {
+    margin-top: 32.5px;
+    width: 50px;
+    height: 50px;
+  }
+  
+  /*css register*/
+  
+  .colorBoton2 {
+    background-color: #00b94e;
+    border-color: #000000;
+    font-weight: 600;
+  }
+  
+  .colorBoton2:hover {
+    background-color: #3f6d4e;
+    border-color: #1d1a2f;
+  }
+  
+  .div2 {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4); /* sombra */
+    border-radius: 7px;
+    background-color: #09101d;
+    padding: 20px;
+    font-family: monospace;
+    
+  }
+  
+  .link {
+    text-decoration: none;
+  }
+  
+  /*fin css register*/
+  
+  .label-limitado {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* ---- ----- ----- MENU FLOTANTE ----- ----- ----- */
+  .containerb {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 200px;
+  }
+  
+  .containerb .btn {
+    height: 50px;
+    margin: 20px;
+    margin-bottom: 40px;
+    position: relative;
+    width: 155px;
+  }
+  
+  .containerb .btn a {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: flex;
+    font-size: 18px;
+    font-weight: 700;
+    left: 0;
+    top: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    letter-spacing: 1px;
+    text-decoration: none;
+    overflow: hidden;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
+    z-index: 1;
+    transition: 0.5s;
+  }
+  
+  .containerb .btn:hover a {
+    letter-spacing: 2px;
+  }
+  
+  .containerb .btn a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left,
+                  rgba(255,255,255,0.15),
+                  transparent);
+    transform: skewX(45deg) translateX(0);
+    transition: 0.5s;
+  }
+  
+  .containerb .btn:hover a::before {
+    transform: skewX(45deg) translateX(200%);
+  }
+  
+  .containerb .btn::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px;
+    height: 10px;
+    width: 30px;
+    background: rgb(8, 107, 183);
+    border-radius: 10px;
+    transition: 0.5s;
+    transition-delay: 0s;
+  }
+  
+  .containerb .btn:hover::before {
+    bottom: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    transition-delay: 0.5s;
+  }
+  
+  .containerb .btn::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -5px;
+    height: 10px;
+    width: 30px;
+    background: rgb(7, 95, 189);
+    border-radius: 10px;
+    transition: 0.5s;
+    transition-delay: 0s;
+  }
+  
+  .containerb .btn:hover::after {
+    top: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    transition-delay: 0.5s;
+  }
+  
+  .containerb .btn:nth-child(1):before,
+  .containerb .btn:nth-child(1)::after {
+    background: #2bd2ff;
+    box-shadow: 0 0 5px #2bd2ff,
+      0 0 15px #2bd2ff,
+      0 0 30px #2bd2ff,
+      0 0 60px #2bd2ff;
+  }
+  
+  .containerb .btn:active a {
+    color: #000;
+  }
+  
+  /* ---- ----- ----- FOOTER ----- ----- ----- */
+  footer {
+    background-color: #09101d;
+    color: white;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 10px;
+    margin-top: 0vh;
+    font-family: 'Press Start 2P';
+    position: sticky bottom;
+  }
+  
+  /*card*/
+  
+  
+  .card {
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .card img {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .card .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .card .description {
+    margin-top: 5px;
+  }
+  
+  .card .likes-comments {
+    margin-top: 10px;
+  }
+  
+  .card .likes-comments span {
+    margin-right: 10px;
+  }
+  
+  .card .likes-comments .likes {
+    color: #00ff00;
+  }
+  
+  .card .likes-comments .comments {
+    color: #ff0000;
+  }
+  
+  .card-group {
+    /* Estilos del grupo de tarjetas */
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    /* Estilos de cada tarjeta */
+   
+    flex: 1 0 300px; /* Anchura mínima de 300px */
+    margin: 10px; /* Espacio entre las tarjetas */
+  }
+  
+  /* Media query para ajustar el diseño de las tarjetas cuando el ancho de la ventana es menor a 768px */
+  @media (max-width: 768px) {
+    .card {
+      flex-basis: 100%; /* Tarjetas de anchura completa */
+    }
+  }
+  
+  .avatar {
+    width: 100px; /* Ajusta el tamaño del contenedor del avatar según tus necesidades */
+    height: 100px;
+    border-radius: 50%; /* Hace que el contenedor tenga forma de círculo */
+    overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del círculo */
+    position: relative; /* Establece el posicionamiento relativo para el contenedor */
+  }
+  
+  .avatar img {
+    width: 100%; /* Asegura que la imagen ocupe todo el contenedor */
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para que cubra todo el contenedor */
+    position: absolute; /* Establece el posicionamiento absoluto para la imagen */
+    top: 50%; /* Centra verticalmente la imagen */
+    left: 50%; /* Centra horizontalmente la imagen */
+    transform: translate(-50%, -50%); /* Ajusta la posición de la imagen al centro */
+    border-radius: 50%; /* Mantiene la forma circular de la imagen */
+  
+  }
+  
