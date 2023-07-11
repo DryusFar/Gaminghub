@@ -86,12 +86,11 @@
 }
 
 body {
-  font-family: 'Press Start 2P';
   background-image: url('../../static/img/fondo03.gif');
   background-repeat: no-repeat;
-background-size: cover;
-background-attachment: fixed;
-color: #fff;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff;
 }
 
 /* ---- ----- ----- CARD PERFIL ----- ----- ----- */

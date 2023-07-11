@@ -91,8 +91,7 @@ def perfil(request):
     }
 
 
-    return render(request, 'perfil.html',context)
-
+    return render(request, 'newperfil.html',context)
 @login_required
 @user_passes_test(is_superuser)
 def admin1(request):
@@ -1220,6 +1219,8 @@ def amigos(request):
     else:
         username_id = None
 
+    user = User.objects.get(id = usuario_actual.id)
+
     chat = Mensaje.objects.filter((Q(destinatario = username_id) & Q(estado=1)))
 
     # Obtener todas las amistades del usuario actual
@@ -1245,7 +1246,7 @@ def amigos(request):
         })
 
     # Puedes pasar la lista de amigos al contexto de renderización
-    return render(request, 'amigos.html', {'amigos': amigos, 'chat':chat})
+    return render(request, 'amigos.html', {'amigos': amigos, 'chat':chat, 'user':user})
 
 def eliminarAmigo(request, id_enviador):
 

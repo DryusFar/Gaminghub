@@ -141,20 +141,9 @@
               </h3>
               <div class="col-md-4"></div>
               <div class="col-md-4">
-                {% if perfil.avatar == null %}
-                <img src="{% static 'img/fotoperfil.jpeg' %}" class="rounded-circle img-fluid" style="width: 150px"
-                  alt="Avatar" />
-
-                {% elif perfil.avatar == "" %}
-
-                <img src="{% static 'img/fotoperfil.jpeg' %}" class="rounded-circle img-fluid" style="width: 150px"
-                  alt="Avatar" />
-
-                {% else %}
                 <div class="avatar">
                   <img src="{{ perfil.avatar.url }}" class="rounded-circle img-fluid" alt="Avatar" />
                 </div>
-                {% endif %}
               </div>
               <div class="col-md-4"></div>
             </div>
