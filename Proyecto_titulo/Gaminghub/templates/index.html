@@ -36,26 +36,27 @@
       });
 
       function mostrarResultados(resultados) {
-        var $acordeon = $('#acordeon');
-        $acordeon.empty();
+  var claseResultado = 'resultado';
+  var $listaResultados = $('<ul>').addClass(claseResultado);
+  var $acordeon = $('#acordeon');
+  $acordeon.empty().append($listaResultados);
 
-        for (var i = 0; i < resultados.length; i++) {
-          var usuario = resultados[i];
-          var $titulo = $('<h3>').text(usuario.username);
-          var $contenido = $('<div>').addClass('contenido');
-          $acordeon.append($titulo).append($contenido);
+  for (var i = 0; i < resultados.length; i++) {
+    var usuario = resultados[i];
+    var $resultado = $('<h5>').addClass('resultado');
+    var $titulo = $('<h5>').text(usuario.username);
+    $resultado.append($titulo);
+    $listaResultados.append($resultado);
 
-          // Agregar evento de clic para redireccionar al perfil del usuario
-          $titulo.on('click', { username: usuario.username }, function (event) {
-            var username = event.data.username;
-            window.location.href = '/perfiles/' + username + '/';
+    // Agregar evento de clic para redireccionar al perfil del usuario
+    $titulo.on('click', { username: usuario.username }, function (event) {
+      var username = event.data.username;
+      window.location.href = '/perfiles/' + username + '/';
           });
         }
 
-        $acordeon.accordion({
-          collapsible: true,
-          heightStyle: 'content'
-        });
+ 
+  
       }
     });
 
@@ -72,7 +73,18 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
 <body>
 
+<style>
+  .resultado {
+  /* Estilos personalizados */
 
+  color: #ff4545;
+    background-color: #100f0dc2;
+    border-radius: 10px;
+
+  padding: 5px;
+  margin-top: 5px;
+}
+</style>
   <div class="container-bar" style="font-family: 'Press Start 2P';">
     <input type="checkbox" id="btn-social">
     <label for="btn-social" class="fa fa-play"></label>

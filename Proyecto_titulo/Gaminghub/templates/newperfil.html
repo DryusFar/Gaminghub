@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <style>
+        .boton1 {
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+            background-color: #6200d1;
+            border-color: #000000;
+            font-weight: 600;
+        }
+        .boton1:hover{
+            background-color: #430f7e;
+            border-color: #000000;
+        }
+        .boton2 {
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+            background-color: #00b94e;
+            border-color: #000000;
+            font-weight: 600;
+        }
+
+        .boton2:hover{
+            background-color: #04612b;
+            border-color: #000000;
+        }
+
+        .boton3 {
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+            background-color: #d18e00;
+            border-color: #000000;
+            font-weight: 600;
+        }
+
+        .boton3:hover{
+            background-color: #996a05;
+            border-color: #000000;
+        }
+
+
+        .custom-container {
+            background-color: #09101d;
+            text-align: center;
+            padding: 20px;
+            color: aliceblue;
+            margin-top: 5%;
+            border-radius: 10px;
+            max-width: 600px;
+            /* Ajusta el valor según tus necesidades */
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #8800ff, 0 0 35px #8800ff, 0 0 40px #8800ff, 0 0 50px #8800ff, 0 0 75px #8800ff;
+
+        }
+    </style>
+
+    <div class="container">
+        <div style="background-color: #09101d; text-align: center; padding: 20px; color: aliceblue; margin-top: 5%; border-radius: 10px;"
+            class="custom-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div></div>
+                    <img src="../static/img/chad.jpg" alt=""
+                        style="width: 250px; border-radius: 10px; margin: 10px; box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);">
+                    <h4>Gaminghub</h4>
+                    <p>👾 SEXUAL 👾</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Nombre</h5>
+                    <p style="background-color: aliceblue; border-radius: 10px; color: #09101d;">Carlos</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Apellido</h5>
+                    <p style="background-color: aliceblue; border-radius: 10px; color: #09101d;">Celis</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Correo</h5>
+                    <p style="background-color: aliceblue; border-radius: 10px; color: #09101d;">cheka4k@gmail.com</p>
+                </div>
+            </div>
+            <h4>Datos adicionales</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Edad</h5>
+                    <p style="background-color: aliceblue; border-radius: 10px; color: #09101d;">Carlos</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Genero</h5>
+                    <p style="background-color: aliceblue; border-radius: 10px; color: #09101d;">Celis</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Fecha de nacimiento</h5>
+                    <p style="background-color: aliceblue; border-radius: 10px; color: #09101d;">cheka4k@gmail.com</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Descripcion</h5>
+                    <p style="background-color: aliceblue; border-radius: 10px; color: #09101d;">Lorem ipsum, dolor sit
+                        amet consectetur adipisicing elit. Facilis et ad, fuga harum ex consequatur architecto nihil
+                        repellat corrupti odio itaque dolores incidunt dolorem ullam ut, sed non rem! Voluptas.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" style="margin-bottom: 10px;">
+                    <a type="submit" class="btn btn-primary colorBoton form-control boton1"
+                        href="{% url 'cambiar_clave' %}">Cambiar
+                        contraseña</a>
+                </div>
+                <div class="col-md-4" style="margin-bottom: 10px;">
+                    <a type="submit" class="btn btn-primary colorBoton2 form-control boton2"
+                        href="{% url 'modificar_perfil' %}">Modificar perfil</a>
+                </div>
+                <div class="col-md-4" style="margin-bottom: 10px;">
+                    <a type="submit" class="btn btn-primary colorBoton2 form-control boton3"
+                        href="{% url 'completar_perfil' %}">Completar
+                        perfil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
