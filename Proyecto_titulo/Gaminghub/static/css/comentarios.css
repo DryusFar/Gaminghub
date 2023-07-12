@@ -12,6 +12,13 @@
     width: 400px;
     height: 180px;
   }
+
+  .colorBoton{
+    background-color: #6200d1;
+    border-color: #000000;
+    color: #ffffff;
+    font-weight: 600;
+  }
   
   .task:hover {
     box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 0px;

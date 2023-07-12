@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>form_grupo</title>
+    <title>Modificar grupo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="{% static 'css/form_publicacion.css' %}" type="text/css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/Logo.ico' %}">
     <link href="{% static 'css/menuflotante.css' %}" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,20 +17,16 @@
     <div class="navbar-container">
         <ul>
             <li class="nav-link active-link">
-                <a href="#">Home
+                <a href="{% url 'index' %}">Inicio
                 </a>
                 <div class="underline"></div>
             </li>
             <li class="nav-link">
-                <a href="#">About Us</a>
+                <a href="#">Sobre nosotros</a>
                 <div class="underline"></div>
             </li>
             <li class="nav-link">
-                <a href="#">Testimonials</a>
-                <div class="underline"></div>
-            </li>
-            <li class="nav-link">
-                <a href="#">Contact</a>
+                <a href="#">Contacto</a>
                 <div class="underline"></div>
             </li>
             <li class="nav-link">
@@ -120,14 +117,15 @@
                     </div>
                     <div>
                         <label for="" class="label-color">Nueva foto de grupo? Seleccione imagen</label>
-                        <input type="file" id="multimedia" name="multimedia"  value="multimedia" class="form-control margin-abajo input">
-                    </div>
+                        <input type="file" id="multimedia" name="multimedia"  value="multimedia" class="form-control input">
+                        <label for="" class="label-color" style="margin-bottom: 10px;">Si no quieres cambiar la imagen, ignora este campo...</label>
+                      </div>
                    
                     <div>
                         <label for="" class="label-color">Descripcion</label>
                         <textarea name="descripcion" id="descripcion"  value="descripcion" cols="40" rows="5" class="margin-abajo separar-lados form-control input" placeholder="Escribe la descripcion de tu grupo..." required>{{ grupo.descripcion }}</textarea>
                     </div>
-                    <div>
+                    <div hidden>
                         <label for="" class="label-color">Privacidad de grupo</label>
                         <select name="privacidad_g" id="privacidad_g" class="form-control" style="margin-bottom: 15px;">
                             {% if grupo.privacidad == 0 %}

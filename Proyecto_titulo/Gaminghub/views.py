@@ -826,6 +826,7 @@ def eliminar_grupo(request, id_grupo):
 
     return redirect('grupos')
 
+@login_required
 def eliminar_sala(request, sala_id):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -839,12 +840,12 @@ def eliminar_sala(request, sala_id):
 
     if sala is not None:  # Verificar si el objeto miembro existe
         sala.delete()
-        messages.success(request, 'Se ha eliminado la sala exitosamente...')
     else:
         messages.error(request, 'La sala no existe en este grupo.')
 
     return redirect('salas', grupo_id = grupo.id_grupo)
 
+@login_required
 def perfiles(request, username):
     usuario = get_object_or_404(User, username=username) #OBTENGO TODOS LOS MODELOS DE User COMPLETOS COMPARANDO EL USERNAME CON EL INGRESADO EN LA URL
     perfil_usuario = PerfilUsuario.objects.get(id_usuario=usuario) #OBTENGO EL MODELO PERFILUSUARIO CON SU FK QUE COINCIDA CON EL USUARIO OBTENIDO ANTERIORMENTE
@@ -885,8 +886,13 @@ def buscar_usuarios(request):
         return JsonResponse([], safe=False)
 
 ########################## LIKE Y DISLIKE ########################
+    
+
 class Darlikes(View):
     def post(self,request, id_publicacion,*args,**kwargs):
+        if not request.user.is_authenticated:
+            return redirect('register')
+    
         post = Publicacion.objects.get(id_publicacion=id_publicacion)
 
         is_dislike = False
@@ -922,7 +928,8 @@ class Darlikes(View):
 
 class Dardislikes(View):
     def post(self,request, id_publicacion,*args,**kwargs):
-
+        if not request.user.is_authenticated:
+            return redirect('register')
         post = Publicacion.objects.get(id_publicacion=id_publicacion)
 
         is_like = False
@@ -1023,12 +1030,12 @@ def modificargrupo(request,id_grupo):
     grupo.multimedia = multimedia_g
 
     grupo.save()
-    messages.success(request,'Grupo Modificado exitosamente')
     return redirect('grupos')
 
 
 
 #Ver miembros de los grupos
+@login_required
 def vista_miembros(request, grupo_id):
     grupo = Grupo.objects.get(id_grupo=grupo_id) #Obtengo el grupo correspondiente comparando la idGrupo de la url
     creador = grupo.fk_id_usuario #Obtengo el creador del grupo ( fk_id_usuario corresponde a la relacion con el Usuario creador)
@@ -1079,6 +1086,7 @@ def registrarcomentario(request, id_publicacion):
             
     return render(request, 'comentarios.html', context)
 
+@login_required
 def comentarios(request,id_publicacion):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -1132,6 +1140,7 @@ def solicitudAmistad(request, id_amigo):
 
     return redirect('perfiles', username=amigo.username)
 
+@login_required
 def notificaciones(request):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -1209,7 +1218,7 @@ def botonOK(request,id_notifi):
 
     return redirect('notificaciones')
 
-
+@login_required
 def amigos(request):
     # Obtener el usuario actual
     usuario_actual = request.user
@@ -1328,6 +1337,7 @@ def enviarMensaje(request, amigo_id):
 def error_404(request, exception):
     return render(request, '404.html', status=404)
 
+@login_required
 def crearsala(request, grupo_id):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -1345,6 +1355,7 @@ def crearsala(request, grupo_id):
 
     return render(request, 'crearsala.html',context)
 
+@login_required
 def salaC(request, grupo_id):
 
     if request.user.is_authenticated:
@@ -1362,7 +1373,7 @@ def salaC(request, grupo_id):
 
     return redirect('salas', grupo_id=grupo.id_grupo)
 
-
+@login_required
 def salas(request, grupo_id):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -1384,6 +1395,7 @@ def salas(request, grupo_id):
 
     return render(request, 'salas.html',context)
 
+@login_required
 def chatSala(request, sala_id):
     if request.user.is_authenticated:
         username_id = request.user.id
@@ -1437,6 +1449,7 @@ def enviarMensajeGrupo(request, sala_id):
     # Agrega un retorno de respuesta adecuado aquí
     return HttpResponse("Solo se permite enviar mensajes a través de POST")
 
+@login_required
 def enviarNotificacionMensaje(request, id_usuario):
 
     if request.user.is_authenticated:
