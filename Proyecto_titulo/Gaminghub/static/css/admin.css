@@ -25,6 +25,11 @@ font-family: monospace;
 .margin-abajo-titulo{
     margin-top: 6vh;
     margin-bottom: 30px;
+	background-color: #000000cf;
+	box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #8800ff, 0 0 35px #8800ff, 0 0 40px #8800ff, 0 0 50px #8800ff, 0 0 75px #8800ff;
+	color: #6200d1;
+	padding: 10px;
+	border-radius: 15px;
 }
 
 .margin-arriba{
