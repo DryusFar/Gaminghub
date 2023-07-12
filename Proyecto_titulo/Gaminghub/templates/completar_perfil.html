@@ -14,6 +14,27 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body id="fondo1">
+  <div class="navbar-container" style="font-family: 'Press Start 2P';">
+    <ul>
+        <li class="nav-link active-link">
+            <a href="{% url 'index' %}">Inicio
+            </a>
+            <div class="underline"></div>
+        </li>
+        <li class="nav-link">
+            <a href="#">Sobre nosotros</a>
+            <div class="underline"></div>
+        </li>
+        <li class="nav-link">
+            <a href="#">Contacto</a>
+            <div class="underline"></div>
+        </li>
+        <li class="nav-link">
+          <a href="/logout">Cerrar Sesión</a>
+          <div class="underline"></div>
+      </li>
+    </ul>
+</div>
   <div class="container-bar" style="font-family: 'Press Start 2P';">
     <input type="checkbox" id="btn-social">
     <label for="btn-social" class="fa fa-play"></label>
