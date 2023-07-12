@@ -840,7 +840,6 @@ def eliminar_sala(request, sala_id):
 
     if sala is not None:  # Verificar si el objeto miembro existe
         sala.delete()
-        messages.success(request, 'Se ha eliminado la sala exitosamente...')
     else:
         messages.error(request, 'La sala no existe en este grupo.')
 
@@ -1031,7 +1030,6 @@ def modificargrupo(request,id_grupo):
     grupo.multimedia = multimedia_g
 
     grupo.save()
-    messages.success(request,'Grupo Modificado exitosamente')
     return redirect('grupos')
 
 

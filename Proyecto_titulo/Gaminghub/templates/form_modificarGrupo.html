@@ -117,14 +117,15 @@
                     </div>
                     <div>
                         <label for="" class="label-color">Nueva foto de grupo? Seleccione imagen</label>
-                        <input type="file" id="multimedia" name="multimedia"  value="multimedia" class="form-control margin-abajo input">
-                    </div>
+                        <input type="file" id="multimedia" name="multimedia"  value="multimedia" class="form-control input">
+                        <label for="" class="label-color" style="margin-bottom: 10px;">Si no quieres cambiar la imagen, ignora este campo...</label>
+                      </div>
                    
                     <div>
                         <label for="" class="label-color">Descripcion</label>
                         <textarea name="descripcion" id="descripcion"  value="descripcion" cols="40" rows="5" class="margin-abajo separar-lados form-control input" placeholder="Escribe la descripcion de tu grupo..." required>{{ grupo.descripcion }}</textarea>
                     </div>
-                    <div>
+                    <div hidden>
                         <label for="" class="label-color">Privacidad de grupo</label>
                         <select name="privacidad_g" id="privacidad_g" class="form-control" style="margin-bottom: 15px;">
                             {% if grupo.privacidad == 0 %}
